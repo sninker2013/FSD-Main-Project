@@ -1,13 +1,13 @@
 body {
-    background-color: #164978;
+    background-color: #61163d;
 }
 
 h1 {
-    color: #A7C2FA;
+    color: #6DD6AE;
 }
 
 p {
-    color: #A9D66D;
+    color: #6DD6AE;
 }
 
 .games,
@@ -16,7 +16,7 @@ p {
     text-align: center;
     padding: 100px 20px;
     min-height: 400px;
-    border-bottom: 2px solid #781649;
+    border-bottom: 2px solid #14385a;
 }
 
 .navbar ul {
@@ -31,7 +31,7 @@ p {
 
 .navbar a {
     text-decoration: none;
-    color: #A7C2FA;
+    color: #6DD6AE;
     padding: 10px 15px;
     display: block;
 }
@@ -59,19 +59,19 @@ p {
     }
 
     header {
-        background-color: #781649;
-        color: #A7C2FA;
+        background-color: #14385a;
+        color: #6DD6AE;
         display: flex;
         flex-direction: column;
         align-items: center;
-        border: 2px solid #A9D66D;
+        border: 2px solid #6DD6AE;
     }
 }
 
 @media (max-width: 767px) {
     .navbar {
         display: none;
-        background-color: #781649;
+        background-color: #14385a;
         width: 100%;
     }
 
@@ -88,7 +88,7 @@ p {
     .nav-toggle {
         font-size: 24px;
         background: none;
-        color: #A7C2FA;
+        color: #6DD6AE;
         border: none;
         cursor: pointer;
         margin: 10px;
@@ -96,8 +96,8 @@ p {
     }
 
     header {
-        background-color: #781649;
-        color: #A7C2FA;
+        background-color: #14385a;
+        color: #6DD6AE;
         display: flex;
         text-align: center;
         flex-direction: column;

@@ -1,6 +1,6 @@
 import './App.css'
-import "./components/reviews/reviews"
-import Reviews from './components/reviews/reviews'
+import "./components/reviews/Reviews"
+import Reviews from './components/reviews/Reviews'
 
 
 function App() {

@@ -1,0 +1,32 @@
+.friendsActivities {
+    border-style: solid;
+    width: 200px;
+    margin-left: auto;
+    color: black;
+    background-color: #532e54;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom: 25px;
+    padding-top: 5px;
+}
+
+#friendsListTitle {
+    width: 200px;
+    color: #A9D66D;
+}
+
+.friend__list {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+.friends {
+    color: #FFF97E;
+    background-color: #15656c;
+    border-style: none;
+    width: 200px;
+    margin-bottom: 5px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}

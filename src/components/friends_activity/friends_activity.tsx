@@ -1,3 +1,5 @@
+import "./friends_acitivity.css"
+
 type Friends = {
     id: number,
     userName: string
@@ -10,7 +12,7 @@ const testFriends: Friends[] = [
 ]
 
 function FriendItem({ userName }: { userName: string }) {
-  return <li>{userName}</li>;
+  return <li className="friends">{userName}</li>;
 }
 
 function FriendsActivity () {
@@ -28,8 +30,8 @@ function DisplayFriendsActivity({
 }) {
     return (
         <section className="friendsActivities">
-        <h2>Friends Activity</h2>
-        <ul className="friends_activity_list">
+        <h2 id="friendsListTitle">Friends Activity</h2>
+        <ul className="friend__list">
         {friendsActivities.map(friend => (
             <FriendItem
             key={friend.id}

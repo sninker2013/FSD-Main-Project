@@ -1,4 +1,4 @@
-import "./stars.css"
+import "./Stars.css"
 import type { ReviewElement } from "../reviews/Reviews"
 
 

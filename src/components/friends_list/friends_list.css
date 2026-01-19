@@ -1,4 +1,4 @@
-.friendsActivities {
+.friendsList {
     border-style: solid;
     width: 200px;
     margin-left: auto;
@@ -29,4 +29,10 @@
     margin-bottom: 5px;
     padding-top: 20px;
     padding-bottom: 20px;
+}
+
+.friend__list li:hover {
+    cursor: pointer;
+    background-color: #72b7bd;
+    color: #2C3732;
 }

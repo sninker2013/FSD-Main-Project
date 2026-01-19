@@ -1,4 +1,4 @@
-import "./reviews.css";
+import "./Reviews.css";
 import Stars from "../stars/Stars";
 
 //sample data

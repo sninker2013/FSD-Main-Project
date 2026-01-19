@@ -1,6 +1,5 @@
-import "./reviews.css"
-import "../stars/Stars"
-import Stars from "../stars/Stars"
+import "./reviews.css";
+import Stars from "../stars/Stars";
 
 //sample data
 type Review = {

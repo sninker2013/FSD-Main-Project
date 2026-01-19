@@ -7,12 +7,12 @@ interface Game {
 }
 
 const games: Game[] = [
-    { id: "1", imageSrc: "/src/assets/placeholders/placeholder1.jpg", title: "Game 1" },
-    { id: "2", imageSrc: "/src/assets/placeholders/placeholder2.jpg", title: "Game 2" },
-    { id: "3", imageSrc: "/src/assets/placeholders/placeholder3.jpg", title: "Game 3" },
-    { id: "4", imageSrc: "/src/assets/placeholders/placeholder4.jpg", title: "Game 4" },
-    { id: "5", imageSrc: "/src/assets/placeholders/placeholder5.jpg", title: "Game 5" },
-    { id: "6", imageSrc: "/src/assets/placeholders/placeholder6.jpg", title: "Game 6" },
+    { id: "1", imageSrc: "/images/placeholders/placeholder1.jpg", title: "Game 1" },
+    { id: "2", imageSrc: "/images/placeholders/placeholder2.jpg", title: "Game 2" },
+    { id: "3", imageSrc: "/images/placeholders/placeholder3.jpg", title: "Game 3" },
+    { id: "4", imageSrc: "/images/placeholders/placeholder4.jpg", title: "Game 4" },
+    { id: "5", imageSrc: "/images/placeholders/placeholder5.jpg", title: "Game 5" },
+    { id: "6", imageSrc: "/images/placeholders/placeholder6.jpg", title: "Game 6" },
 ];
 
 export function PopularGames() {

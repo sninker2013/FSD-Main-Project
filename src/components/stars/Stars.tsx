@@ -37,9 +37,9 @@ function Stars(review: ReviewElement) {
 function ListStarItem({star}: {star: boolean}) {
     let starSVG: string
     if (star == true) {
-        starSVG = "src/assets/star.svg"
+        starSVG = "/src/assets/star.svg"
     } else {
-        starSVG = "src/assets/emptyStar.svg"
+        starSVG = "/src/assets/emptyStar.svg"
     }
     return(
         <img src={starSVG} alt="star SVG" style={{width: "18px", height: "18px"}}/>

@@ -1,6 +1,6 @@
 import "./reviews.css"
-import "../stars/stars"
-import Stars from "../stars/stars"
+import "../stars/Stars"
+import Stars from "../stars/Stars"
 
 //sample data
 type Review = {

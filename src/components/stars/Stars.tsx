@@ -28,9 +28,9 @@ function Stars(review: ReviewElement) {
         />)
     })
     return (
-        <ul>
+        <div>
             {starsItems}
-        </ul>
+        </div>
     )
 }
 

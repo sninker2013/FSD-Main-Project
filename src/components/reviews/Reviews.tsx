@@ -72,9 +72,9 @@ function ReviewsDisplay({reviews}: {reviews: Review[]}) {
     return(
         <section className="reviews">
             <h2>Reviews</h2>
-            <ul className="reviews__list">
+            <div className="reviews__list">
                 {reviewItems}
-            </ul>
+            </div>
         </section>
     )
 }

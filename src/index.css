@@ -55,7 +55,7 @@ p {
 
     header {
         background-color: #6d1f48;
-        color: #A7C2FA;
+        color: hsl(220, 89%, 82%);
         display: flex;
         flex-direction: column;
         align-items: center;

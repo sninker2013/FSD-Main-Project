@@ -1,5 +1,6 @@
 import './App.css'
 
+import { Header } from './components/common/Header'
 import { Footer } from './components/common/Footer'
 
 import "./components/reviews/Reviews"
@@ -13,6 +14,7 @@ import { PopularGames } from './components/popular_games/PopularGames'
 function App() {
   return (
     <>
+      <Header />
       <PopularGames />
       <FriendsList />
       <Reviews />

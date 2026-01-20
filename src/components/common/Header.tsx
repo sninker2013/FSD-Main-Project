@@ -1,7 +1,7 @@
 export function Header() {
     return (
         <header>
-        <h1>Application Name</h1>
+        <h1>GameStars</h1>
         </header>
     );
 }

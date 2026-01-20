@@ -1,7 +1,7 @@
 export function Footer() {
     return (
         <footer>
-        <p>Created by: Team Name</p>
+        <p>Created by: TBD</p>
         </footer>
     );
 }

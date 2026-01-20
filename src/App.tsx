@@ -1,5 +1,7 @@
 import './App.css'
 
+import { Footer } from './components/common/Footer'
+
 import "./components/reviews/Reviews"
 import Reviews from './components/reviews/Reviews'
 
@@ -14,6 +16,7 @@ function App() {
       <PopularGames />
       <FriendsList />
       <Reviews />
+      <Footer />
     </>
   )
 }

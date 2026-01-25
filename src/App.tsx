@@ -3,8 +3,7 @@ import { useState } from "react";
 
 import './App.css'
 
-import { Header } from './components/common/layout/header/Header'
-import { Footer } from './components/common/layout/footer/Footer'
+import { Layout } from "./components/common/layout/layout";
 
 import "./components/reviews/Reviews"
 import Reviews from './components/reviews/Reviews'
@@ -17,11 +16,8 @@ import { PopularGames } from './components/popular_games/PopularGames'
 function App() {
   return (
     <Routes>
-      <Header />
-      <PopularGames />
-      <FriendsList />
-      <Reviews />
-      <Footer />
+      <Route path="/" element={<Layout />}>
+      </Route>
     </Routes>
   )
 }

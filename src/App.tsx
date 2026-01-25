@@ -1,7 +1,10 @@
+import { Routes, Route } from "react-router-dom";
+import { useState } from "react";
+
 import './App.css'
 
-import { Header } from './components/common/Header'
-import { Footer } from './components/common/Footer'
+import { Header } from './components/common/layout/header/Header'
+import { Footer } from './components/common/layout/footer/Footer'
 
 import "./components/reviews/Reviews"
 import Reviews from './components/reviews/Reviews'
@@ -13,13 +16,13 @@ import { PopularGames } from './components/popular_games/PopularGames'
   
 function App() {
   return (
-    <>
+    <Routes>
       <Header />
       <PopularGames />
       <FriendsList />
       <Reviews />
       <Footer />
-    </>
+    </Routes>
   )
 }
 

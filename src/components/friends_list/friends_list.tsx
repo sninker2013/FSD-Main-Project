@@ -1,9 +1,5 @@
 import "./friends_list.css"
-
-type Friends = {
-    id: number,
-    userName: string
-};
+import type { Friends } from "../../types/friends";
 
 const testFriends: Friends[] = [
     {id: 101, userName: "timdrake"},

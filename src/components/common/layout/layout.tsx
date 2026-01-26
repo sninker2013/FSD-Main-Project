@@ -1,18 +1,14 @@
 import { Outlet } from "react-router-dom";
 import { Header } from "./header/Header";
 import { Footer } from "./footer/Footer";
-import FriendsList from "../../friends_list/friends_list";
-import { PopularGames } from "../../popular_games/PopularGames";
-import Reviews from "../../reviews/Reviews";
+import { Landing } from "../../pages/Landing";
 
 export function Layout() {
     return (
         <>
             <Header />
+            <Landing />
             <Outlet />
-            <PopularGames />
-            <FriendsList />
-            <Reviews />
             <Footer />
         </>
     )

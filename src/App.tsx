@@ -1,7 +1,9 @@
+import { Routes, Route } from "react-router-dom";
+import { useState } from "react";
+
 import './App.css'
 
-import { Header } from './components/common/Header'
-import { Footer } from './components/common/Footer'
+import { Layout } from "./components/common/layout/layout";
 
 import "./components/reviews/Reviews"
 import Reviews from './components/reviews/Reviews'
@@ -13,13 +15,9 @@ import { PopularGames } from './components/popular_games/PopularGames'
   
 function App() {
   return (
-    <>
-      <Header />
-      <PopularGames />
-      <FriendsList />
-      <Reviews />
-      <Footer />
-    </>
+    <Routes>
+      <Route path="/" element={<Layout />} />
+    </Routes>
   )
 }
 

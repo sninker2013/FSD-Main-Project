@@ -16,8 +16,7 @@ import { PopularGames } from './components/popular_games/PopularGames'
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
-      </Route>
+      <Route path="/" element={<Layout />} />
     </Routes>
   )
 }

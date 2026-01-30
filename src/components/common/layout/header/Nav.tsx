@@ -9,7 +9,7 @@ export function Nav() {
                     Home
                 </NavLink>
                 <NavLink to="/reviews">
-                    Reviews                
+                    Reviews
                 </NavLink>
             </div>
         </nav>

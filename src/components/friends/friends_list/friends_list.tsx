@@ -1,24 +1,37 @@
+import { useState } from "react";
 import "./friends_list.css"
 import type { Friends } from "../../../types/friends";
 import { FriendForm } from "../friends_form/friends_form";
 
 const testFriends: Friends[] = [
-    {id: 101, userName: "timdrake"},
-    {id: 102, userName: "donnatroy"},
-    {id: 103, userName: "peterparker"}
+    {id: "101", userName: "timdrake"},
+    {id: "102", userName: "donnatroy"},
+    {id: "103", userName: "peterparker"}
 ]
 
 function FriendItem({ userName }: { userName: string }) {
   return <li className="friends">{userName}</li>;
 }
 
-function FriendsList () {
+export function FriendsList () {
+    const [friends, setFriends] = useState<Friends[]>(
+        testFriends
+    );
+
+    const handleAddFriend = (userName: string) => {
+        const newFriend: Friends = {
+            id: crypto.randomUUID(),
+            userName
+        };
+        setFriends(prev => [...prev, newFriend])
+    };
+
     return (
         <>
-            <DisplayFriendsList friendsList={testFriends} />
-            <FriendForm />
+            <DisplayFriendsList friendsList={friends} />
+            <FriendForm onSubmit={handleAddFriend}/>
         </>
-    )
+    );
 }
 
 function DisplayFriendsList({

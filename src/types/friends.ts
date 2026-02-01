@@ -1,4 +1,4 @@
 export type Friends = {
-    id: number,
+    id: string,
     userName: string
 };

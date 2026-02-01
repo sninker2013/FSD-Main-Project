@@ -3,9 +3,9 @@ import { useState } from "react";
 import './App.css'
 
 import { Layout } from "./components/common/layout/layout";
-import FriendsList from "./components/friends_list/friends_list";
 import { PopularGames } from "./components/popular_games/PopularGames";
 import Reviews from './components/reviews/Reviews'
+import AllFriends from "./components/pages/friends/friends-page";
 
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route path="PopularGames" element={<PopularGames />}/>
-        <Route path="Friends" element={<FriendsList />}/>
+        <Route path="Friends" element={<AllFriends />}/>
         <Route path="Reviews" element={<Reviews />}/>
       </Route>
     </Routes>

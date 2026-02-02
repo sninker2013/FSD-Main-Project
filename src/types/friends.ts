@@ -1,4 +1,5 @@
 export type Friends = {
     id: string,
-    userName: string
+    userName: string,
+    isFavourite: boolean
 };

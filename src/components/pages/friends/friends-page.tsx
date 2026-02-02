@@ -1,15 +1,8 @@
-import type { Friends } from "../../../types/friends";
 import FriendsList from "../../friends/friends_list/friends_list";
 
-function AllFriends(
-    {
-        friends
-    }:
-    {
-        friends: Friends[]
-    }
-) {
-    return(
+function AllFriends()
+{
+    return (
         <>
         <main>
         <h2>All Friends</h2>

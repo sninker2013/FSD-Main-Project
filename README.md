@@ -33,3 +33,31 @@ Review CSS - D
 I.1: High-Level Component - Shannon - Shannon
 
 Popular Games Component - Xavier
+
+## Sprint 2
+
+Multi-page Navigation - Shannon
+
+Navigation Interface(s) - D
+
+Shared State Across Pages - Xavier
+
+Status Component - D
+
+Feature Page - Friends - Shannon
+
+Feature Page - Reviews - D
+
+Feature Page - User Account - Xavier
+
+Form Component - Friends Page - Shannon
+
+Form Component - Reviews Page - D
+
+Form Component - User Account Page - Xavier
+
+Element Addition/Removal - Friends Page - Shannon
+
+Element Addition/Removal - Reviews - D
+
+Element Addition/Removal - User Account Page - Xavier

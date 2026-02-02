@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./friends-form.css";
 
 type FriendFormProps = {
     onSubmit: (
@@ -34,7 +35,7 @@ export function FriendForm({ onSubmit }: FriendFormProps) {
     return (
     <>
     <form onSubmit={handleSubmit}>
-    <label htmlFor="userName">User Name:
+    <label htmlFor="userName" className="friendForm">User Name:
         <input
             type="text"
             name="userName"

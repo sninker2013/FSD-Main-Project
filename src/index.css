@@ -5,15 +5,11 @@ body {
     font-family: "Space Grotesk", sans-serif
 }
 
-h1 {
+h1, h2 {
     color: #A7C2FA;
 }
 
-h2 {
-    color: #A9D66D;
-}
-
-p {
+p, label {
     color: #A9D66D;
     font-family: "Inter", sans-serif;
 }

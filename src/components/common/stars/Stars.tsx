@@ -1,5 +1,4 @@
-import "./Stars.css"
-import type { ReviewElement } from "../reviews/Reviews"
+import type { ReviewElement } from "../../../types/reviews"
 
 
 type Stars = {

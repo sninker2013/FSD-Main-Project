@@ -17,6 +17,13 @@ function App() {
         status={status}
         updateStatus={updateStatus}
         />}>
+        <Route index element={
+          <>
+          <PopularGames />
+          <FriendsList />
+          <Reviews />
+          </>
+        }/>
         <Route path="PopularGames" element={<PopularGames />}/>
         <Route path="Friends" element={<FriendsList />}/>
         <Route path="Reviews" element={<Reviews />}/>

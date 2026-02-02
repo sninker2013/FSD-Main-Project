@@ -9,11 +9,14 @@ import Reviews from './components/reviews/Reviews'
 
 
 function App() {
-  const [status, updateStatus] = useState<String>("");
+  const [status, updateStatus] = useState<string>("");
   
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
+      <Route path="/" element={<Layout 
+        status={status}
+        updateStatus={updateStatus}
+        />}>
         <Route path="PopularGames" element={<PopularGames />}/>
         <Route path="Friends" element={<FriendsList />}/>
         <Route path="Reviews" element={<Reviews />}/>

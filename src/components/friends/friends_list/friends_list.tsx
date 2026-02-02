@@ -23,7 +23,7 @@ function FriendItem({
         className={`friends ${isFavourite ? "favourite" : ""}`}
         onClick={onToggleFavourite}
     > 
-        {userName}
+        {userName} {isFavourite && "*"}
     </li>
   );
 }

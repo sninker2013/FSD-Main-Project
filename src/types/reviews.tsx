@@ -1,5 +1,5 @@
 export type Review = {
-    id: number,
+    id: string,
     value: ReviewElement
 }
 

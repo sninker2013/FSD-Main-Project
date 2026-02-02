@@ -8,9 +8,13 @@ import { PopularGames } from "./components/popular_games/PopularGames";
 import { ReviewsPage } from "./components/pages/ReviewsPage";
 import Reviews from "./components/common/reviews/reviews-list/Reviews";
 
+import type { Review } from "./types/reviews";
+import { testReviews } from "./components/common/reviews/reviewData";
+
 
 function App() {
   const [status, updateStatus] = useState<string>("");
+  const [reviews, updateReviews] = useState<Review[]>(testReviews)
   
   return (
     <Routes>
@@ -22,12 +26,17 @@ function App() {
           <>
           <PopularGames />
           <FriendsList />
-          <Reviews />
+          <Reviews reviews={reviews}/>
           </>
         }/>
         <Route path="PopularGames" element={<PopularGames />}/>
         <Route path="Friends" element={<FriendsList />}/>
-        <Route path="Reviews" element={<ReviewsPage />}/>
+        <Route 
+          path="Reviews" 
+          element={<ReviewsPage 
+            reviews={reviews}
+            updateReviews={updateReviews}
+          />}/>
       </Route>
     </Routes>
   )

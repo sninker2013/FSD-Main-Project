@@ -3,7 +3,7 @@ import type { Review } from "../../../types/reviews"
 // Mock review data for filling out the page
 export const testReviews: Review[] = [
     {
-        id: 0,
+        id: "0",
         value: {
             starRating: 5,
             reviewerName: "D Synkiw",
@@ -13,7 +13,7 @@ export const testReviews: Review[] = [
         }
     },
     {
-        id: 1,
+        id: "1",
         value: {
             starRating: 2,
             reviewerName: "Xavier",
@@ -23,7 +23,7 @@ export const testReviews: Review[] = [
         }
     },
         {
-        id: 1,
+        id: "2",
         value: {
             starRating: 1,
             reviewerName: "Shannon",

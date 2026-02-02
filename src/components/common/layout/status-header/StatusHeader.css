@@ -19,7 +19,7 @@ textarea {
     resize: none;
 }
 
-form {
+#status-form {
     display: flex;
     flex-direction: column;
     grid-column: 1 / 3;

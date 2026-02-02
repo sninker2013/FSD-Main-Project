@@ -33,6 +33,11 @@
     grid-area: rating;
 }
 
+.date {
+    grid-area: date;
+    align-content: right;
+}
+
 .review__row ul {
     padding: 0;
     margin: 0;

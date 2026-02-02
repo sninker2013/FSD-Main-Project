@@ -11,6 +11,9 @@ export function Nav() {
                 <NavLink to="/reviews">
                     Reviews
                 </NavLink>
+                <NavLink to="/friends">
+                    Friends
+                </NavLink>
             </div>
         </nav>
     )

@@ -3,7 +3,8 @@ import { useState } from "react";
 import './App.css'
 
 import { Layout } from "./components/common/layout/layout";
-import FriendsList from "./components/friends_list/friends_list";
+import AllFriends from './components/pages/friends/friends-page';
+import FriendsList from "./components/friends/friends_list/friends_list";
 import { PopularGames } from "./components/popular_games/PopularGames";
 import { ReviewsPage } from "./components/pages/ReviewsPage";
 import Reviews from "./components/common/reviews/reviews-list/Reviews";
@@ -25,7 +26,7 @@ function App() {
         <Route index element={
           <>
           <PopularGames />
-          <FriendsList />
+          <AllFriends />
           <Reviews reviews={reviews}/>
           </>
         }/>

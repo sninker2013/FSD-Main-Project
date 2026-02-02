@@ -2,6 +2,8 @@ import { useState } from "react";
 import "./friends_list.css"
 import type { Friends } from "../../../types/friends";
 import { FriendForm } from "../friends_form/friends_form";
+import starIcon from "./assets/star-transparent.png";
+
 
 const testFriends: Friends[] = [
     {id: "101", userName: "timdrake", isFavourite: false},
@@ -21,9 +23,12 @@ function FriendItem({
   return (
     <li
         className={`friends ${isFavourite ? "favourite" : ""}`}
-        onClick={onToggleFavourite}
     > 
-        {userName} {isFavourite && "*"}
+        {isFavourite && <img src={starIcon} alt="star" style={{ width: "16px", marginLeft: "5px" }} />}
+        {userName}
+        <button id="favouriteButton" onClick={onToggleFavourite} style={{ marginLeft: "10px" }}>
+                {isFavourite ? "Remove" : "Favourite"}
+            </button>
     </li>
   );
 }

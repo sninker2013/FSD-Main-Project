@@ -24,7 +24,7 @@ function FriendItem({
         onClick={onToggleFavourite}
     > 
         {userName}
-    </li>;
+    </li>
   );
 }
 
@@ -68,7 +68,6 @@ function DisplayFriendsList({
                     : friend
             )
         );
-    };
 
     return (
         <section className="friendsList">
@@ -78,7 +77,7 @@ function DisplayFriendsList({
                         <FriendItem
                             key={friend.id}
                             userName={friend.userName}
-                            favourite={friend.isFavourite}
+                            isFavourite={friend.isFavourite}
                             onToggleFavourite={() =>
                                 handleFriendsFavouriteClick(friend)
                             }
@@ -87,5 +86,6 @@ function DisplayFriendsList({
                 </ul>
         </section>
     );
+}
 
 export default FriendsList

@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
-import { Header } from "./header/Header";
 import { Footer } from "./footer/Footer";
 import type React from "react";
+import { StatusHeader } from "./status-header/StatusHeader";
 
 export function Layout({
         status,
@@ -13,7 +13,7 @@ export function Layout({
     }) {
     return (
         <>
-            <Header 
+            <StatusHeader
                 status={status}
                 updateStatus={updateStatus}
             />

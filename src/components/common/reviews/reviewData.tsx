@@ -1,24 +1,9 @@
-import "./Reviews.css";
-import Stars from "../stars/Stars";
+import type { Review } from "../../../types/reviews"
 
-//sample data
-type Review = {
-    id: number,
-    value: ReviewElement
-}
-
-export interface ReviewElement {
-    starRating: 1|2|3|4|5,
-    reviewerName: string,
-    reviewerPfp: string,
-    reviewDesc: string,
-    reviewDate: Date,
-}
-
-
-const testReviews: Review[] = [
+// Mock review data for filling out the page
+export const testReviews: Review[] = [
     {
-        id: 0,
+        id: "0",
         value: {
             starRating: 5,
             reviewerName: "D Synkiw",
@@ -28,7 +13,7 @@ const testReviews: Review[] = [
         }
     },
     {
-        id: 1,
+        id: "1",
         value: {
             starRating: 2,
             reviewerName: "Xavier",
@@ -38,7 +23,7 @@ const testReviews: Review[] = [
         }
     },
         {
-        id: 1,
+        id: "2",
         value: {
             starRating: 1,
             reviewerName: "Shannon",
@@ -48,59 +33,3 @@ const testReviews: Review[] = [
         }
     },
 ]
-
-
-function Reviews () {
-    return (
-        <>
-            <ReviewsDisplay reviews={testReviews} />
-        </>
-    )
-}
-
-function ReviewsDisplay({reviews}: {reviews: Review[]}) {
-    const reviewItems: React.JSX.Element[] = [];
-
-    reviews.forEach((review) => {
-        reviewItems.push(<ReviewItem
-            review={review.value}
-            key={review.id}
-            />
-        )
-    })
-
-    return(
-        <section className="reviews">
-            <h2>Reviews</h2>
-            <div className="reviews__list">
-                {reviewItems}
-            </div>
-        </section>
-    )
-}
-
-function ReviewItem({review}: {review: ReviewElement}) {
-    const formattedDate = review.reviewDate.toLocaleDateString("en-US", {
-  year: "numeric",
-  month: "long",
-  day: "numeric"
-});
-
-    return(
-        <section className="review">
-                <section className="profile">
-                    <img src={review.reviewerPfp} alt="reviewer profile picture" style={{width: "56px", height: "56px"}}/>
-                    <p>{review.reviewerName}</p>
-                </section>
-                <section className="review__row">
-                <Stars {...review}/>
-                <p>{formattedDate}</p>
-                </section>
-                <section className="review__desc">
-                    <p>{review.reviewDesc}</p>
-                </section>
-        </section>
-    )
-}
-
-export default Reviews

@@ -14,6 +14,9 @@ export function Nav() {
                 <NavLink to="/profile">
                     Profile
                 </NavLink>
+                <NavLink to="/friends">
+                    Friends
+                </NavLink>
             </div>
         </nav>
     )

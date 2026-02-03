@@ -36,3 +36,9 @@
     background-color: #72b7bd;
     color: #2C3732;
 }
+
+#favouriteButton {
+    background-color: #A9D66D;
+    color: #6d1f48;
+    border-radius: 8px;
+}

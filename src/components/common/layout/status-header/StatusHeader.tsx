@@ -56,7 +56,7 @@ function SetStatus({
     const [lockStatus, lockUnlock] = useState<boolean>(true)
     
     return (
-    <form>
+    <form id="status-form">
         <textarea 
             placeholder="Set your status!"
             maxLength={128}

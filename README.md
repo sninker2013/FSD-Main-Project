@@ -61,3 +61,5 @@ Element Addition/Removal - Friends Page - Shannon
 Element Addition/Removal - Reviews - D
 
 Element Addition/Removal - User Account Page - Xavier
+
+Update README.md for Sprint 2 - Shannon

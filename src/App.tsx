@@ -6,16 +6,29 @@ import { Layout } from "./components/common/layout/layout";
 import AllFriends from './components/pages/friends/friends-page';
 import FriendsList from "./components/friends/friends_list/friends_list";
 import { PopularGames } from "./components/popular_games/PopularGames";
+
+
+import { UserProfilePage } from "./components/pages/UserProfilePage";
+import type { UserProfileType, Game } from "./components/common/user-profile/profileData";
+import { testProfile, testGames } from "./components/common/user-profile/profileData";
+
 import { ReviewsPage } from "./components/pages/ReviewsPage";
 import Reviews from "./components/common/reviews/reviews-list/Reviews";
-
 import type { Review } from "./types/reviews";
 import { testReviews } from "./components/common/reviews/reviewData";
 
 
+
 function App() {
   const [status, updateStatus] = useState<string>("");
+
+  const [profile, setProfile] = useState<UserProfileType>(testProfile);
+  const [games, setGames] = useState<Game[]>(testGames);
+
+  const [newGameTitle, setNewGameTitle] = useState("");
+  
   const [reviews, updateReviews] = useState<Review[]>(testReviews)
+
   
   return (
     <Routes>
@@ -37,6 +50,16 @@ function App() {
           element={<ReviewsPage 
             reviews={reviews}
             updateReviews={updateReviews}
+          />}/>
+        <Route 
+          path="Profile" 
+          element={<UserProfilePage 
+            profile={profile}
+            setProfile={setProfile}
+            games={games}
+            updateGames={setGames}
+            newGameTitle={newGameTitle}
+            setNewGameTitle={setNewGameTitle}
           />}/>
       </Route>
     </Routes>

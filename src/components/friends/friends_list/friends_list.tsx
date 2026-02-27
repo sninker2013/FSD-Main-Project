@@ -37,6 +37,7 @@ function FriendItem({
         <button id="favouriteButton" onClick={onToggleFavourite} style={{ marginLeft: "10px" }}>
                 {isFavourite ? "Remove" : "Favourite"}
             </button>
+        <button onClick={onDelete} style={{ marginLeft: "5px" }}>Delete</button>
     </li>
   );
 }
@@ -104,12 +105,6 @@ function DisplayFriendsList({
                         />
                     ))}
                 </ul>
-                <button
-                    onClick={onDelete}
-                    style={{ marginLeft: "10px" }}
-                >
-                    Delete
-                </button>
         </section>
     );
 }

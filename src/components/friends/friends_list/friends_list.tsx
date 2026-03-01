@@ -4,6 +4,8 @@ import type { Friends } from "../../../types/friends";
 import { FriendForm } from "../friends_form/friends_form";
 import starIcon from "./assets/star-transparent.png";
 
+import { testFriends } from "../../../data/friendsData";
+
 import {
     initializeFriends,
     getFriends,
@@ -11,12 +13,6 @@ import {
     updateFriendFavourite,
     deleteFriend
 } from "../../../repository/friendsRepo";
-
-const testFriends: Friends[] = [
-    {id: "101", userName: "timdrake", isFavourite: false},
-    {id: "102", userName: "donnatroy", isFavourite: false},
-    {id: "103", userName: "peterparker", isFavourite: false}
-]
 
 function FriendItem({ 
     userName,

@@ -64,3 +64,50 @@ export async function removeGame(id: number): Promise<boolean> {
     }
 }
 
+/**
+ * Toggle the featured status of a game
+ * @param id - The game ID whose featured status should be toggled
+ * @returns Promise<Game> - The updated game object
+ */
+export async function toggleFeaturedGame(id: number): Promise<Game> {
+    try {
+        const game = await fetchGameById(id);
+        if (!game) {
+            throw new Error(`Game with ID ${id} not found`);
+        }
+        
+        const updatedGame: Game = {
+            ...game,
+            isFeatured: !game.isFeatured
+        };
+        return updatedGame;
+    } catch (error) {
+        throw new Error(`Failed to toggle featured status for game ${id}: ${error}`);
+    }
+}
+
+/**
+ * Update a game's properties
+ * @param id - The game ID to update
+ * @param updates - Partial game object with properties to update
+ * @returns Promise<Game> - The updated game object
+ */
+export async function updateGame(
+    id: number,
+    updates: Partial<Omit<Game, 'id'>>
+): Promise<Game> {
+    try {
+        const game = await fetchGameById(id);
+        if (!game) {
+            throw new Error(`Game with ID ${id} not found`);
+        }
+        
+        const updatedGame: Game = {
+            ...game,
+            ...updates
+        };
+        return updatedGame;
+    } catch (error) {
+        throw new Error(`Failed to update game with ID ${id}: ${error}`);
+    }
+}

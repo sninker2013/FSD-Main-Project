@@ -55,3 +55,15 @@ export async function toggleFeaturedGame(id: number): Promise<Game> {
     return GameRepo.toggleFeaturedGame(id);
 }
 
+/**
+ * Update a game's properties
+ * @param id - The game ID to update
+ * @param updates - Partial game object with properties to update
+ * @returns Promise<Game> - The updated game
+ */
+export async function updateGame(
+    id: number,
+    updates: Partial<Omit<Game, 'id'>>
+): Promise<Game> {
+    return GameRepo.updateGame(id, updates);
+}

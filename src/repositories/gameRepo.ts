@@ -1,4 +1,4 @@
-import { Game } from "../types/game";
+import type { Game } from "../types/game";
 import { sampleGames } from "../data/gameData";
 
 /**

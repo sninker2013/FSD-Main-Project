@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import * as GameService from "../services/gameService";
-import { Game } from "../types/game";
+import type { Game } from "../types/game";
 
 /**
  * Custom hook for managing game data fetching, filtering, and state management.

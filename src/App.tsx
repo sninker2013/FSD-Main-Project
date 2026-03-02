@@ -13,9 +13,9 @@ import type { UserProfileType, Game } from "./components/common/user-profile/pro
 import { testProfile, testGames } from "./components/common/user-profile/profileData";
 
 import { ReviewsPage } from "./components/pages/ReviewsPage";
-import Reviews from "./components/common/reviews/reviews-list/Reviews";
+import Reviews from "./components/reviews/reviews-list/Reviews";
 import type { Review } from "./types/reviews";
-import { testReviews } from "./components/common/reviews/reviewData";
+import * as reviewRepo from "./apis/reviews/reviewRepo"
 
 
 
@@ -27,7 +27,7 @@ function App() {
 
   const [newGameTitle, setNewGameTitle] = useState("");
   
-  const [reviews, updateReviews] = useState<Review[]>(testReviews)
+  const [reviews, updateReviews] = useState<Review[]>(reviewRepo.getAllReviews)
 
   
   return (

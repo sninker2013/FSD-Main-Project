@@ -1,6 +1,7 @@
-import { ReviewForm } from "../common/reviews/review-form/ReviewForm";
-import Reviews from "../common/reviews/reviews-list/Reviews";
+import { ReviewForm } from "../reviews/review-form/ReviewForm";
+import Reviews from "../reviews/reviews-list/Reviews";
 import type { Review } from "../../types/reviews";
+import * as reviewRepo from "../../apis/reviews/reviewRepo"
 
 export function ReviewsPage ({
     reviews,
@@ -14,17 +15,7 @@ export function ReviewsPage ({
         starRating: 1|2|3|4|5,
         reviewDesc: string,
     ) => {
-        const newReview: Review = {
-            id: crypto.randomUUID(),
-            value: {
-                starRating: starRating,
-                reviewerName: "D Synkiw",
-                reviewerPfp: "/images/profilePics/silksong.png",
-                reviewDesc: reviewDesc,
-                reviewDate: new Date(Date.now())
-            }
-        };
-        updateReviews(oldState => [newReview, ...oldState]);
+        updateReviews(oldState => [reviewRepo.createReview(starRating, reviewDesc), ...oldState]);
     }
 
     return (

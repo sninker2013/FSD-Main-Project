@@ -45,3 +45,13 @@ export async function addGame(game: Omit<Game, 'id'>): Promise<Game> {
 export async function removeGame(id: number): Promise<boolean> {
     return GameRepo.removeGame(id);
 }
+
+/**
+ * Toggle a game's featured status
+ * @param id - The game ID to toggle
+ * @returns Promise<Game> - The updated game
+ */
+export async function toggleFeaturedGame(id: number): Promise<Game> {
+    return GameRepo.toggleFeaturedGame(id);
+}
+

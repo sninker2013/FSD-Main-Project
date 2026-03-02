@@ -12,10 +12,9 @@ import type { Game } from "../types/game";
  * - Providing a method to toggle the featured status of a game
  * 
  * @param dependencies - Array of dependencies that trigger a re-fetch when changed.
- *  Pass an empty array [] if you only want to fetch once on component mount.
  * @param filterFn - Optional filter function that receives a Game object and returns
  *  true if the game should be included, false otherwise. If not provided, all games
- *  are returned. Example: (game) => game.isFeatured === true
+ *  are returned.
  * 
  * @returns Object containing:
  *  - games: Game[] - The filtered array of games from the service
@@ -74,8 +73,7 @@ export function useGames(
 
     /**
      * Effect hook that runs fetchGames on component mount and whenever any
-     * dependency in the dependencies array changes. This ensures the games list
-     * is always up-to-date when external state (like user selection) changes.
+     * dependency in the dependencies array changes.
      */
     useEffect(() => {
         fetchGames();

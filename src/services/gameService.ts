@@ -23,3 +23,17 @@ export async function fetchGameById(id: number): Promise<Game | null> {
     return GameRepo.fetchGameById(id);
 }
 
+/**
+ * Add a new game with validation
+ * @param game - The game object to add
+ * @returns Promise<Game> - The newly created game
+ * @throws Error if validation fails
+ */
+export async function addGame(game: Omit<Game, 'id'>): Promise<Game> {
+    if (!game.title || game.title.trim() === "") {
+        throw new Error("Game title is required");
+    }
+    
+    return GameRepo.addGame(game);
+}
+

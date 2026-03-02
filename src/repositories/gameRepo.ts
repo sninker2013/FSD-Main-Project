@@ -3,7 +3,6 @@ import { sampleGames } from "../data/gameData";
 
 /**
  * Game Repository - Handles all data access for games.
- * This is where actual CRUD operations would interact with a database or API.
  */
 
 /**
@@ -39,7 +38,6 @@ export async function fetchGameById(id: number): Promise<Game | null> {
  */
 export async function addGame(game: Omit<Game, 'id'>): Promise<Game> {
     try {
-        // In a real application, this would POST to an API
         const games = await fetchGames();
         const newGame: Game = {
             ...game,
@@ -48,6 +46,21 @@ export async function addGame(game: Omit<Game, 'id'>): Promise<Game> {
         return newGame;
     } catch (error) {
         throw new Error(`Failed to add game: ${error}`);
+    }
+}
+
+/**
+ * Remove a game by ID
+ * @param id - The game ID to remove
+ * @returns Promise<boolean> - True if the game was removed, false if not found
+ */
+export async function removeGame(id: number): Promise<boolean> {
+    try {
+        const games = await fetchGames();
+        const gameExists = games.some(game => game.id === id);
+        return gameExists;
+    } catch (error) {
+        throw new Error(`Failed to remove game with ID ${id}: ${error}`);
     }
 }
 

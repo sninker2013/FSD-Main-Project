@@ -1,11 +1,9 @@
 import "./Reviews.css";
 import Stars from "../../common/stars/Stars";
-import type { Review } from "../../../types/reviews";
 import type { ReviewElement } from "../../../types/reviews";
+import type { Review } from "../../../types/reviews";
 
-
-function Reviews ({reviews}:{reviews: Review[],}) {
- 
+function Reviews ({ reviews }: { reviews: Review[] }) {
     return (
         <>
             <ReviewsDisplay reviews={reviews}/>
@@ -13,7 +11,7 @@ function Reviews ({reviews}:{reviews: Review[],}) {
     )
 }
 
-function ReviewsDisplay({ reviews } : { reviews: Review[] }) {
+function ReviewsDisplay({ reviews }: { reviews: Review[] }) {
     const reviewItems: React.JSX.Element[] = [];
 
     reviews.forEach((review) => {

@@ -14,8 +14,7 @@ import { testProfile, testGames } from "./components/common/user-profile/profile
 
 import { ReviewsPage } from "./components/pages/ReviewsPage";
 import Reviews from "./components/reviews/reviews-list/Reviews";
-import type { Review } from "./types/reviews";
-import * as reviewRepo from "./apis/reviews/reviewRepo"
+import { useReviews } from "./hooks/useReviews";
 
 
 
@@ -26,8 +25,9 @@ function App() {
   const [games, setGames] = useState<Game[]>(testGames);
 
   const [newGameTitle, setNewGameTitle] = useState("");
+
+  const { reviews, createReview } = useReviews()
   
-  const [reviews, updateReviews] = useState<Review[]>(reviewRepo.getAllReviews)
 
   
   return (
@@ -47,10 +47,7 @@ function App() {
         <Route path="Friends" element={<FriendsList />}/>
         <Route 
           path="Reviews" 
-          element={<ReviewsPage 
-            reviews={reviews}
-            updateReviews={updateReviews}
-          />}/>
+          element={<ReviewsPage reviews={reviews} createReview={createReview}/>}/>
         <Route 
           path="Profile" 
           element={<UserProfilePage 

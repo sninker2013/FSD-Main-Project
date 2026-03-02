@@ -1,29 +1,27 @@
 import { useState } from "react"
 import "./ReviewForm.css"
+import { validateForm } from "../../../services/reviewService";
 
 type ReviewFormProps = {
     onSubmit: (
-        starRating: 1|2|3|4|5,
+        starRating: 1|2|3|4|5|undefined,
         reviewDesc: string
     ) => void;
 };
 
 export function ReviewForm ({ onSubmit }: ReviewFormProps) {
-    const [starRating, setStarRating] = useState<1|2|3|4|5>();
+    const [starRating, setStarRating] = useState<1|2|3|4|5|undefined>();
     const [reviewDesc, setReviewDesc] = useState<string>("")
     const [error, setError] = useState<string>();
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
-        if (!starRating) {
-            setError("Please select a star rating");
-            return;
-        } else if (reviewDesc.trim().length === 0){
-            setError("Please enter a review");
-        } else {
+        const { valid, error } = await validateForm(starRating, reviewDesc)
+        if (valid) {
             setError("")
             onSubmit(starRating, reviewDesc)
+        } else {
+            setError(error)
         }
     }
 

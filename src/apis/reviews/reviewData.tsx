@@ -1,7 +1,7 @@
-import type { Review } from "../../../types/reviews"
+import type { Review } from "../../types/reviews"
 
 // Mock review data for filling out the page
-export const testReviews: Review[] = [
+export const reviewData: Review[] = [
     {
         id: "0",
         value: {

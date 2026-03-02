@@ -6,3 +6,11 @@ import { Game } from "../types/game";
  * Delegates all data access to the GameRepository.
  */
 
+/**
+ * Fetch all games
+ * @returns Promise<Game[]> - Array of all games
+ */
+export async function fetchGames(): Promise<Game[]> {
+    return GameRepo.fetchGames();
+}
+

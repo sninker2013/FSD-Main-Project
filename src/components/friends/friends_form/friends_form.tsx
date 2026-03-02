@@ -1,4 +1,7 @@
 import { useState } from "react";
+
+import useFriendsInput from "../../../hooks/useFriendsInput";
+
 import "./friends-form.css";
 
 type FriendFormProps = {
@@ -8,7 +11,7 @@ type FriendFormProps = {
 };
 
 export function FriendForm({ onSubmit }: FriendFormProps) {
-    const [userName, setUserName] = useState("");
+    const userName = useFriendsInput(validateFirstName);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
 

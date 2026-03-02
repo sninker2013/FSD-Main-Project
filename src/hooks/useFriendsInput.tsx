@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const useFormInput = (validateValue: (value: string) => { isValid: boolean; errors: string[] }) => {
+const useFriendsInput = (validateValue: (value: string) => { isValid: boolean; errors: string[] }) => {
     const [enteredValue, setEnteredValue] = useState("");
     const [errors, setErrors] = useState<string[]>([]);
 
@@ -28,4 +28,4 @@ const useFormInput = (validateValue: (value: string) => { isValid: boolean; erro
     };
 };
 
-export default useFormInput;
+export default useFriendsInput;

@@ -37,3 +37,11 @@ export async function addGame(game: Omit<Game, 'id'>): Promise<Game> {
     return GameRepo.addGame(game);
 }
 
+/**
+ * Remove a game
+ * @param id - The game ID to remove
+ * @returns Promise<boolean> - True if removed, false if not found
+ */
+export async function removeGame(id: number): Promise<boolean> {
+    return GameRepo.removeGame(id);
+}

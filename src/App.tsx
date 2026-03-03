@@ -13,9 +13,8 @@ import type { UserProfileType, Game } from "./components/common/user-profile/pro
 import { testProfile, testGames } from "./components/common/user-profile/profileData";
 
 import { ReviewsPage } from "./components/pages/ReviewsPage";
-import Reviews from "./components/common/reviews/reviews-list/Reviews";
-import type { Review } from "./types/reviews";
-import { testReviews } from "./components/common/reviews/reviewData";
+import Reviews from "./components/reviews/reviews-list/Reviews";
+import { useReviews } from "./hooks/useReviews";
 
 
 
@@ -25,8 +24,9 @@ function App() {
   const [games, setGames] = useState<Game[]>(testGames);
 
   const [newGameTitle, setNewGameTitle] = useState("");
+
+  const { reviews, createReview } = useReviews()
   
-  const [reviews, updateReviews] = useState<Review[]>(testReviews)
 
   
   return (
@@ -43,10 +43,7 @@ function App() {
         <Route path="Friends" element={<FriendsList />}/>
         <Route 
           path="Reviews" 
-          element={<ReviewsPage 
-            reviews={reviews}
-            updateReviews={updateReviews}
-          />}/>
+          element={<ReviewsPage reviews={reviews} createReview={createReview}/>}/>
         <Route 
           path="Profile" 
           element={<UserProfilePage 

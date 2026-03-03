@@ -1,6 +1,16 @@
 import "./PopularGames.css"
 import { useGames } from "../../hooks/useGames";
 
+/**
+ * PopularGames Component
+ * 
+ * Displays a horizontally scrollable list of featured games as poster images.
+ * Fetches games from the GameService and filters to show only games marked as featured.
+ * 
+ * @component
+ * @returns {React.ReactNode} A section containing a grid of featured game posters,
+ *                            or an error message if game fetching fails.
+ */
 export function PopularGames() {
     const { games, error } = useGames([], (game) => game.isFeatured === true);
 

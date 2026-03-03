@@ -14,38 +14,31 @@ import type { UserProfileType, Game } from "./components/common/user-profile/pro
 import { testProfile, testGames } from "./components/common/user-profile/profileData";
 
 import { ReviewsPage } from "./components/pages/ReviewsPage";
-import type { Review } from "./types/reviews";
-import { testReviews } from "./components/common/reviews/reviewData";
+import { useReviews } from "./hooks/useReviews";
+
 import { SearchResult } from "./components/pages/search-results";
 
 
-
 function App() {
-  const [status, updateStatus] = useState<string>("");
 
   const [profile, setProfile] = useState<UserProfileType>(testProfile);
   const [games, setGames] = useState<Game[]>(testGames);
 
   const [newGameTitle, setNewGameTitle] = useState("");
+
+  const { reviews, createReview } = useReviews()
   
-  const [reviews, updateReviews] = useState<Review[]>(testReviews)
 
   
   return (
     <Routes>
-      <Route path="/" element={<Layout 
-        status={status}
-        updateStatus={updateStatus}
-        />}>
+      <Route path="/" element={<Layout />}>
         <Route index element={<Landing />}/>
         <Route path="PopularGames" element={<PopularGames />}/>
         <Route path="Friends" element={<FriendsList />}/>
         <Route 
           path="Reviews" 
-          element={<ReviewsPage 
-            reviews={reviews}
-            updateReviews={updateReviews}
-          />}/>
+          element={<ReviewsPage reviews={reviews} createReview={createReview}/>}/>
         <Route 
           path="Profile" 
           element={<UserProfilePage 

@@ -1,24 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./friends_list.css"
 import type { Friends } from "../../../types/friends";
 import { FriendForm } from "../friends_form/friends_form";
 import starIcon from "./assets/star-transparent.png";
 
+import { testFriends } from "../../../data/friendsData";
 
-const testFriends: Friends[] = [
-    {id: "101", userName: "timdrake", isFavourite: false},
-    {id: "102", userName: "donnatroy", isFavourite: false},
-    {id: "103", userName: "peterparker", isFavourite: false}
-]
+import {
+    initializeFriends,
+    getFriends,
+    addFriend,
+    updateFriendFavourite,
+    deleteFriend
+} from "../../../repository/friendsRepo";
 
 function FriendItem({ 
     userName,
     isFavourite,
-    onToggleFavourite
+    onToggleFavourite,
+    onDelete
  }: { 
     userName: string;
     isFavourite: boolean;
     onToggleFavourite: () => void;
+    onDelete: () => void;
  }) {
   return (
     <li
@@ -29,29 +34,40 @@ function FriendItem({
         <button id="favouriteButton" onClick={onToggleFavourite} style={{ marginLeft: "10px" }}>
                 {isFavourite ? "Remove" : "Favourite"}
             </button>
+        <button id="deleteButton" onClick={onDelete} style={{ marginLeft: "5px" }}>Delete</button>
     </li>
   );
 }
 
 export function FriendsList () {
-    const [friends, setFriends] = useState<Friends[]>(
-        testFriends
-    );
+    const [friends, setFriends] = useState<Friends[]>([]);
+
+    useEffect(() => {
+        initializeFriends(testFriends);
+        setFriends(getFriends());
+    }, []);
 
     const handleAddFriend = (userName: string) => {
-        const newFriend: Friends = {
-            id: crypto.randomUUID(),
-            userName,
-            isFavourite: false
-        };
-        setFriends(prev => [...prev, newFriend])
+        addFriend(userName);
+        setFriends(getFriends());
+    };
+
+    const handleToggleFavourite = (friendId: string) => {
+        updateFriendFavourite(friendId);
+        setFriends(getFriends());
+    }
+
+    const handleDelete = (friendId: string) => {
+        deleteFriend(friendId);
+        setFriends(getFriends());
     };
 
     return (
         <>
             <DisplayFriendsList 
                 friendsList={friends} 
-                updateFavourite={setFriends}
+                onToggleFavourite={handleToggleFavourite}
+                onDelete={handleDelete}
             />
             <FriendForm onSubmit={handleAddFriend}/>
         </>
@@ -60,19 +76,13 @@ export function FriendsList () {
 
 function DisplayFriendsList({
     friendsList,
-    updateFavourite
+    onToggleFavourite,
+    onDelete
 }: {
     friendsList: Friends[];
-    updateFavourite: React.Dispatch<React.SetStateAction<Friends[]>>
+    onToggleFavourite: (id: string) => void;
+    onDelete: (id: string) => void;
 }) {
-    const handleFriendsFavouriteClick = (friendClicked: Friends): void =>
-        updateFavourite(prev => 
-            prev.map(friend => 
-                friend.id === friendClicked.id
-                    ? { ...friend, isFavourite: !friend.isFavourite }
-                    : friend
-            )
-        );
 
     return (
         <section className="friendsList">
@@ -84,7 +94,10 @@ function DisplayFriendsList({
                             userName={friend.userName}
                             isFavourite={friend.isFavourite}
                             onToggleFavourite={() =>
-                                handleFriendsFavouriteClick(friend)
+                                onToggleFavourite(friend.id)
+                            }
+                            onDelete={() =>
+                                onDelete(friend.id)
                             }
                         />
                     ))}

@@ -30,7 +30,7 @@ textarea {
     margin-bottom: 10px;
 }
 
-textarea:disabled {
+textarea:read-only {
     background-color: #6d1f48;
     border: 2px solid #46152f;
     opacity: 1;

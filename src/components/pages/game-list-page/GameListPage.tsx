@@ -2,7 +2,7 @@ import { useGames } from "../../../hooks/useGames";
 import type { Game } from "../../../types/game";
 
 type GameListPageProps = {
-    dependencies?: unknown[];
+    dependencies?: any[];
     filterFn?: ((game: Game) => boolean) | null;
 };
 

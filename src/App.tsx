@@ -20,7 +20,6 @@ import { testReviews } from "./components/common/reviews/reviewData";
 
 
 function App() {
-  const [status, updateStatus] = useState<string>("");
 
   const [profile, setProfile] = useState<UserProfileType>(testProfile);
   const [games, setGames] = useState<Game[]>(testGames);
@@ -32,10 +31,7 @@ function App() {
   
   return (
     <Routes>
-      <Route path="/" element={<Layout 
-        status={status}
-        updateStatus={updateStatus}
-        />}>
+      <Route path="/" element={<Layout />}>
         <Route index element={
           <>
           <PopularGames />

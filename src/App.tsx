@@ -3,7 +3,8 @@ import { useState } from "react";
 import './App.css'
 
 import { Layout } from "./components/common/layout/layout";
-import AllFriends from './components/pages/friends/friends-page';
+import { Landing } from "./components/pages/landing/landing";
+
 import FriendsList from "./components/friends/friends_list/friends_list";
 import { PopularGames } from "./components/popular_games/PopularGames";
 
@@ -13,9 +14,9 @@ import type { UserProfileType, Game } from "./components/common/user-profile/pro
 import { testProfile, testGames } from "./components/common/user-profile/profileData";
 
 import { ReviewsPage } from "./components/pages/ReviewsPage";
-import Reviews from "./components/reviews/reviews-list/Reviews";
 import { useReviews } from "./hooks/useReviews";
 
+import { SearchResult } from "./components/pages/search-results";
 
 
 function App() {
@@ -32,13 +33,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route index element={
-          <>
-          <PopularGames />
-          <AllFriends />
-          <Reviews reviews={reviews}/>
-          </>
-        }/>
+        <Route index element={<Landing />}/>
         <Route path="PopularGames" element={<PopularGames />}/>
         <Route path="Friends" element={<FriendsList />}/>
         <Route 
@@ -54,6 +49,8 @@ function App() {
             newGameTitle={newGameTitle}
             setNewGameTitle={setNewGameTitle}
           />}/>
+          {// new path to handle searching for games
+          }<Route path="games/search" element={<SearchResult/>}/>
       </Route>
     </Routes>
   )

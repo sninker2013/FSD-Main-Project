@@ -4,7 +4,6 @@
     justify-content: space-between;
     align-items: center;
     width: 85%;
-    margin-left: 15%;
 }
 
 .status {
@@ -31,9 +30,13 @@ textarea {
     margin-bottom: 10px;
 }
 
-textarea:disabled {
+textarea:read-only {
     background-color: #6d1f48;
     border: 2px solid #46152f;
     opacity: 1;
     color: #A9D66D
+}
+
+.search-form input {
+    margin: 0 2px;
 }

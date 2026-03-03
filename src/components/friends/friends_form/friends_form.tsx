@@ -1,4 +1,6 @@
 import { useState } from "react";
+import useFriendsInput from "../../../hooks/useFriendsInput";
+import { validateUserName } from "../../../services/friendsService";
 import "./friends-form.css";
 
 type FriendFormProps = {
@@ -8,28 +10,24 @@ type FriendFormProps = {
 };
 
 export function FriendForm({ onSubmit }: FriendFormProps) {
-    const [userName, setUserName] = useState("");
-    const [error, setError] = useState("");
+    const userName = useFriendsInput(validateUserName);
     const [success, setSuccess] = useState("");
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        if ( !userName ) {
-            setError("Field cannot be empty");
-            setSuccess("")
+        const userNameValid = userName.validate();
+
+        if (!userNameValid) {
+            setSuccess("");
             return;
-        } else if (userName.trim().length < 3 || userName.trim().length < 3) {
-            setError("User name must be at least 3 characters");
-            setSuccess("")
-            return;
-        } else {
-            onSubmit(userName);
-            setError("");
-            setSuccess("Form is valid!");
-            setUserName("");
         }
-    
+
+        onSubmit(userName.value);
+
+        setSuccess("Form is valid!");
+        userName.inputReset();
+
     };
 
     return (
@@ -40,13 +38,16 @@ export function FriendForm({ onSubmit }: FriendFormProps) {
             type="text"
             name="userName"
             id="userName"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
+            value={userName.value}
+            onChange={userName.valueChangeHandler}
         />
     </label>
+    {userName.errors.map((err, i) => (
+        <p key={i} style={{ color: "red"}}>{err}</p>
+    ))}
+
     <input type="submit"/>
     </form>
-    {error && <p style={{ color: "red"}}>{error}</p>}
     {success && <p style={{ color: "green" }}>{success}</p>}
     </>
     );

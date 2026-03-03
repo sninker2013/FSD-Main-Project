@@ -63,3 +63,37 @@ Element Addition/Removal - Reviews - D
 Element Addition/Removal - User Account Page - Xavier
 
 Update README.md for Sprint 2 - Shannon
+
+## Sprint 3
+
+Hook - useGame - Xavier
+
+Hook - useSearch D / Xavier
+
+Service - gameService - Xavier
+
+Service - searchService - Shannon / D
+
+Shared Page State Refactor - D
+
+Repository - gameRepo - Xavier
+
+Repository - friendsRepo - Shannon
+
+Repository - Reviews - D
+
+Test Data - friendsData - Shannon
+
+Test Data - gameData - Xavier
+
+Test Data - Reviews - D
+
+Refactored Component - PopularGame - Xavier
+
+Refactored Component - Reviews - D
+
+Refactored Component - Friends - Shannon
+
+Architectural Layout documents - Xavier, D, Shannon
+
+Update README.md for Sprint 3 - Xavier

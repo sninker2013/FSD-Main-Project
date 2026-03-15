@@ -8,6 +8,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTFRES_PASSWORD: postgres
+      POSTGRES_DB: gamestars_db
     ports:
       - "5433:5432"
     volumes:

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import useFriendsInput from "../../../hooks/useFriendsInput";
-import { validateUserName } from "../../../services/friendsService";
 import "./friends-form.css";
 
 type FriendFormProps = {
@@ -9,8 +8,8 @@ type FriendFormProps = {
     ) => void;
 };
 
-export function FriendForm({ onSubmit }: FriendFormProps) {
-    const userName = useFriendsInput(validateUserName);
+export function FriendForm({ onSubmit }: FriendFormProps) { 
+    const userName = useFriendsInput();
     const [success, setSuccess] = useState("");
 
     const handleSubmit = (e: React.FormEvent) => {

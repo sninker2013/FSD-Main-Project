@@ -1,4 +1,4 @@
-import type { ReviewElement } from "../../../types/reviews"
+import type { ReviewElement } from "../../../../../../shared/types/reviews"
 
 
 type Stars = {

@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router-dom";
-import type { Game } from "../../types/game";
+import type { Game } from "../../../../../shared/types/game";
 import { GameListPage } from "./game-list-page/GameListPage";
 
 /**

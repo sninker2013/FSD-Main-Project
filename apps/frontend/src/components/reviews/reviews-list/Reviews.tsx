@@ -1,7 +1,7 @@
 import "./Reviews.css";
 import Stars from "../../common/stars/Stars";
-import type { ReviewElement } from "../../../types/reviews";
-import type { Review } from "../../../types/reviews";
+import type { ReviewElement } from "../../../../../../shared/types/reviews";
+import type { Review } from "../../../../../../shared/types/reviews";
 
 function Reviews ({ reviews }: { reviews: Review[] }) {
     return (

@@ -1,4 +1,4 @@
-import type { Review } from "../../types/reviews"
+import type { Review } from "../../../../../shared/types/reviews"
 
 // Mock review data for filling out the page
 export const reviewData: Review[] = [

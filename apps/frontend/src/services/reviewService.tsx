@@ -1,5 +1,5 @@
 import * as ReviewRepo from "../apis/reviews/reviewRepo"
-import type { Review } from "../types/reviews";
+import type { Review } from "../../../../shared/types/reviews";
 
 /**
  * Any validation surrounding reviews happens here, this includes validation for when we are using external data, as well as validating user data from a form.

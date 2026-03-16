@@ -1,4 +1,4 @@
-import type { Game } from "../../types/game";
+import type { Game } from "../../../../../shared/types/game";
 
 export const sampleGames: Game[] = [
     {

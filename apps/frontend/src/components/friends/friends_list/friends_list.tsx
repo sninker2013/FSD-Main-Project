@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "./friends_list.css"
-import type { Friends } from "../../../types/friends";
+import type { Friends } from "../../../../../../shared/types/friends";
 import { FriendForm } from "../friends_form/friends_form";
 import starIcon from "./assets/star-transparent.png";
 

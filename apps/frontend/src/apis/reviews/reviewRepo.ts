@@ -1,4 +1,4 @@
-import type { Review } from "../../types/reviews";
+import type { Review } from "../../../../../shared/types/reviews";
 import { reviewData } from "./reviewData";
 
 /**

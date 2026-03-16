@@ -1,5 +1,5 @@
 import * as GameRepo from "../apis/games/gameRepo";
-import type { Game } from "../types/game";
+import type { Game } from "../../../../shared/types/game";
 
 /**
  * Game Service - Business logic layer for game operations.

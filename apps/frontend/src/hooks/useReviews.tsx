@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import * as reviewService from "../services/reviewService";
-import type { Review } from "../types/reviews";
+import type { Review } from "../../../../shared/types/reviews";
 
 /**
  * updates a list of reviews, this needs to be a custom hook because if we decide to make individual game pages, the reviews for said game will use this hook.

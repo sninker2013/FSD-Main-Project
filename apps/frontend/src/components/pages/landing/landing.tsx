@@ -1,7 +1,7 @@
 import "./landing.css"
 import { useState, useEffect } from "react";
 import { useSearch } from "../../../hooks/useSearch";
-import type { Game } from "../../../types/game";
+import type { Game } from "../../../../../../shared/types/game";
 import { SearchBar } from "../../common/search-bar/SearchBar";
 import { GameListPage } from "../game-list-page/GameListPage";
 

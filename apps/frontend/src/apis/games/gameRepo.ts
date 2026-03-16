@@ -1,5 +1,5 @@
-import type { Game } from "../types/game";
-import { sampleGames } from "../data/gameData";
+import type { Game } from "../../types/game";
+import { sampleGames } from "../games/gameData";
 
 /**
  * Game Repository - Handles all data access for games.

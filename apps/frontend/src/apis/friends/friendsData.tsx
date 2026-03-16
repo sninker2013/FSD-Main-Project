@@ -1,4 +1,4 @@
-import type { Friends } from "../types/friends";
+import type { Friends } from "../../types/friends";
 
 export const testFriends: Friends[] = [
     {id: "101", userName: "timdrake", isFavourite: false},

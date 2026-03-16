@@ -1,4 +1,4 @@
-import * as GameRepo from "../repositories/gameRepo";
+import * as GameRepo from "../apis/games/gameRepo";
 import type { Game } from "../types/game";
 
 /**

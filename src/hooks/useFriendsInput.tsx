@@ -1,4 +1,6 @@
 import { useState } from "react";
+import * as friendService from "../services/friendsService";
+import type { Friends } from "../types/friends";
 
 /**
  * Custom hook for managing the inputting a new friend into the friend list.
@@ -13,12 +15,36 @@ import { useState } from "react";
  * - error: string - "User Name needs at least 3 characters."
  */
 
-const useFriendsInput = (validateValue: (value: string) => { isValid: boolean; errors: string[] }) => {
+interface ValidationResult {
+    isValid: boolean;
+    errors: string[];
+}
+
+interface UseFriendsInputReturn {
+    value: string;
+    errors: string[];
+    success: string;
+    valueChangeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    inputReset: () => void;
+    validate: () => boolean;
+
+    addFriend: () => Friends | null;
+    getFriends: () => Friends[];
+    updateFriendFavourite: (friendId: string) => void;
+    deleteFriend: (friendId: string) => void;
+}
+
+const useFriendsInput = (): UseFriendsInputReturn => {
     const [enteredValue, setEnteredValue] = useState("");
     const [errors, setErrors] = useState<string[]>([]);
+    const [success, setSuccess] = useState("");
+
+    const [friends, setFriends] = useState<Friends[]>(friendService.getFriends());
 
     const valueChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEnteredValue(event.target.value);
+        setErrors([]);
+        setSuccess("");
     };
 
     /**
@@ -29,6 +55,7 @@ const useFriendsInput = (validateValue: (value: string) => { isValid: boolean; e
     const inputReset = () => {
         setEnteredValue("");
         setErrors([]);
+        setSuccess("");
     };
 
     /**
@@ -36,9 +63,10 @@ const useFriendsInput = (validateValue: (value: string) => { isValid: boolean; e
      * Sets both to empty
      */
 
-    const validate = () => {
-        const result = validateValue(enteredValue);
+    const validate = (): boolean => {
+        const result: ValidationResult = friendService.validateUserName(enteredValue);
         setErrors(result.errors);
+        setSuccess(result.isValid ? "Form is valid!" : "");
         return result.isValid;
     };
 
@@ -50,12 +78,38 @@ const useFriendsInput = (validateValue: (value: string) => { isValid: boolean; e
 
     // Return the value, error state, valueChangeHandler, inputReset, and validate 
 
+    const addFriend = (): Friends | null => {
+        if (!validate()) return null;
+        const newFriend = friendService.addFriend(enteredValue);
+
+        setFriends(friendService.getFriends());
+        setSuccess("Friend added successfully!");
+        setEnteredValue("");
+        return newFriend;
+    };
+
+    const updateFriendFavourite = (friendId: string) => {
+        friendService.updateFriendFavourite(friendId);
+    };
+
+    const deleteFriend = (friendId: string) => {
+        friendService.deleteFriend(friendId);
+        setFriends(friendService.getFriends());
+    };
+
+    const getFriends = () => friends;
+
     return {
         value: enteredValue,
         errors,
+        success,
         valueChangeHandler,
         inputReset,
         validate,
+        addFriend,
+        getFriends,
+        updateFriendFavourite,
+        deleteFriend,
     };
 };
 

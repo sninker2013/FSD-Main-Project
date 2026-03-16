@@ -4,7 +4,7 @@ import type { Friends } from "../../../../../../shared/types/friends";
 import { FriendForm } from "../friends_form/friends_form";
 import starIcon from "./assets/star-transparent.png";
 
-import { testFriends } from "../../../data/friendsData";
+import { testFriends } from "../../../apis/friends/friendsData";
 
 import {
     initializeFriends,
@@ -12,7 +12,7 @@ import {
     addFriend,
     updateFriendFavourite,
     deleteFriend
-} from "../../../repository/friendsRepo";
+} from "../../../apis/friends/friendsRepo";
 
 function FriendItem({ 
     userName,

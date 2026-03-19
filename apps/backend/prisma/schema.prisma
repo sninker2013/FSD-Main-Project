@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id Int @id @default(autoincrement())
+
+  userName String @unique
+  dateCreated DateTime
+
+  reviews Review[]
+  friends Friend[] @relation("UserFriends")
+  friendOf Friend[] @relation("FriendUsers")
+}
+
+model Game {
+  id Int @id @default(autoincrement())
+
+  gameName String
+  coverPicture String
+  gameDescription String
+  releaseDate DateTime
+
+  reviews Review[]
+}
+
+model Friend {
+  userId Int
+  friendId Int
+
+  dateAdded DateTime
+  isFavourite Boolean
+
+  user User @relation("UserFriends", fields: [userId], references: [id])
+  friend User @relation("FriendUsers", fields: [friendId], references: [id])
+
+  @@id([userId, friendId])
+}
+
+model Review {
+  gameId Int
+  userId Int
+  dateCreated DateTime
+
+  dateEditted DateTime?
+  stars Int
+  reviewContents String
+
+  user User @relation(fields: [userId], references: [id])
+  game Game @relation(fields: [gameId], references: [id])
+
+  @@id([gameId, userId, dateCreated])
+}

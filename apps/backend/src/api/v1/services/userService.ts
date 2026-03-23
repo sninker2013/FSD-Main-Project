@@ -12,3 +12,25 @@ const users: User[] = testUsers;
 export const getAllUsers = async (): Promise<User[]> => {
     return structuredClone(users);
 };
+
+/**
+ * Creates a new user
+ * @param userData - The data for the new user (userId, userName and dateCreated)
+ * @returns The created user with generated ID
+ */
+export const createUser = async (userData: {
+    id: string;
+    name: string;
+    dateCreated: Datetime;
+}): Promise<User> => {
+    const dateNow = new Date();
+    const newUser: Partial<User> = {
+        ...userData,
+        createdAt: dateNow,
+        updatedAt: dateNow,
+    };
+
+    const userId: string = await createUser<User>(COLLECTION, newUser);
+
+    return structuredClone({ id: userId, ...newUser } as User);
+};

@@ -3,6 +3,8 @@ import { User } from "@prisma/client";
 // initialize a prisma client if not already and use in queries here
 import prisma from "../../../../prisma/client";
 
+import { format } from 'date-fns';
+
 const users: User[] = userData;
 
 /**
@@ -48,7 +50,7 @@ export const getUserById = async(id: string): Promise<User | null> => {
 export const createUser = async(userData: {
     id: string,
     userName: string,
-    dateCreated: Datetime
+    dateCreated: Date
 }): Promise<User> => {
 
     const newUser: User = await prisma.user.create({

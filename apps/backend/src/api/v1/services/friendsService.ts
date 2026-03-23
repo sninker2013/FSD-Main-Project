@@ -3,6 +3,8 @@ import { Friend } from "@prisma/client";
 // initialize a prisma client if not already and use in queries here
 import prisma from "../../../../prisma/client";
 
+import { format } from 'date-fns';
+
 /**
  * Retrieves all friends from storage
  * @returns Array of all friends
@@ -48,7 +50,7 @@ export const getFriendById = async(id: string): Promise<Friend | null> => {
 
 export const updateFriend = async(
     id: string,
-    friend: {friendId: string, dateAdded: string, isFavourite: boolean}
+    friend: {friendId: string, dateAdded: Date, isFavourite: boolean}
 ): Promise<Friend> => {
     const updateFriend = await prisma.friend.update({
         where: {
@@ -62,3 +64,4 @@ export const updateFriend = async(
 }
 
 // deleteFriend
+

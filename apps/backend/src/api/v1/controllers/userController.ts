@@ -15,7 +15,7 @@ export const getAllUsers = async(
     next: NextFunction
 ): Promise<void> => {
     try{
-        const users = await userService.fetchAllUsers();
+        const users = await userService.getAllUsers();
         res.status(200).json(
             successResponse(users, "Users retrieved succesfully")
         );
@@ -25,7 +25,7 @@ export const getAllUsers = async(
 };
 
 /**
- * Manages requests and reponses to retrieve one User
+ * Manages requests and reponses to retrieve a User
  * @param req - The express Request
  * @param res  - The express Response
  * @param next - The express middleware chaining function

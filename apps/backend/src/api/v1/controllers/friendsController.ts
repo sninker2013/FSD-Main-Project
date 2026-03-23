@@ -27,22 +27,22 @@ export const getAllFriends = async (
  * @param res  - The express Response
  * @param next - The express middleware chaining function
  */
-export const getOneFriend = async (
+export const getFriendByUserName = async (
     req: Request,
     res: Response,
     next: NextFunction
 ): Promise<void> => {
     try {
-        const id: string = req.params.id;
+        const userName: string = req.params.userName;
         
-        if (!id || id.trim() === "") {
+        if (!userName || userName.trim() === "") {
             res.status(HTTP_STATUS.BAD_REQUEST).json(
-                errorResponse("Friend ID is required")
+                errorResponse("Friend's user name is required")
             );
             return;
         }
         
-        const friend: Friend = await friendService.getOneFriend(id);
+        const friend: Friend = await friendService.getFriendByUserName(userName);
         
         if (!friend) {
             res.status(HTTP_STATUS.NOT_FOUND).json(
@@ -71,13 +71,13 @@ export const updateFriend = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-        const id: string = req.params.id;
+        const userName: string = req.params.userName;
         
-        const { userName, dateFriended, isFavourite } = req.body;
+        const { id, dateFriended, isFavourite } = req.body;
         
-        if (!id || id.trim() === "") {
+        if (!userName || userName.trim() === "") {
             res.status(HTTP_STATUS.BAD_REQUEST).json(
-                errorResponse("Friend ID is required.")
+                errorResponse("Friend's user name is required.")
             );
             return;
         }
@@ -105,16 +105,16 @@ export const deleteFriend = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-        const id: string = req.params.id;
+        const userName: string = req.params.userName;
         
-        if (!id || id.trim() === "") {
+        if (!userName || userName.trim() === "") {
             res.status(HTTP_STATUS.BAD_REQUEST).json(
-                errorResponse("Friend ID is required.")
+                errorResponse("Friend's user name is required.")
             );
             return;
         }
         
-        const friend: Friend = await friendService.getOneFriend(id);
+        const friend: Friend = await friendService.getFriendByUserName(userName);
         
         if (!friend) {
             res.status(HTTP_STATUS.NOT_FOUND).json(
@@ -123,7 +123,7 @@ export const deleteFriend = async (
             return;
         }
 
-        await friendService.deleteFriend(id);
+        await friendService.deleteFriend(userName);
 
         res.status(HTTP_STATUS.OK).json(
             successResponse(null, "Friend successfully deleted")

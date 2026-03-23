@@ -1,36 +1,70 @@
-// placeholders right now so I can try to figure it out
-import type { User } from "../../../../../../shared/types";
+// Use the term type defined in prisma/schema.prisma
+import { User } from "@prisma/client";
+// initialize a prisma client if not already and use in queries here
+import prisma from "../../../../prisma/client";
 
-import { testUsers } from "../../../../../frontend/src/apis/friends/friendsData";
-
-const users: User[] = testUsers;
+const users: User[] = userData;
 
 /**
  * Retrieves all users from storage
  * @returns Array of all users
  */
-export const getAllUsers = async (): Promise<User[]> => {
-    return structuredClone(users);
-};
+export const getAllUsers = async(): Promise<User[]> => {
+    // get all records in the term table
+    return prisma.user.findMany();
+}
+
+/**
+ * Retrieves one user from services
+ * @param id - The ID of the user to be retrieved
+ * @returns The User being retrieved
+ * @throws If the id doesn't match a user listed
+ */
+
+
+export const getUserById = async(id: string): Promise<User | null> => {
+    try {
+        const user = prisma.user.findUnique({
+            where: {
+                id: id
+            }
+        });
+
+        if(!user) {
+            return null;
+        } else{
+            return user;
+        }
+    } catch(error) {
+        throw new Error(`Failed to fetch user with id ${id}`);
+    }
+}
 
 /**
  * Creates a new user
  * @param userData - The data for the new user (userId, userName and dateCreated)
  * @returns The created user with generated ID
  */
-export const createUser = async (userData: {
-    id: string;
-    name: string;
-    dateCreated: Datetime;
+export const createUser = async(userData: {
+    id: string,
+    userName: string,
+    dateCreated: Datetime
 }): Promise<User> => {
-    const dateNow = new Date();
-    const newUser: Partial<User> = {
-        ...userData,
-        createdAt: dateNow,
-        updatedAt: dateNow,
-    };
 
-    const userId: string = await createUser<User>(COLLECTION, newUser);
+    const newUser: User = await prisma.user.create({
+        data: {
+            ...userData
+        }
+    });
 
-    return structuredClone({ id: userId, ...newUser } as User);
-};
+    return newUser;
+}
+
+
+export const deleteUser = async(id: string): Promise<void> => {
+    await prisma.user.delete({
+        where: {
+            id: id
+        }
+    });
+}

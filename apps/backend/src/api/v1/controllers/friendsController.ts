@@ -1,4 +1,8 @@
 import { Request, Response, NextFunction } from "express";
+import {Friend} from "@prisma/client";
+import * as friendService from "../services/friendService";
+import { successResponse } from "../models/responseModel";
+
 
 /**
  * Manages requests and reponses to retrieve all Friends
@@ -6,17 +10,17 @@ import { Request, Response, NextFunction } from "express";
  * @param res  - The express Response
  * @param next - The express middleware chaining function
  */
-export const getAllFriends = async (
-    req: Request,
+export const getAllFriends = async(
+    _req: Request,
     res: Response,
     next: NextFunction
 ): Promise<void> => {
-    try {
-        const friends: Friend[] = await friendService.getAllFriends();
-        res.status(HTTP_STATUS.OK).json(
-            successResponse(friends, "Friends retrieved successfully")
+    try{
+        const friends = await friendService.getAllFriends();
+        res.status(200).json(
+            successResponse(friends, "Friends retrieved succesfully")
         );
-    } catch (error: unknown) {
+    } catch (error) {
         next(error);
     }
 };
@@ -27,34 +31,40 @@ export const getAllFriends = async (
  * @param res  - The express Response
  * @param next - The express middleware chaining function
  */
-export const getFriendByUserName = async (
+export const getFriendByUserName = async(
     req: Request,
     res: Response,
     next: NextFunction
 ): Promise<void> => {
     try {
-        const userName: string = req.params.userName;
-        
-        if (!userName || userName.trim() === "") {
-            res.status(HTTP_STATUS.BAD_REQUEST).json(
-                errorResponse("Friend's user name is required")
-            );
-            return;
+        const term: Friend | null = 
+            await friendService.getFriendByUserName(req.params.userName);
+        if(term) {
+            res.json(successResponse(friend, "Friend retrieved succesfully"));
+        } else{
+            throw new Error("Friend not found");
         }
-        
-        const friend: Friend = await friendService.getFriendByUserName(userName);
-        
-        if (!friend) {
-            res.status(HTTP_STATUS.NOT_FOUND).json(
-                errorResponse("Friend not found.")
-            );
-            return;
-        }
-        
-        res.status(HTTP_STATUS.OK).json(
-            successResponse(friend, "Friend retrieved successfully")
-        );
-    } catch (error: unknown) {
+    } catch(error) {
+        next(error);
+    }
+}
+
+/**
+ * Manages requests, reponses, and validation to create a Friend
+ * @param req - The express Request
+ * @param res  - The express Response
+ * @param next - The express middleware chaining function
+ */
+export const createFriend = async(
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<void> => {
+    try {
+        const newFriend = await friendService.createFriend(req.body);
+        res.status(201)
+            .json(successResponse(newFriend, "Friend created succesfully"));
+    } catch(error) {
         next(error);
     }
 };
@@ -65,30 +75,19 @@ export const getFriendByUserName = async (
  * @param res  - The express Response
  * @param next - The express middleware chaining function
  */
-export const updateFriend = async (
+export const updateFriend = async(
     req: Request,
     res: Response,
     next: NextFunction
 ): Promise<void> => {
     try {
-        const userName: string = req.params.userName;
-        
-        const { id, dateFriended, isFavourite } = req.body;
-        
-        if (!userName || userName.trim() === "") {
-            res.status(HTTP_STATUS.BAD_REQUEST).json(
-                errorResponse("Friend's user name is required.")
-            );
-            return;
-        }
-        
-        const updatedFriend: Friend = await friendService.updateFriend(id, { userName, dateFriended, isFavourite });
-
-        res.status(HTTP_STATUS.OK).json(
-            successResponse(updatedFriend, "Friend updated successfully")
+        const updatedFriend = await friendService.updateFriend(
+            req.params.id,
+            req.body
         );
-    
-    } catch (error: unknown) {
+        res.status(200)
+            .json(successResponse(updatedFriend, "Friend updated succesfully"));
+    } catch(error) {
         next(error);
     }
 };
@@ -99,37 +98,16 @@ export const updateFriend = async (
  * @param res  - The express Response
  * @param next - The express middleware chaining function
  */
-export const deleteFriend = async (
+export const deleteFriend = async(
     req: Request,
     res: Response,
     next: NextFunction
 ): Promise<void> => {
     try {
-        const userName: string = req.params.userName;
-        
-        if (!userName || userName.trim() === "") {
-            res.status(HTTP_STATUS.BAD_REQUEST).json(
-                errorResponse("Friend's user name is required.")
-            );
-            return;
-        }
-        
-        const friend: Friend = await friendService.getFriendByUserName(userName);
-        
-        if (!friend) {
-            res.status(HTTP_STATUS.NOT_FOUND).json(
-                errorResponse("Friend not found.")
-            );
-            return;
-        }
-
-        await friendService.deleteFriend(userName);
-
-        res.status(HTTP_STATUS.OK).json(
-            successResponse(null, "Friend successfully deleted")
-        );
-        
-    } catch (error: unknown) {
+        await friendService.deleteFriend(req.params.id);
+        res.status(200)
+            .json(successResponse(null, "Friend deleted succesfully"));
+    } catch(error) {
         next(error);
     }
 };

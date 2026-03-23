@@ -1,4 +1,7 @@
 import { Request, Response, NextFunction } from "express";
+import {User} from "@prisma/client";
+import * as userService from "../services/userService";
+import { successResponse } from "../models/responseModel";
 
 /**
  * Manages requests and reponses to retrieve all Users
@@ -6,17 +9,17 @@ import { Request, Response, NextFunction } from "express";
  * @param res  - The express Response
  * @param next - The express middleware chaining function
  */
-export const getAllUsers = async (
-    req: Request,
+export const getAllUsers = async(
+    _req: Request,
     res: Response,
     next: NextFunction
 ): Promise<void> => {
-    try {
-        const users: User[] = await userService.getAllUsers();
-        res.status(HTTP_STATUS.OK).json(
-            successResponse(users, "Users retrieved successfully")
+    try{
+        const users = await userService.fetchAllUsers();
+        res.status(200).json(
+            successResponse(users, "Users retrieved succesfully")
         );
-    } catch (error: unknown) {
+    } catch (error) {
         next(error);
     }
 };
@@ -27,37 +30,23 @@ export const getAllUsers = async (
  * @param res  - The express Response
  * @param next - The express middleware chaining function
  */
-export const getOneUser = async (
+export const getUserById = async(
     req: Request,
     res: Response,
     next: NextFunction
 ): Promise<void> => {
     try {
-        const id: string = req.params.id;
-        
-        if (!id || id.trim() === "") {
-            res.status(HTTP_STATUS.BAD_REQUEST).json(
-                errorResponse("User ID is required")
-            );
-            return;
+        const user: User | null = 
+            await userService.getUserById(req.params.id);
+        if(user) {
+            res.json(successResponse(user, "User retrieved succesfully"));
+        } else{
+            throw new Error("User not found");
         }
-        
-        const user: User = await userService.getOneUser(id);
-        
-        if (!user) {
-            res.status(HTTP_STATUS.NOT_FOUND).json(
-                errorResponse("User not found.")
-            );
-            return;
-        }
-        
-        res.status(HTTP_STATUS.OK).json(
-            successResponse(episode, "User retrieved successfully")
-        );
-    } catch (error: unknown) {
+    } catch(error) {
         next(error);
     }
-};
+}
 
 /**
  * Manages requests, reponses, and validation to create a User
@@ -65,40 +54,16 @@ export const getOneUser = async (
  * @param res  - The express Response
  * @param next - The express middleware chaining function
  */
-export const createUser = async (
+export const createUser = async(
     req: Request,
     res: Response,
     next: NextFunction
 ): Promise<void> => {
     try {
-        const requiredFields: (keyof User)[] = [
-            'id',
-            'userName',
-            'dateCreated'
-        ];
-        
-        const missingFields = requiredFields.filter(field => !(field in req.body));
-        
-        if (missingFields.length > 0) {
-            res.status(HTTP_STATUS.BAD_REQUEST).json(
-                errorResponse("Missing required parameter")
-            );
-            return;
-        }
-        
-        const { id, userName, dateCreated } = req.body;
-        
-        const newUser: User = await userService.createUser({
-            id,
-            userName,
-            dateCreated
-        });
-
-        res.status(HTTP_STATUS.CREATED).json(
-            successResponse(newUser, "User created successfully")
-        );
-    
-    } catch (error: unknown) {
+        const newUser = await userService.createUser(req.body);
+        res.status(201)
+            .json(successResponse(newUser, "User created succesfully"));
+    } catch(error) {
         next(error);
     }
 };
@@ -109,37 +74,16 @@ export const createUser = async (
  * @param res  - The express Response
  * @param next - The express middleware chaining function
  */
-export const deleteUser = async (
+export const deleteUser = async(
     req: Request,
     res: Response,
     next: NextFunction
 ): Promise<void> => {
     try {
-        const id: string = req.params.id;
-        
-        if (!id || id.trim() === "") {
-            res.status(HTTP_STATUS.BAD_REQUEST).json(
-                errorResponse("User ID is required.")
-            );
-            return;
-        }
-        
-        const user: User = await userService.getOneUser(id);
-        
-        if (!user) {
-            res.status(HTTP_STATUS.NOT_FOUND).json(
-                errorResponse("User not found.")
-            );
-            return;
-        }
-
-        await userService.deleteUser(id);
-
-        res.status(HTTP_STATUS.OK).json(
-            successResponse(null, "User successfully deleted")
-        );
-        
-    } catch (error: unknown) {
+        await userService.deleteUser(req.params.id);
+        res.status(200)
+            .json(successResponse(null, "User deleted succesfully"));
+    } catch(error) {
         next(error);
     }
 };

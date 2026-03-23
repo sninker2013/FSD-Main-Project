@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import {Friend} from "@prisma/client";
-//import * as friendService from "../services/friendService";
-//import { successResponse } from "../models/responseModel";
+import * as friendService from "../services/friendService";
+import { successResponse } from "../models/responseModel";
 
 
 /**
@@ -48,6 +48,26 @@ export const getFriendByUserName = async(
         next(error);
     }
 }
+
+/**
+ * Manages requests, reponses, and validation to create a Friend
+ * @param req - The express Request
+ * @param res  - The express Response
+ * @param next - The express middleware chaining function
+ */
+export const createFriend = async(
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<void> => {
+    try {
+        const newFriend = await friendService.createFriend(req.body);
+        res.status(201)
+            .json(successResponse(newFriend, "Friend created succesfully"));
+    } catch(error) {
+        next(error);
+    }
+};
 
 /**
  * Manages requests and reponses to update a Friend

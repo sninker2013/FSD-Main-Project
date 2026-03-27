@@ -20,22 +20,12 @@ export type GameModel = runtime.Types.Result.DefaultSelection<Prisma.$GamePayloa
 
 export type AggregateGame = {
   _count: GameCountAggregateOutputType | null
-  _avg: GameAvgAggregateOutputType | null
-  _sum: GameSumAggregateOutputType | null
   _min: GameMinAggregateOutputType | null
   _max: GameMaxAggregateOutputType | null
 }
 
-export type GameAvgAggregateOutputType = {
-  id: number | null
-}
-
-export type GameSumAggregateOutputType = {
-  id: number | null
-}
-
 export type GameMinAggregateOutputType = {
-  id: number | null
+  id: string | null
   gameName: string | null
   coverPicture: string | null
   gameDescription: string | null
@@ -43,7 +33,7 @@ export type GameMinAggregateOutputType = {
 }
 
 export type GameMaxAggregateOutputType = {
-  id: number | null
+  id: string | null
   gameName: string | null
   coverPicture: string | null
   gameDescription: string | null
@@ -59,14 +49,6 @@ export type GameCountAggregateOutputType = {
   _all: number
 }
 
-
-export type GameAvgAggregateInputType = {
-  id?: true
-}
-
-export type GameSumAggregateInputType = {
-  id?: true
-}
 
 export type GameMinAggregateInputType = {
   id?: true
@@ -131,18 +113,6 @@ export type GameAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: GameAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: GameSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: GameMinAggregateInputType
@@ -173,21 +143,17 @@ export type GameGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   _count?: GameCountAggregateInputType | true
-  _avg?: GameAvgAggregateInputType
-  _sum?: GameSumAggregateInputType
   _min?: GameMinAggregateInputType
   _max?: GameMaxAggregateInputType
 }
 
 export type GameGroupByOutputType = {
-  id: number
+  id: string
   gameName: string
   coverPicture: string
   gameDescription: string
   releaseDate: Date
   _count: GameCountAggregateOutputType | null
-  _avg: GameAvgAggregateOutputType | null
-  _sum: GameSumAggregateOutputType | null
   _min: GameMinAggregateOutputType | null
   _max: GameMaxAggregateOutputType | null
 }
@@ -211,7 +177,7 @@ export type GameWhereInput = {
   AND?: Prisma.GameWhereInput | Prisma.GameWhereInput[]
   OR?: Prisma.GameWhereInput[]
   NOT?: Prisma.GameWhereInput | Prisma.GameWhereInput[]
-  id?: Prisma.IntFilter<"Game"> | number
+  id?: Prisma.StringFilter<"Game"> | string
   gameName?: Prisma.StringFilter<"Game"> | string
   coverPicture?: Prisma.StringFilter<"Game"> | string
   gameDescription?: Prisma.StringFilter<"Game"> | string
@@ -229,7 +195,7 @@ export type GameOrderByWithRelationInput = {
 }
 
 export type GameWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   AND?: Prisma.GameWhereInput | Prisma.GameWhereInput[]
   OR?: Prisma.GameWhereInput[]
   NOT?: Prisma.GameWhereInput | Prisma.GameWhereInput[]
@@ -247,17 +213,15 @@ export type GameOrderByWithAggregationInput = {
   gameDescription?: Prisma.SortOrder
   releaseDate?: Prisma.SortOrder
   _count?: Prisma.GameCountOrderByAggregateInput
-  _avg?: Prisma.GameAvgOrderByAggregateInput
   _max?: Prisma.GameMaxOrderByAggregateInput
   _min?: Prisma.GameMinOrderByAggregateInput
-  _sum?: Prisma.GameSumOrderByAggregateInput
 }
 
 export type GameScalarWhereWithAggregatesInput = {
   AND?: Prisma.GameScalarWhereWithAggregatesInput | Prisma.GameScalarWhereWithAggregatesInput[]
   OR?: Prisma.GameScalarWhereWithAggregatesInput[]
   NOT?: Prisma.GameScalarWhereWithAggregatesInput | Prisma.GameScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"Game"> | number
+  id?: Prisma.StringWithAggregatesFilter<"Game"> | string
   gameName?: Prisma.StringWithAggregatesFilter<"Game"> | string
   coverPicture?: Prisma.StringWithAggregatesFilter<"Game"> | string
   gameDescription?: Prisma.StringWithAggregatesFilter<"Game"> | string
@@ -265,6 +229,7 @@ export type GameScalarWhereWithAggregatesInput = {
 }
 
 export type GameCreateInput = {
+  id: string
   gameName: string
   coverPicture: string
   gameDescription: string
@@ -273,7 +238,7 @@ export type GameCreateInput = {
 }
 
 export type GameUncheckedCreateInput = {
-  id?: number
+  id: string
   gameName: string
   coverPicture: string
   gameDescription: string
@@ -282,6 +247,7 @@ export type GameUncheckedCreateInput = {
 }
 
 export type GameUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   gameName?: Prisma.StringFieldUpdateOperationsInput | string
   coverPicture?: Prisma.StringFieldUpdateOperationsInput | string
   gameDescription?: Prisma.StringFieldUpdateOperationsInput | string
@@ -290,7 +256,7 @@ export type GameUpdateInput = {
 }
 
 export type GameUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   gameName?: Prisma.StringFieldUpdateOperationsInput | string
   coverPicture?: Prisma.StringFieldUpdateOperationsInput | string
   gameDescription?: Prisma.StringFieldUpdateOperationsInput | string
@@ -299,7 +265,7 @@ export type GameUncheckedUpdateInput = {
 }
 
 export type GameCreateManyInput = {
-  id?: number
+  id: string
   gameName: string
   coverPicture: string
   gameDescription: string
@@ -307,6 +273,7 @@ export type GameCreateManyInput = {
 }
 
 export type GameUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   gameName?: Prisma.StringFieldUpdateOperationsInput | string
   coverPicture?: Prisma.StringFieldUpdateOperationsInput | string
   gameDescription?: Prisma.StringFieldUpdateOperationsInput | string
@@ -314,7 +281,7 @@ export type GameUpdateManyMutationInput = {
 }
 
 export type GameUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   gameName?: Prisma.StringFieldUpdateOperationsInput | string
   coverPicture?: Prisma.StringFieldUpdateOperationsInput | string
   gameDescription?: Prisma.StringFieldUpdateOperationsInput | string
@@ -327,10 +294,6 @@ export type GameCountOrderByAggregateInput = {
   coverPicture?: Prisma.SortOrder
   gameDescription?: Prisma.SortOrder
   releaseDate?: Prisma.SortOrder
-}
-
-export type GameAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
 }
 
 export type GameMaxOrderByAggregateInput = {
@@ -347,10 +310,6 @@ export type GameMinOrderByAggregateInput = {
   coverPicture?: Prisma.SortOrder
   gameDescription?: Prisma.SortOrder
   releaseDate?: Prisma.SortOrder
-}
-
-export type GameSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
 }
 
 export type GameScalarRelationFilter = {
@@ -373,6 +332,7 @@ export type GameUpdateOneRequiredWithoutReviewsNestedInput = {
 }
 
 export type GameCreateWithoutReviewsInput = {
+  id: string
   gameName: string
   coverPicture: string
   gameDescription: string
@@ -380,7 +340,7 @@ export type GameCreateWithoutReviewsInput = {
 }
 
 export type GameUncheckedCreateWithoutReviewsInput = {
-  id?: number
+  id: string
   gameName: string
   coverPicture: string
   gameDescription: string
@@ -404,6 +364,7 @@ export type GameUpdateToOneWithWhereWithoutReviewsInput = {
 }
 
 export type GameUpdateWithoutReviewsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   gameName?: Prisma.StringFieldUpdateOperationsInput | string
   coverPicture?: Prisma.StringFieldUpdateOperationsInput | string
   gameDescription?: Prisma.StringFieldUpdateOperationsInput | string
@@ -411,7 +372,7 @@ export type GameUpdateWithoutReviewsInput = {
 }
 
 export type GameUncheckedUpdateWithoutReviewsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   gameName?: Prisma.StringFieldUpdateOperationsInput | string
   coverPicture?: Prisma.StringFieldUpdateOperationsInput | string
   gameDescription?: Prisma.StringFieldUpdateOperationsInput | string
@@ -497,7 +458,7 @@ export type $GamePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     reviews: Prisma.$ReviewPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
+    id: string
     gameName: string
     coverPicture: string
     gameDescription: string
@@ -926,7 +887,7 @@ export interface Prisma__GameClient<T, Null = never, ExtArgs extends runtime.Typ
  * Fields of the Game model
  */
 export interface GameFieldRefs {
-  readonly id: Prisma.FieldRef<"Game", 'Int'>
+  readonly id: Prisma.FieldRef<"Game", 'String'>
   readonly gameName: Prisma.FieldRef<"Game", 'String'>
   readonly coverPicture: Prisma.FieldRef<"Game", 'String'>
   readonly gameDescription: Prisma.FieldRef<"Game", 'String'>

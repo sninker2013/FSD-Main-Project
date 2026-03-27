@@ -1,4 +1,6 @@
-import { PrismaClient } from "@prisma/client";
+import 'dotenv/config';
+
+import { PrismaClient } from "../src/generated/prisma/client";
 import { userSeedData, gameSeedData, friendSeedData, reviewSeedData } from "./seedData";
 
 const prisma = new PrismaClient();

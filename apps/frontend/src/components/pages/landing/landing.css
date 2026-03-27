@@ -1,0 +1,18 @@
+.landing-title {
+    text-align: center;
+    padding: 10px;
+}
+
+.page-landing .search-form button {
+    display: none;
+}
+
+.page-landing .search-form {
+    width: 60%;
+    margin: 0 auto;
+}
+
+.page-landing .search-form input {
+    width: 100%;
+    text-align: center;
+}

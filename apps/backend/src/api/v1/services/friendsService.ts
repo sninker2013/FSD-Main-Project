@@ -65,3 +65,11 @@ export const updateFriend = async(
 
 // deleteFriend
 
+export const deleteFriend = async(id: number): Promise<void> => {
+    // delete the term that matches the where key/value pairs
+    await prisma.friend.delete({
+        where: {
+            id: id
+        }
+    });
+}

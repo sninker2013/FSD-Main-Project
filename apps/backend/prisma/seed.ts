@@ -11,13 +11,12 @@ const prisma = new PrismaClient();
 async function main() {
     // clear table
     
-    await prisma.friend.deleteMany();
-
-    await prisma.review.deleteMany();
-    
-    await prisma.user.deleteMany();
-
-    await prisma.game.deleteMany();
+    await prisma.$transaction([
+        prisma.review.deleteMany(),
+        prisma.friend.deleteMany(),
+        prisma.user.deleteMany(),
+        prisma.game.deleteMany(),
+    ]);
 
     // insert users to db
     const createManyUsers = await prisma.user.createManyAndReturn(

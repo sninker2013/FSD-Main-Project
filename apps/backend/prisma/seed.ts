@@ -19,7 +19,7 @@ async function main() {
     ]);
 
     // insert users to db
-    const createManyUsers = await prisma.user.createManyAndReturn(
+    const users = await prisma.user.createMany(
         {
             data: userSeedData,
             skipDuplicates: true
@@ -27,7 +27,7 @@ async function main() {
     );
 
     // insert games to db
-    const createManyGames = await prisma.game.createManyAndReturn(
+    const games = await prisma.game.createMany(
         {
             data: gameSeedData,
             skipDuplicates: true
@@ -35,7 +35,7 @@ async function main() {
     );
 
     // insert friends to db
-    const createManyFriends = await prisma.friend.createManyAndReturn(
+    const friends = await prisma.friend.createMany(
         {
             data: friendSeedData,
             skipDuplicates: true
@@ -43,15 +43,21 @@ async function main() {
     );
 
     // insert reviews to db
-    const createManyReviews = await prisma.review.createManyAndReturn(
+    const reviews = await prisma.review.createMany(
         {
             data: reviewSeedData,
             skipDuplicates: true
         }
     );
 
-    console.log(`CREATED USERS: ${createManyUsers}, CREATED GAMES: ${createManyGames}, CREATED FRIENDS: ${createManyFriends}, CREATED REVIEWS: ${createManyReviews}`);
-};
+    console.log(`
+        Seed complete:
+        - Users: ${users.count}
+        - Games: ${games.count}
+        - Friends: ${friends.count}
+        - Reviews: ${reviews.count}
+        `);
+    }
 
 main().then(
     async() => {

@@ -5,16 +5,16 @@ import * as userController from "../controllers/userController";
 
 const router: Router = express.Router();
 
-router.get("/terms", /*validateRequest(userSchema),*/
+router.get("/users", /*validateRequest(userSchema),*/
     userController.getAllUsers);
 
-    router.get("/terms/:id", /*validateRequest(userSchema),*/
+    router.get("/users/:id", /*validateRequest(userSchema),*/
         userController.getUserById);
 
-router.post("/terms", /*validateRequest(userSchema),*/ 
+router.post("/users", /*validateRequest(userSchema),*/ 
     userController.createUser);
 
-router.delete("/terms/:id", /*validateRequest(userSchema),*/
+router.delete("/users/:id", /*validateRequest(userSchema),*/
     userController.deleteUser);
 
 export default router;

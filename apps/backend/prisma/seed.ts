@@ -10,7 +10,14 @@ const prisma = new PrismaClient();
 // see https://www.prisma.io/docs/orm/prisma-migrate/workflows/seeding
 async function main() {
     // clear table
+    
+    await prisma.friend.deleteMany();
+
+    await prisma.review.deleteMany();
+    
     await prisma.user.deleteMany();
+
+    await prisma.game.deleteMany();
 
     // insert users to db
     const createManyUsers = await prisma.user.createManyAndReturn(
@@ -20,8 +27,6 @@ async function main() {
         }
     );
 
-    await prisma.game.deleteMany();
-
     // insert games to db
     const createManyGames = await prisma.game.createManyAndReturn(
         {
@@ -30,8 +35,6 @@ async function main() {
         }
     );
 
-    await prisma.friend.deleteMany();
-
     // insert friends to db
     const createManyFriends = await prisma.friend.createManyAndReturn(
         {
@@ -39,8 +42,6 @@ async function main() {
             skipDuplicates: true
         }
     );
-
-    await prisma.review.deleteMany();
 
     // insert reviews to db
     const createManyReviews = await prisma.review.createManyAndReturn(

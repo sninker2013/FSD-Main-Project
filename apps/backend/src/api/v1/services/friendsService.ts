@@ -13,24 +13,6 @@ export const fetchAllFriends = async(): Promise<Friend[]> => {
     return prisma.friend.findMany();
 }
 
-/**
- * Retrieves one friend from services
- * @param id - The ID of the friend to be retrieved
- * @returns The Friend being retrieved
- * @throws If the id doesn't match a friend listed
- */
-
-export const getFriendById = async(userId: string, friendId: string): Promise<Friend | null> => {
-    return await prisma.friend.findUnique({
-        where: {
-            userId_friendId: {
-                userId,
-                friendId,
-            },
-        },
-    });
-}
-
 
 /**
  * Retrieves one friend from services
@@ -49,12 +31,6 @@ export const getFriendByUserName = async(userName: string): Promise<Friend[]> =>
     return user.friends;
 };
 
-export const getFriendsByUserId = async (userId: string): Promise<Friend[]> => {
-    return await prisma.friend.findMany({
-        where: { userId },
-        include: { friend: true },
-    });
-};
 
 export const getFriendsByUserName = async (userName: string): Promise<Friend[]> => {
     const user = await prisma.user.findUnique({
@@ -107,34 +83,6 @@ export const addFriendByUserName = async (
 
     return newFriend;
 }
-
-export const addFriend = async(
-    userId: string,
-    friendId: string,
-    dateAdded: Date,
-    isFavourite: boolean
-): Promise<Friend> => {
-    const user = await prisma.user.findUnique({ where: { id: userId } });
-    const friendUser = await prisma.user.findUnique({ where: { id: friendId } });
-
-    if (!user || !friendUser) {
-        throw new Error("One or both users do not exist.");
-    }
-
-    const existing = await prisma.friend.findUnique({
-        where: {
-            userId_friendId: { userId, friendId },
-        },
-    });
-
-    if (existing) {
-        throw new Error("Friendship already exists.");
-    }
-
-    return await prisma.friend.create({
-        data: { userId, friendId, dateAdded, isFavourite },
-    });
-};
 
 // updateFriend
 

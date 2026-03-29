@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import * as friendService from "../services/friendsService";
-import type { Friends } from "@shared/types/friends";
+import type { Friend } from "@shared/types/friends";
 
 /**
  * Custom hook for managing the inputting a new friend into the friend list.
@@ -24,14 +24,18 @@ interface UseFriendsInputReturn {
     value: string;
     errors: string[];
     success: string;
+    friends: Friend[];
     valueChangeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
     inputReset: () => void;
     validate: () => boolean;
 
-    addFriend: () => Friends | null;
-    getFriends: () => Friends[];
-    updateFriendFavourite: (friendId: string) => void;
-    deleteFriend: (friendId: string) => void;
+    addFriendByUserName: (currentUserName: string) => Promise<Friend | null>;
+    updateFriendFavourite: (
+        userId: string,
+        friendId: string,
+        isFavourite: boolean
+    ) => Promise<void>;
+    deleteFriend: (userId: string, friendId: string) => Promise<void>;
 }
 
 const useFriendsInput = (): UseFriendsInputReturn => {
@@ -39,7 +43,16 @@ const useFriendsInput = (): UseFriendsInputReturn => {
     const [errors, setErrors] = useState<string[]>([]);
     const [success, setSuccess] = useState("");
 
-    const [friends, setFriends] = useState<Friends[]>(friendService.getFriends());
+    const [friends, setFriends] = useState<Friend[]>([]);
+
+    useEffect(() => {
+        loadFriends();
+    }, [])
+
+    const loadFriends = async () => {
+        const data = await friendService.getFriends();
+        setFriends(data);
+    }
 
     const valueChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEnteredValue(event.target.value);
@@ -64,7 +77,9 @@ const useFriendsInput = (): UseFriendsInputReturn => {
      */
 
     const validate = (): boolean => {
-        const result: ValidationResult = friendService.validateUserName(enteredValue);
+        const result: ValidationResult = 
+            friendService.validateUserName(enteredValue);
+
         setErrors(result.errors);
         setSuccess(result.isValid ? "Form is valid!" : "");
         return result.isValid;
@@ -78,26 +93,45 @@ const useFriendsInput = (): UseFriendsInputReturn => {
 
     // Return the value, error state, valueChangeHandler, inputReset, and validate 
 
-    const addFriend = (): Friends | null => {
+    const addFriendByUserName = async (
+        currentUserName: string
+    ): Promise<Friend | null> => {
         if (!validate()) return null;
-        const newFriend = friendService.addFriend(enteredValue);
 
-        setFriends(friendService.getFriends());
+        const newFriend = friendService.addFriendByUserName(
+            currentUserName,
+            enteredValue
+        );
+
+        await loadFriends();
+
         setSuccess("Friend added successfully!");
-        setEnteredValue("");
+        inputReset();
+
         return newFriend;
     };
 
-    const updateFriendFavourite = (friendId: string) => {
-        friendService.updateFriendFavourite(friendId);
+    const updateFriendFavourite = async (
+        userId: string,
+        friendId: string,
+        isFavourite: boolean
+    ) => {
+        await friendService.updateFriendFavourite(
+            userId,
+            friendId,
+            isFavourite
+        );
+
+        await loadFriends();
     };
 
-    const deleteFriend = (friendId: string) => {
-        friendService.deleteFriend(friendId);
-        setFriends(friendService.getFriends());
+    const deleteFriend = async (
+        userId: string,
+        friendId: string
+    ) => {
+        await friendService.deleteFriend(userId, friendId);
+        await loadFriends();
     };
-
-    const getFriends = () => friends;
 
     return {
         value: enteredValue,
@@ -106,8 +140,8 @@ const useFriendsInput = (): UseFriendsInputReturn => {
         valueChangeHandler,
         inputReset,
         validate,
-        addFriend,
-        getFriends,
+        friends,
+        addFriendByUserName,
         updateFriendFavourite,
         deleteFriend,
     };

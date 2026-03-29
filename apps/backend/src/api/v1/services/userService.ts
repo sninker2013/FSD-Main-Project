@@ -22,8 +22,6 @@ export const getAllUsers = async(): Promise<User[]> => {
  * @returns The User being retrieved
  * @throws If the id doesn't match a user listed
  */
-
-
 export const getUserById = async(id: string): Promise<User | null> => {
     try {
         const user = prisma.user.findUnique({
@@ -43,6 +41,30 @@ export const getUserById = async(id: string): Promise<User | null> => {
 }
 
 /**
+ * Retrieves one user from services
+ * @param userName - The user name of the user to be retrieved
+ * @returns The User being retrieved
+ * @throws If the id doesn't match an existing user
+ */
+export const getUserByUserName = async(userName: string): Promise<User | null> => {
+    try {
+        const user = prisma.user.findUnique({
+            where: {
+                userName: userName
+            }
+        });
+
+        if(!user) {
+            return null;
+        } else{
+            return user;
+        }
+    } catch(error) {
+        throw new Error(`Failed to fetch user with user name ${userName}`);
+    }
+}
+
+/**
  * Creates a new user
  * @param userData - The data for the new user (userId, userName and dateCreated)
  * @returns The created user with generated ID
@@ -50,13 +72,14 @@ export const getUserById = async(id: string): Promise<User | null> => {
 export const createUser = async(userData: {
     id: string,
     userName: string,
-    dateCreated: Date
+    dateCreated?: Date
 }): Promise<User> => {
 
     const newUser: User = await prisma.user.create({
         data: {
-            ...userData
-        }
+            userName: userData.userName,
+            dateCreated: userData.dateCreated ?? new Date(),
+        },
     });
 
     return newUser;

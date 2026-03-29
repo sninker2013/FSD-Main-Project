@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import {Friend} from "@prisma/client";
-import * as friendService from "../services/friendService";
-import { successResponse } from "../models/responseModel";
+import * as friendService from "../services/friendsService";
+//import { successResponse } from "../models/responseModel";
 
 
 /**

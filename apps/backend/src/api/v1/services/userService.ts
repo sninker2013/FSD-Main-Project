@@ -24,7 +24,7 @@ export const getAllUsers = async(): Promise<User[]> => {
  */
 export const getUserById = async(id: string): Promise<User | null> => {
     try {
-        const user = prisma.user.findUnique({
+        const user = await prisma.user.findUnique({
             where: {
                 id: id
             }
@@ -48,7 +48,7 @@ export const getUserById = async(id: string): Promise<User | null> => {
  */
 export const getUserByUserName = async(userName: string): Promise<User | null> => {
     try {
-        const user = prisma.user.findUnique({
+        const user = await prisma.user.findUnique({
             where: {
                 userName: userName
             }

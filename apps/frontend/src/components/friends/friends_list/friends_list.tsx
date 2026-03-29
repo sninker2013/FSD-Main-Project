@@ -14,6 +14,8 @@ import {
     deleteFriend
 } from "../../../apis/friends/friendsRepo";
 
+// Creates the Friends List and adds the friend data to the webpage
+
 function FriendItem({ 
     userName,
     isFavourite,

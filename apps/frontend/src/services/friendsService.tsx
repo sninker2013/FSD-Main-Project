@@ -1,5 +1,5 @@
 import type { Friends } from  "../types/friends";
-import * as friendsRepo from "../repository/friendsRepo";
+import * as friendsRepo from "../apis/friends/friendsRepo";
 
 /**
  * This Service function handles the validation for the friendsInput

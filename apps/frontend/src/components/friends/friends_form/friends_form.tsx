@@ -2,6 +2,8 @@ import { useState } from "react";
 import useFriendsInput from "../../../hooks/useFriendsInput";
 import "./friends-form.css";
 
+//Used to submit a friend to the friends list
+
 type FriendFormProps = {
     onSubmit: (
         userName: string

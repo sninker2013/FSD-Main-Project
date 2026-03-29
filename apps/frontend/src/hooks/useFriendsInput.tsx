@@ -29,6 +29,8 @@ interface UseFriendsInputReturn {
     inputReset: () => void;
     validate: () => boolean;
 
+    getFriendByUserName: (friendUserName: string) => Promise<Friend | null>;
+    getFriendsByUserName: (userName: string) => Promise<Friend[]>;
     addFriendByUserName: (currentUserName: string) => Promise<Friend | null>;
     updateFriendFavourite: (
         userId: string,
@@ -93,12 +95,20 @@ const useFriendsInput = (): UseFriendsInputReturn => {
 
     // Return the value, error state, valueChangeHandler, inputReset, and validate 
 
+    const getFriendsByUserName = async (userName: string) => {
+        return friendService.getFriendsByUserName(userName);
+    };
+
+    const getFriendByUserName = async (friendUserName: string) => {
+        return friendService.getFriendByUserName(friendUserName);
+    };
+
     const addFriendByUserName = async (
         currentUserName: string
     ): Promise<Friend | null> => {
         if (!validate()) return null;
 
-        const newFriend = friendService.addFriendByUserName(
+        const newFriend = await friendService.addFriendByUserName(
             currentUserName,
             enteredValue
         );
@@ -110,6 +120,7 @@ const useFriendsInput = (): UseFriendsInputReturn => {
 
         return newFriend;
     };
+    
 
     const updateFriendFavourite = async (
         userId: string,
@@ -141,6 +152,8 @@ const useFriendsInput = (): UseFriendsInputReturn => {
         inputReset,
         validate,
         friends,
+        getFriendByUserName,
+        getFriendsByUserName,
         addFriendByUserName,
         updateFriendFavourite,
         deleteFriend,

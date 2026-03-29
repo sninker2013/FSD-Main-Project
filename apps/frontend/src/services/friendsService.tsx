@@ -33,6 +33,18 @@ export async function getFriends(): Promise<Friend[]> {
     return await friendsRepo.getFriends();
 }
 
+export const getFriendByUserName = async (
+    friendUserName: string,
+): Promise<Friend> => {
+    return await friendsRepo.getFriendByUserName(friendUserName);
+}
+
+export const getFriendsByUserName = async (
+    userName: string,
+): Promise<Friend[]> => {
+    return await friendsRepo.getFriendsByUserName(userName);
+}
+
 export const addFriendByUserName = async (
     userName: string,
     friendUserName: string

@@ -39,6 +39,19 @@ export async function getFriendByUserName(friendUserName: string): Promise<Frien
     return json.data;
 }
 
+export async function getFriendsByUserName(userName: string): Promise<Friend[]> {
+    const friendResponse: Response = await fetch(
+        `${BASE_URL}${FRIEND_ENDPOINT}/of/${userName}`
+    );
+
+    if(!friendResponse.ok) {
+        throw new Error(`Failed to fetch friends with user name ${userName}`);
+    }
+
+    const json: FriendsResponseJSON = await friendResponse.json();
+    return json.data;
+}
+
 /**
  * addFriend
  * @param userName - the userName of the friend 

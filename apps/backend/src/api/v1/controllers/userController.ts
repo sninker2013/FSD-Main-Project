@@ -30,30 +30,6 @@ export const getAllUsers = async(
  * @param res  - The express Response
  * @param next - The express middleware chaining function
  */
-export const getUserById = async(
-    req: Request,
-    res: Response,
-    next: NextFunction
-): Promise<void> => {
-    try {
-        const user = await userService.getUserById(req.params.id);
-        
-        if (user) {
-            res.status(200).json(successResponse(user, "User retrieved successfully" ));
-        } else {
-            res.status(404).json({ success: false, message: "User not found" });
-        }
-    } catch(error) {
-        next(error);
-    }
-}
-
-/**
- * Manages requests and reponses to retrieve a User
- * @param req - The express Request
- * @param res  - The express Response
- * @param next - The express middleware chaining function
- */
 export const getUserByUserName = async(
     req: Request,
     res: Response,

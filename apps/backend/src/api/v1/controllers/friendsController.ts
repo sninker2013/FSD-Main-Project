@@ -37,17 +37,47 @@ export const getFriendByUserName = async(
     next: NextFunction
 ): Promise<void> => {
     try {
-        const term: Friend | null = 
-            await friendService.getFriendByUserName(req.params.userName);
-        if(term) {
+        const { userName, friendUserName } = req.query as { userName: string; friendUserName: string };
+        
+        if (!userName || !friendUserName) {
+            res.status(400).json({ success: false, message: "userName and friendUserName are required" });
+            return;
+        }
+
+        const friend = await friendService.getFriendByUserName(userName, friendUserName);
+
+        if(friend) {
             res.json(successResponse(friend, "Friend retrieved succesfully"));
         } else{
-            throw new Error("Friend not found");
+            res.status(404).json({ success: false, message: "Friend not found" });
         }
-    } catch(error) {
-        next(error);
+    } catch(error: any) {
+        res.status(400).json({ success: false, message: error.message });
     }
 }
+
+export const getFriendsByUserName = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<void> => {
+    try {
+        const { userName } = req.params;
+
+        if (!userName) {
+            res.status(400).json({ success: false, message: "User name is required" });
+            return;
+        }
+
+        const friends = await friendService.getFriendsByUserName(userName);
+
+        res.status(200).json(
+            successResponse(friends, "Friends retrieved successfully")
+        );
+    } catch (error: any) {
+        next(error);
+    }
+};
 
 /**
  * Manages requests, reponses, and validation to create a Friend
@@ -55,17 +85,24 @@ export const getFriendByUserName = async(
  * @param res  - The express Response
  * @param next - The express middleware chaining function
  */
-export const createFriend = async(
+export const addFriendByUserName = async (
     req: Request,
     res: Response,
     next: NextFunction
-): Promise<void> => {
+) => {
     try {
-        const newFriend = await friendService.createFriend(req.body);
+        const { userName, friendUserName, isFavourite } = req.body;
+
+        if (!userName || !friendUserName) {
+            res.status(400).json({ success: false, message: "User name and friend user name are required" });
+            return;
+        }
+
+        const newFriend = await friendService.addFriendByUserName(req.body);
         res.status(201)
             .json(successResponse(newFriend, "Friend created succesfully"));
-    } catch(error) {
-        next(error);
+    } catch(error: any) {
+        res.status(400).json({ success: false, message: error.message });
     }
 };
 
@@ -81,14 +118,17 @@ export const updateFriend = async(
     next: NextFunction
 ): Promise<void> => {
     try {
-        const updatedFriend = await friendService.updateFriend(
-            req.params.id,
-            req.body
-        );
+        const { userId, friendId, isFavourite } = req.body;
+        if (!userId || !friendId) {
+            res.status(400).json({ success: false, message: "User Id and friend Id are required" });
+            return;
+        };
+
+        const updatedFriend = await friendService.updateFriend(userId, friendId, { isFavourite });
         res.status(200)
             .json(successResponse(updatedFriend, "Friend updated succesfully"));
-    } catch(error) {
-        next(error);
+    } catch(error: any) {
+        res.status(400).json({ success: false, message: error.message });
     }
 };
 
@@ -104,10 +144,15 @@ export const deleteFriend = async(
     next: NextFunction
 ): Promise<void> => {
     try {
+        const { userId, friendId } = req.body;
+        if (!userId || !friendId) {
+            res.status(400).json({ success: false, message: "User Id and Friend Id are required" });
+        }
+
         await friendService.deleteFriend(req.params.id);
         res.status(200)
             .json(successResponse(null, "Friend deleted succesfully"));
-    } catch(error) {
-        next(error);
+    } catch(error: any) {
+        res.status(400).json({ success: false, message: error.message });
     }
 };

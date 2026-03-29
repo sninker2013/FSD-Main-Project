@@ -56,6 +56,21 @@ export const getFriendsByUserId = async (userId: string): Promise<Friend[]> => {
     });
 };
 
+export const getFriendsByUserName = async (userName: string): Promise<Friend[]> => {
+    const user = await prisma.user.findUnique({
+        where: { userName },
+    });
+
+    if (!user) return [];
+
+    const friends = await prisma.friend.findMany({
+        where: { userId: user.id },
+        include: { friend: true },
+    });
+
+    return friends;
+};
+
 // addFriend
 
 export const addFriendByUserName = async (

@@ -14,7 +14,7 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
+  id String @id
 
   userName String @unique
   dateCreated DateTime
@@ -25,7 +25,7 @@ model User {
 }
 
 model Game {
-  id Int @id @default(autoincrement())
+  id String @id
 
   gameName String
   coverPicture String
@@ -36,8 +36,8 @@ model Game {
 }
 
 model Friend {
-  userId Int
-  friendId Int
+  userId String
+  friendId String
 
   dateAdded DateTime
   isFavourite Boolean
@@ -49,8 +49,8 @@ model Friend {
 }
 
 model Review {
-  gameId Int
-  userId Int
+  gameId String
+  userId String
   dateCreated DateTime
 
   dateEditted DateTime?

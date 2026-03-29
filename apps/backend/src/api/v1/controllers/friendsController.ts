@@ -149,7 +149,7 @@ export const deleteFriend = async(
             res.status(400).json({ success: false, message: "User Id and Friend Id are required" });
         }
 
-        await friendService.deleteFriend(req.params.id);
+        await friendService.deleteFriend(userId, friendId);
         res.status(200)
             .json(successResponse(null, "Friend deleted succesfully"));
     } catch(error: any) {

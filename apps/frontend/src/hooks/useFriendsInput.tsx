@@ -1,6 +1,6 @@
 import { useState } from "react";
 import * as friendService from "../services/friendsService";
-import type { Friends } from "../types/friends";
+import type { Friends } from "@shared/types/friends";
 
 /**
  * Custom hook for managing the inputting a new friend into the friend list.

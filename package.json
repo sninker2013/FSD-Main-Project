@@ -9,7 +9,8 @@
     "dev": "concurrently \"npm:start:frontend\" \"npm:start:backend\"",
     "migrate:backend": "npx --workspace=@fsd-project/backend prisma migrate dev",
     "start:frontend": "npm run dev --workspace=@fsd-project/frontend",
-    "start:backend": "npm start --workspace=@fsd-project/backend"
+    "start:backend": "npm start --workspace=@fsd-project/backend",
+    "vercel-build": "npm run vercel-build --workspace=@fsd-project/backend"
   },
   "keywords": [],
   "author": "",

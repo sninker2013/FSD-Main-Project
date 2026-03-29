@@ -16,29 +16,6 @@ export const getAllUsers = async(): Promise<User[]> => {
     return prisma.user.findMany();
 }
 
-/**
- * Retrieves one user from services
- * @param id - The ID of the user to be retrieved
- * @returns The User being retrieved
- * @throws If the id doesn't match a user listed
- */
-export const getUserById = async(id: string): Promise<User | null> => {
-    try {
-        const user = await prisma.user.findUnique({
-            where: {
-                id: id
-            }
-        });
-
-        if(!user) {
-            return null;
-        } else{
-            return user;
-        }
-    } catch(error) {
-        throw new Error(`Failed to fetch user with id ${id}`);
-    }
-}
 
 /**
  * Retrieves one user from services

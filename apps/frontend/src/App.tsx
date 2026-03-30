@@ -5,7 +5,7 @@ import './App.css'
 import { Layout } from "./components/common/layout/layout";
 import { Landing } from "./components/pages/landing/landing";
 
-import FriendsList from "./components/friends/friends_list/friends_list";
+
 import { PopularGames } from "./components/popular_games/PopularGames";
 
 
@@ -18,6 +18,9 @@ import { useReviews } from "./hooks/useReviews";
 
 import { SearchResult } from "./components/pages/search-results";
 
+import LoginOptions from "./components/pages/users/login-options-page";
+import LoginPage from "./components/pages/users/login-page";
+import CreateUserPage from "./components/pages/users/create-user-page";
 
 function App() {
 
@@ -35,7 +38,7 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<Landing />}/>
         <Route path="PopularGames" element={<PopularGames />}/>
-        <Route path="Friends" element={<FriendsList />}/>
+  
         <Route 
           path="Reviews" 
           element={<ReviewsPage reviews={reviews} createReview={createReview}/>}/>
@@ -49,6 +52,9 @@ function App() {
             newGameTitle={newGameTitle}
             setNewGameTitle={setNewGameTitle}
           />}/>
+          <Route path="/login-options" element={<LoginOptions />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/create-user" element={<CreateUserPage />} />
           {// new path to handle searching for games
           }<Route path="games/search" element={<SearchResult/>}/>
       </Route>

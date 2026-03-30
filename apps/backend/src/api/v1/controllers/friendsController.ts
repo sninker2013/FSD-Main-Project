@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import {Friend} from "@prisma/client";
 import * as friendService from "../services/friendsService";
-//import { successResponse } from "../models/responseModel";
+import { HTTP_STATUS } from "../../../constants/httpConstants";
 
 
 /**
@@ -17,9 +17,10 @@ export const getAllFriends = async(
 ): Promise<void> => {
     try{
         const friends = await friendService.getAllFriends();
-        res.status(200).json(
-            successResponse(friends, "Friends retrieved succesfully")
-        );
+        res.status(HTTP_STATUS.OK).json({
+            message: "Friends retrieved successfully",
+            data: friends,
+        });
     } catch (error) {
         next(error);
     }
@@ -47,7 +48,10 @@ export const getFriendByUserName = async(
         const friend = await friendService.getFriendByUserName(userName);
 
         if(friend) {
-            res.json(successResponse(friend, "Friend retrieved succesfully"));
+            res.status(HTTP_STATUS.OK).json({
+            message: "Friend retrieved successfully",
+            data: friend,
+        });
         } else{
             res.status(404).json({ success: false, message: "Friend not found" });
         }
@@ -114,7 +118,10 @@ export const addFriendByUserName = async (
       finalIsFavourite
     );
 
-    res.status(201).json(successResponse(newFriend, "Friend created successfully"));
+    res.status(HTTP_STATUS.CREATED).json({
+                message: "Friend created successfully",
+                data: newFriend,
+            });
   } catch (error: any) {
     res.status(400).json({ success: false, message: error.message });
   }
@@ -147,8 +154,10 @@ export const updateFriendFavourite = async(
       { isFavourite } // Prisma expects object
     );
 
-    res.status(200)
-      .json(successResponse(updatedFriend, "Friend updated successfully"));
+    res.status(HTTP_STATUS.OK).json({
+            message: "Friend updated successfully",
+            data: updatedFriend,
+        });
   } catch(error: any) {
     res.status(400).json({ success: false, message: error.message });
   }
@@ -172,8 +181,9 @@ export const deleteFriend = async(
         }
 
         await friendService.deleteFriend(userId, friendId);
-        res.status(200)
-            .json(successResponse(null, "Friend deleted succesfully"));
+        res.status(HTTP_STATUS.OK).json({
+            message: "Friend deleted successfully",
+        });
     } catch(error: any) {
         res.status(400).json({ success: false, message: error.message });
     }

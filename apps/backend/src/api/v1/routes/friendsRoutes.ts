@@ -1,26 +1,26 @@
 import express, {Router} from "express";
-//import { validateRequest } from "../middleware/validate";
-//import { userSchema } from "../validations/userValidation";
+import { validateRequest } from "../middleware/validate";
+import { friendSchema } from "../validations/friendValidation";
 import * as friendsController from "../controllers/friendsController";
 
 const router: Router = express.Router();
 
-router.get("/friends", /*validateRequest(friendSchema),*/
+router.get("/friends", validateRequest({ query: friendSchema }),
     friendsController.getAllFriends);
 
-router.get("/friends/:friendUserName", /*validateRequest(friendSchema),*/
+router.get("/friends/:friendUserName", validateRequest({ params: friendSchema }),
     friendsController.getFriendByUserName);
 
-router.get("/friends/of/:userName", /*validateRequest(friendSchema),*/
+router.get("/friends/of/:userName", validateRequest({ params: friendSchema }),
     friendsController.getFriendsByUserName);
 
-router.post("/friends", /*validateRequest(friendSchema),*/ 
+router.post("/friends", validateRequest({ body: friendSchema }),
     friendsController.addFriendByUserName);
 
-router.put("/friends/:userId/:friendId", /*validateRequest(friendSchema),*/
-    friendsController.updateFriend);
+router.put("/friends/:userId/:friendId", validateRequest({ body: friendSchema }),
+    friendsController.updateFriendFavourite);
 
-router.delete("/friends/:userId/:friendId", /*validateRequest(friendSchema),*/
+router.delete("/friends/:userId/:friendId", validateRequest({ params: friendSchema }),
     friendsController.deleteFriend);
 
 export default router;

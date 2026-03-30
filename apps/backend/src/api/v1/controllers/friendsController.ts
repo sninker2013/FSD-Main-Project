@@ -44,7 +44,7 @@ export const getFriendByUserName = async(
             return;
         }
 
-        const friend = await friendService.getFriendByUserName(userName, friendUserName);
+        const friend = await friendService.getFriendByUserName(userName);
 
         if(friend) {
             res.json(successResponse(friend, "Friend retrieved succesfully"));
@@ -56,27 +56,33 @@ export const getFriendByUserName = async(
     }
 }
 
+
+
 export const getFriendsByUserName = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-): Promise<void> => {
-    try {
-        const { userName } = req.params;
+  req: Request<{ userName: string }>,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { userName } = req.params;
 
-        if (!userName) {
-            res.status(400).json({ success: false, message: "User name is required" });
-            return;
-        }
-
-        const friends = await friendService.getFriendsByUserName(userName);
-
-        res.status(200).json(
-            successResponse(friends, "Friends retrieved successfully")
-        );
-    } catch (error: any) {
-        next(error);
+    if (!userName) {
+      res.status(400).json({ success: false, message: "User name is required" });
+      return;
     }
+
+    const friends = await friendService.getFriendsByUserName(userName);
+
+    res.status(200).json({
+      success: true,
+      message: friends.length
+        ? "Friends retrieved successfully"
+        : "No friends found",
+      data: friends,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
 /**
@@ -86,24 +92,32 @@ export const getFriendsByUserName = async (
  * @param next - The express middleware chaining function
  */
 export const addFriendByUserName = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
+  req: Request<{}, {}, { userName: string; friendUserName: string; dateAdded?: string; isFavourite?: boolean; }>,
+  res: Response,
+  next: NextFunction
 ) => {
-    try {
-        const { userName, friendUserName, isFavourite } = req.body;
+  try {
+    const { userName, friendUserName, isFavourite, dateAdded } = req.body;
 
-        if (!userName || !friendUserName) {
-            res.status(400).json({ success: false, message: "User name and friend user name are required" });
-            return;
-        }
-
-        const newFriend = await friendService.addFriendByUserName(req.body);
-        res.status(201)
-            .json(successResponse(newFriend, "Friend created succesfully"));
-    } catch(error: any) {
-        res.status(400).json({ success: false, message: error.message });
+    if (!userName || !friendUserName) {
+      res.status(400).json({ success: false, message: "User name and friend user name are required" });
+      return;
     }
+
+    const finalDateAdded = dateAdded ? new Date(dateAdded) : new Date();
+    const finalIsFavourite = isFavourite ?? false;
+
+    const newFriend = await friendService.addFriendByUserName(
+      userName,
+      friendUserName,
+      finalDateAdded,
+      finalIsFavourite
+    );
+
+    res.status(201).json(successResponse(newFriend, "Friend created successfully"));
+  } catch (error: any) {
+    res.status(400).json({ success: false, message: error.message });
+  }
 };
 
 /**
@@ -112,24 +126,32 @@ export const addFriendByUserName = async (
  * @param res  - The express Response
  * @param next - The express middleware chaining function
  */
-export const updateFriend = async(
-    req: Request,
-    res: Response,
-    next: NextFunction
+export const updateFriendFavourite = async(
+  req: Request<{ userId: string; friendId: string }>,
+  res: Response,
+  next: NextFunction
 ): Promise<void> => {
-    try {
-        const { userId, friendId, isFavourite } = req.body;
-        if (!userId || !friendId) {
-            res.status(400).json({ success: false, message: "User Id and friend Id are required" });
-            return;
-        };
+  try {
+    // Extract IDs from params, not body
+    const { userId, friendId } = req.params;
+    const { isFavourite } = req.body;
 
-        const updatedFriend = await friendService.updateFriend(userId, friendId, { isFavourite });
-        res.status(200)
-            .json(successResponse(updatedFriend, "Friend updated succesfully"));
-    } catch(error: any) {
-        res.status(400).json({ success: false, message: error.message });
+    if (!userId || !friendId) {
+      res.status(400).json({ success: false, message: "User Id and friend Id are required" });
+      return;
     }
+
+    const updatedFriend = await friendService.updateFriendFavourite(
+      userId,
+      friendId,
+      { isFavourite } // Prisma expects object
+    );
+
+    res.status(200)
+      .json(successResponse(updatedFriend, "Friend updated successfully"));
+  } catch(error: any) {
+    res.status(400).json({ success: false, message: error.message });
+  }
 };
 
 /**

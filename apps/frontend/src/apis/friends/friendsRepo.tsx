@@ -99,7 +99,7 @@ export async function updateFriendFavourite(
         }
     );
 
-    if (!res.ok) throw new Error("Failed to update friend");
+    if (!updateResponse.ok) throw new Error("Failed to update friend");
 
     const json: FriendResponseJSON = await updateResponse.json();
     return json.data;

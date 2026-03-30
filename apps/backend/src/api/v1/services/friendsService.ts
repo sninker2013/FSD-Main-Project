@@ -9,7 +9,7 @@ import { format } from 'date-fns';
  * Retrieves all friends from storage
  * @returns Array of all friends
  */
-export const fetchAllFriends = async(): Promise<Friend[]> => {
+export const getAllFriends = async(): Promise<Friend[]> => {
     return prisma.friend.findMany();
 }
 
@@ -31,20 +31,19 @@ export const getFriendByUserName = async(userName: string): Promise<Friend[]> =>
     return user.friends;
 };
 
+export const getFriendsByUserName = async (userName: string): Promise<User[]> => {
+  const user = await prisma.user.findUnique({
+    where: { userName },
+  });
 
-export const getFriendsByUserName = async (userName: string): Promise<Friend[]> => {
-    const user = await prisma.user.findUnique({
-        where: { userName },
-    });
+  if (!user) return [];
 
-    if (!user) return [];
+  const friendships = await prisma.friend.findMany({
+    where: { userId: user.id },
+    include: { friend: true }, // <- This gives the actual User object
+  });
 
-    const friends = await prisma.friend.findMany({
-        where: { userId: user.id },
-        include: { friend: true },
-    });
-
-    return friends;
+  return friendships.map(f => f.friend); // returns User[]
 };
 
 // addFriend
@@ -86,7 +85,7 @@ export const addFriendByUserName = async (
 
 // updateFriend
 
-export const updateFriend = async(
+export const updateFriendFavourite = async(
     userId: string,
     friendId: string,
     updates: { isFavourite: boolean }

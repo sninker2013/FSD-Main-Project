@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 
 import corsOptions from "../config/cors";
 import setupSwagger from "../config/swagger";
+import reviewRoutes from "./api/v1/routes/reviewRoutes";
 import errorHandler from "./api/v1/middleware/errorHandler";
 
 const app: Express = express();
@@ -20,6 +21,7 @@ app.get("/",  (_req, res) => {
 });
 
 //Put routes here
+app.use("/api/v1/reviews", reviewRoutes);
 
 app.use(errorHandler);
 

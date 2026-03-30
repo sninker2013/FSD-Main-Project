@@ -1,47 +1,56 @@
-import { User } from "@prisma/client";
-import { Game } from "@prisma/client";
-import { Review } from "@prisma/client";
-import { Friend } from "@prisma/client";
+import { User } from "../src/generated/prisma/client";
+import { Game } from "../src/generated/prisma/client";
+import { Review } from "../src/generated/prisma/client";
+import { Friend } from "../src/generated/prisma/client";
+import { Prisma } from "../src/generated/prisma/client";
 
-export const userSeedData: User = [
+export const userSeedData: User[] = [
     {
         id: "w34tuh3",
         userName: "timdrake",
+        profilePic: "images/profilePics/CUBE.jpg",
+
         dateCreated: new Date(),
     },
     {
         id: "4382ty9s",
         userName: "peterparker",
+        profilePic: "images/profilePics/silksong.png",
         dateCreated: new Date(),
     },
     {
         id: "2p498ty",
         userName: "surlycat",
+        profilePic: "images/profilePics/XavierPfp.png",
         dateCreated: new Date(),
     },
     {
         id: "34p98tw",
         userName: "ChasingRainbows",
+        profilePic: "images/profilePics/CUBE.jpg",
         dateCreated: new Date(),
     },
     {
         id: "l2r8rrf3",
         userName: "lotsOfLeg",
+        profilePic: "images/profilePics/silksong.png",
         dateCreated: new Date(),
     },
     {
         id: "wg3yop24",
         userName: "demolitionBabe",
+        profilePic: "images/profilePics/XavierPfp.png",
         dateCreated: new Date(),
     },
     {
         id: "4gtf359g",
         userName: "endlessGrace",
+        profilePic: "images/profilePics/CUBE.jpg",
         dateCreated: new Date(),
     },
 ]
 
-export const gameSeedData: Game = [
+export const gameSeedData: Game[] = [
     {
         id: "3ao8twl",
         gameName: "Elden Ring",
@@ -65,7 +74,7 @@ export const gameSeedData: Game = [
     }
 ]
 
-export const friendSeedData: Friend = [
+export const friendSeedData: Friend[] = [
     {
         userId: "w34tuh3",
         friendId: "4382ty9s",
@@ -164,7 +173,7 @@ export const friendSeedData: Friend = [
     },
 ]
 
-export const reviewSeedData: Review = [
+export const reviewSeedData: Prisma.ReviewUncheckedCreateInput[] = [
     {
         gameId: "3ao8twl",   
         userId: "w34tuh3",

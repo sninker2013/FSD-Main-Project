@@ -74,6 +74,7 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export const UserScalarFieldEnum = {
   id: 'id',
   userName: 'userName',
+  profilePic: 'profilePic',
   dateCreated: 'dateCreated'
 } as const
 
@@ -102,6 +103,7 @@ export type FriendScalarFieldEnum = (typeof FriendScalarFieldEnum)[keyof typeof 
 
 
 export const ReviewScalarFieldEnum = {
+  id: 'id',
   gameId: 'gameId',
   userId: 'userId',
   dateCreated: 'dateCreated',

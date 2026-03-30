@@ -1,83 +1,55 @@
-import type { Review } from "../../../../../shared/types/reviews";
-import { reviewData } from "./reviewData";
+import type { Review } from "@shared/types/reviews";
 
-/**
- * This component acts as a repository where any access of the data goes through, this will be important when we are using external data.
- */
+type ReviewsResponseJSON = {message: string, data: Review[]}
+type ReviewResponseJSON = {message: string, data: Review}
+
+const BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1/reviews`;
 
 /**
  * Gets all of the reviews from the dataset.
  * @returns {Review[]} An array of all the reviews
  */
-export function getAllReviews(): Review[] {
-    return reviewData;
-}
+export async function getAllReviews(): Promise<Review[]> {
+    const response: Response = await fetch(BASE_URL)
 
-/**
- * Finds a review by it's ID.
- * @param reviewId - The ID of the review that is to be retrieved.
- * @errors - Throws an error if the review ID cannot be found.
- * @returns {Review} - The review that is found by the ID.
- */
-export function getReviewById(reviewId: string): Review {
-    const foundReview = reviewData.find(r => r.id === reviewId);
-
-    if(!foundReview) {
-        throw new Error(`Failed to fetch review with ID: ${reviewId}`);
+    if (!response.ok) {
+        throw new Error("failed to get all reviews")
     }
 
-    return foundReview;
+    const json: ReviewsResponseJSON = await response.json();
+    return json.data
 }
 
 /**
- * Create a review from the star rating and review decription. The reviewer name and profile picture are placeholders because presumably this information would come from the user.
+ * Create a review from the star rating and review decription.
  * @param starRating - The rating as a number from 1-5.
  * @param reviewDesc - The description of the review.
  * @returns {Review} - The newly created review
  */
-export function createReview(starRating: 1|2|3|4|5, reviewDesc: string,): Review {
-    const newReview: Review = {
-        id: crypto.randomUUID(),
-        value: {
-            starRating: starRating,
-            // using a temporary reviewer name and profile picture until we implement proper users
-            reviewerName: "D Synkiw",
-            reviewerPfp: "/images/profilePics/silksong.png",
-            reviewDesc: reviewDesc,
-            reviewDate: new Date(Date.now())
+export async function createReview(starRating: 1|2|3|4|5, reviewDesc: string,): Promise<Review> {
+        const createResponse: Response = await fetch(
+        BASE_URL,
+        {
+            method: "POST",
+            body: JSON.stringify({
+                /* 
+                These hardcoded game and user IDs are temporary, once the game backend is integrated I will edit the form so the user
+                can select the game they write the review for.
+                */
+                gameId: "3ao8twl",
+                userId: "l2r8rrf3",
+                stars: starRating,
+                reviewContents: reviewDesc,
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            }
         }
-    };
-    return newReview;
-}
+    );
 
-/**
- * Updates a review. This may be useful if we let users edit their reviews.
- * @param review - The review that is to be updated.
- * @errors - Throws an error if the review ID cannot be found.
- * @returns {Review} - The review that was changed.
- */
-export async function updateReview(review: Review) {
-    const foundReviewIndex = reviewData.findIndex(r => r.id === review.id);
-
-    if(foundReviewIndex === -1) {
-        throw new Error(`Failed to update terms with ID: ${review.id}`);
+    if (!createResponse.ok) {
+        throw new Error("Could not create new review")
     }
-
-    reviewData[foundReviewIndex] = review;
-    return reviewData[foundReviewIndex];
-}
-
-/**
- * Deletes a review by it's ID
- * @param reviewId - The ID of the review that is to be deleted
- * @errors - Throws an error if the review ID cannot be found.
- */
-export async function deleteReview(reviewId: string) {
-    const foundReview = reviewData.find(r => r.id === reviewId)
-
-    if(!foundReview) {
-        throw new Error(`Failed to delete term with ID: ${reviewId}`)
-    } else {
-        reviewData.splice(reviewData.indexOf(foundReview), 1)
-    }
+    const json: ReviewResponseJSON = await createResponse.json()
+    return json.data
 }

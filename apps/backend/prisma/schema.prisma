@@ -17,6 +17,7 @@ model User {
   id String @id
 
   userName String @unique
+  profilePic String
   dateCreated DateTime
 
   reviews Review[]
@@ -49,16 +50,13 @@ model Friend {
 }
 
 model Review {
-  gameId String
-  userId String
-  dateCreated DateTime
-
-  dateEditted DateTime?
-  stars Int
+  id             String @id @default(uuid())
+  gameId         String
+  userId         String
+  dateCreated    DateTime @default(now())
+  dateEditted    DateTime?
+  stars          Int
   reviewContents String
-
-  user User @relation(fields: [userId], references: [id])
-  game Game @relation(fields: [gameId], references: [id])
-
-  @@id([gameId, userId, dateCreated])
+  user           User @relation(fields: [userId], references: [id])
+  game           Game @relation(fields: [gameId], references: [id])
 }

@@ -3,6 +3,9 @@ import type { Review } from "../../../generated/prisma/client"
 import * as reviewService from '../services/reviewService';
 import { successResponse } from '../models/responseModel';
 
+/**
+ * Gets all the reviews and sends 200 if it succeeds
+ */
 export async function getAllReviews(_req: Request, res: Response, next: NextFunction) {
     try {
         const reviews: Review[] = await reviewService.fetchAllReviews();
@@ -11,7 +14,9 @@ export async function getAllReviews(_req: Request, res: Response, next: NextFunc
         next(error);
     }
 };
-
+/**
+ * Creates a review and sends 201 if successful
+ */
 export async function createReview(req: Request, res: Response, next: NextFunction) {
     try {
         const reviewData = req.body;

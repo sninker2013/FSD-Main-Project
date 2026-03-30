@@ -1,12 +1,11 @@
-import type { ReviewElement } from "../../../../../../shared/types/reviews"
-
+import type { Review } from "@shared/types/reviews"
 
 type Stars = {
     id: number;
     value: boolean;
 }
 
-function Stars(review: ReviewElement) {
+function Stars(review: Review) {
     const starsItems: React.JSX.Element[] = []
     let stars: Stars[] = [
         {id: 0, value: false},
@@ -16,7 +15,7 @@ function Stars(review: ReviewElement) {
         {id: 4, value: false},
     ]
 
-    for (let i = 0; i < review.starRating; i++) {
+    for (let i = 0; i < review.stars; i++) {
         stars[i].value = true
     }
 

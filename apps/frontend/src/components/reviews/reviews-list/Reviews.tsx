@@ -1,7 +1,6 @@
 import "./Reviews.css";
 import Stars from "../../common/stars/Stars";
-import type { ReviewElement } from "../../../../../../shared/types/reviews";
-import type { Review } from "../../../../../../shared/types/reviews";
+import type { Review } from "@shared/types/reviews";
 
 function Reviews ({ reviews }: { reviews: Review[] }) {
     return (
@@ -14,10 +13,10 @@ function Reviews ({ reviews }: { reviews: Review[] }) {
 function ReviewsDisplay({ reviews }: { reviews: Review[] }) {
     const reviewItems: React.JSX.Element[] = [];
 
-    reviews.forEach((review) => {
+    reviews.forEach((review: Review) => {
         reviewItems.push(<ReviewItem
-            review={review.value}
-            key={review.id}
+            review={review}
+            key={`${review.id}`}
             />
         )
     })
@@ -32,8 +31,8 @@ function ReviewsDisplay({ reviews }: { reviews: Review[] }) {
     )
 }
 
-function ReviewItem({review}: {review: ReviewElement}) {
-    const formattedDate = review.reviewDate.toLocaleDateString("en-US", {
+function ReviewItem({review}: {review: Review}) {
+    const formattedDate = new Date(review.dateCreated).toLocaleDateString("en-US", {
   year: "numeric",
   month: "long",
   day: "numeric"
@@ -42,15 +41,15 @@ function ReviewItem({review}: {review: ReviewElement}) {
     return(
         <section className="review">
                 <section className="profile">
-                    <img src={review.reviewerPfp} alt="reviewer profile picture" style={{width: "56px", height: "56px"}}/>
-                    <p>{review.reviewerName}</p>
+                    <img src={review.user.profilePic} alt="reviewer profile picture" style={{width: "56px", height: "56px"}}/>
+                    <p>{review.user.userName}</p>
                 </section>
                 <section className="review__row">
                 <Stars {...review}/>
                 </section>
                 <p className="date">{formattedDate}</p>
                 <section className="review__desc">
-                    <p>{review.reviewDesc}</p>
+                    <p>{review.reviewContents}</p>
                 </section>
         </section>
     )

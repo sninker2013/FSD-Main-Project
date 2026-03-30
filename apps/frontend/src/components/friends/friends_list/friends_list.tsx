@@ -7,9 +7,10 @@ import starIcon from "./assets/star-transparent.png";
 import { testFriends } from "../../../apis/friends/friendsData";
 
 import {
-    initializeFriends,
     getFriends,
-    addFriend,
+    getFriendByUserName,
+    getFriendsByUserName,
+    addFriendByUserName,
     updateFriendFavourite,
     deleteFriend
 } from "../../../apis/friends/friendsRepo";
@@ -18,11 +19,13 @@ import {
 
 function FriendItem({ 
     userName,
+    friendUserName,
     isFavourite,
     onToggleFavourite,
     onDelete
  }: { 
     userName: string;
+    friendUserName: string;
     isFavourite: boolean;
     onToggleFavourite: () => void;
     onDelete: () => void;

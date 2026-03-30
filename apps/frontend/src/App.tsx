@@ -5,9 +5,8 @@ import './App.css'
 import { Layout } from "./components/common/layout/layout";
 import { Landing } from "./components/pages/landing/landing";
 
-
+import FriendsList from "./components/friends/friends_list/friends_list";
 import { PopularGames } from "./components/popular_games/PopularGames";
-
 
 import { UserProfilePage } from "./components/pages/UserProfilePage";
 import type { UserProfileType, Game } from "./components/common/user-profile/profileData";
@@ -38,7 +37,7 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<Landing />}/>
         <Route path="PopularGames" element={<PopularGames />}/>
-  
+        <Route path="Friends" element={<FriendsList />}/>
         <Route 
           path="Reviews" 
           element={<ReviewsPage reviews={reviews} createReview={createReview}/>}/>

@@ -1,9 +1,7 @@
 // Use the term type defined in prisma/schema.prisma
-import { Friend } from "@prisma/client";
-// initialize a prisma client if not already and use in queries here
 import prisma from "../../../../prisma/client";
-
-import { format } from 'date-fns';
+import { Friend, User } from "../../../generated/prisma/client";
+// initialize a prisma client if not already and use in queries here
 
 /**
  * Retrieves all friends from storage
@@ -43,7 +41,8 @@ export const getFriendsByUserName = async (userName: string): Promise<User[]> =>
     include: { friend: true }, // <- This gives the actual User object
   });
 
-  return friendships.map(f => f.friend); // returns User[]
+  // Explicitly type `f` as Friend & { friend: User }
+  return friendships.map((f: Friend & { friend: User }) => f.friend);
 };
 
 // addFriend

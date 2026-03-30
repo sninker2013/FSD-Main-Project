@@ -3,6 +3,8 @@ import morgan from "morgan";
 import cors from "cors";
 import dotenv from "dotenv";
 
+import friendsRoutes from "./api/v1/routes/friendsRoutes";
+
 import corsOptions from "../config/cors";
 import setupSwagger from "../config/swagger";
 import errorHandler from "./api/v1/middleware/errorHandler";
@@ -20,6 +22,8 @@ app.get("/",  (_req, res) => {
 });
 
 //Put routes here
+
+app.use("/api/v1/friends", friendsRoutes);
 
 app.use(errorHandler);
 

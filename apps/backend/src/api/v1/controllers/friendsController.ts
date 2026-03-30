@@ -1,8 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import {Friend} from "@prisma/client";
 import * as friendService from "../services/friendsService";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
-
 
 /**
  * Manages requests and reponses to retrieve all Friends
@@ -56,7 +54,7 @@ export const getFriendByUserName = async(
             res.status(404).json({ success: false, message: "Friend not found" });
         }
     } catch(error: any) {
-        res.status(400).json({ success: false, message: error.message });
+        next(error)
     }
 }
 
@@ -84,9 +82,9 @@ export const getFriendsByUserName = async (
         : "No friends found",
       data: friends,
     });
-  } catch (error) {
-    next(error);
-  }
+  } catch(error: any) {
+        next(error)
+    }
 };
 
 /**
@@ -122,9 +120,9 @@ export const addFriendByUserName = async (
                 message: "Friend created successfully",
                 data: newFriend,
             });
-  } catch (error: any) {
-    res.status(400).json({ success: false, message: error.message });
-  }
+  } catch(error: any) {
+        next(error)
+    }
 };
 
 /**
@@ -159,8 +157,8 @@ export const updateFriendFavourite = async(
             data: updatedFriend,
         });
   } catch(error: any) {
-    res.status(400).json({ success: false, message: error.message });
-  }
+        next(error)
+    }
 };
 
 /**
@@ -185,6 +183,6 @@ export const deleteFriend = async(
             message: "Friend deleted successfully",
         });
     } catch(error: any) {
-        res.status(400).json({ success: false, message: error.message });
+        next(error)
     }
 };

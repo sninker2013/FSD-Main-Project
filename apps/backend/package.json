@@ -17,6 +17,7 @@
     "seed": "ts-node --transpile-only prisma/seed.ts"
   },
   "devDependencies": {
+    "@prisma/client": "^7.6.0",
     "@types/express": "^5.0.0",
     "@types/node": "^22.13.10",
     "@types/swagger-jsdoc": "^6.0.4",
@@ -28,7 +29,6 @@
     "tsx": "^4.21.0"
   },
   "dependencies": {
-    "@prisma/client": "^6.5.0",
     "@types/cors": "^2.8.17",
     "@types/morgan": "^1.9.9",
     "cors": "^2.8.5",

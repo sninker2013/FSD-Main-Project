@@ -1,4 +1,4 @@
-import type { Friends } from  "@shared/types/friends";
+import type { Friend } from  "@shared/types/friends";
 import * as friendsRepo from "../apis/friends/friendsRepo";
 
 /**
@@ -29,22 +29,44 @@ export function validateUserName(userName: string): ValidationResult {
     };
 }
 
-export const initializeFriends = (data : Friends[]) =>{
-    return friendsRepo.initializeFriends(data);
+export async function getFriends(): Promise<Friend[]> {
+    return await friendsRepo.getFriends();
+}
+
+export const getFriendByUserName = async (
+    friendUserName: string,
+): Promise<Friend> => {
+    return await friendsRepo.getFriendByUserName(friendUserName);
+}
+
+export const getFriendsByUserName = async (
+    userName: string,
+): Promise<Friend[]> => {
+    return await friendsRepo.getFriendsByUserName(userName);
+}
+
+export const addFriendByUserName = async (
+    userName: string,
+    friendUserName: string
+): Promise<Friend> => {
+    return await friendsRepo.addFriendByUserName(userName, friendUserName);
 };
 
-export const getFriends = (): Friends[] => {
-    return friendsRepo.getFriends();
+export const updateFriendFavourite = async (
+    userId: string,
+    friendId: string,
+    isFavourite: boolean
+): Promise<Friend> => {
+    return await friendsRepo.updateFriendFavourite(
+        userId,
+        friendId,
+        isFavourite
+    );
 };
 
-export const addFriend = (userName: string): Friends => {
-    return friendsRepo.addFriend(userName);
-};
-
-export const updateFriendFavourite = (friendId: string): void => {
-    friendsRepo.updateFriendFavourite(friendId);
-};
-
-export const deleteFriend = (friendId: string): void => {
-    friendsRepo.deleteFriend(friendId);
+export const deleteFriend = async (
+    userId: string,
+    friendId: string
+): Promise<void> => {
+    await friendsRepo.deleteFriend(userId, friendId);
 }

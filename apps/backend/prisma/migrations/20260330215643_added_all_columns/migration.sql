@@ -2,6 +2,7 @@
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "userName" TEXT NOT NULL,
+    "profilePic" TEXT NOT NULL,
     "dateCreated" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
@@ -30,14 +31,15 @@ CREATE TABLE "Friend" (
 
 -- CreateTable
 CREATE TABLE "Review" (
+    "id" TEXT NOT NULL,
     "gameId" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
-    "dateCreated" TIMESTAMP(3) NOT NULL,
+    "dateCreated" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "dateEditted" TIMESTAMP(3),
     "stars" INTEGER NOT NULL,
     "reviewContents" TEXT NOT NULL,
 
-    CONSTRAINT "Review_pkey" PRIMARY KEY ("gameId","userId","dateCreated")
+    CONSTRAINT "Review_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex

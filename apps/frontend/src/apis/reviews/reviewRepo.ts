@@ -21,7 +21,7 @@ export async function getAllReviews(): Promise<Review[]> {
 }
 
 /**
- * Create a review from the star rating and review decription. The reviewer name and profile picture are placeholders because presumably this information would come from the user.
+ * Create a review from the star rating and review decription.
  * @param starRating - The rating as a number from 1-5.
  * @param reviewDesc - The description of the review.
  * @returns {Review} - The newly created review
@@ -32,6 +32,10 @@ export async function createReview(starRating: 1|2|3|4|5, reviewDesc: string,): 
         {
             method: "POST",
             body: JSON.stringify({
+                /* 
+                These hardcoded game and user IDs are temporary, once the game backend is integrated I will edit the form so the user
+                can select the game they write the review for.
+                */
                 gameId: "3ao8twl",
                 userId: "l2r8rrf3",
                 stars: starRating,

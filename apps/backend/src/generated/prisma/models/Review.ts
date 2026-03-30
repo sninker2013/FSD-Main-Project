@@ -240,7 +240,7 @@ export type ReviewOrderByWithRelationInput = {
 }
 
 export type ReviewWhereUniqueInput = Prisma.AtLeast<{
-  gameId_userId_dateCreated?: Prisma.ReviewGameIdUserIdDateCreatedCompoundUniqueInput
+  gameId_userId?: Prisma.ReviewGameIdUserIdCompoundUniqueInput
   AND?: Prisma.ReviewWhereInput | Prisma.ReviewWhereInput[]
   OR?: Prisma.ReviewWhereInput[]
   NOT?: Prisma.ReviewWhereInput | Prisma.ReviewWhereInput[]
@@ -252,7 +252,7 @@ export type ReviewWhereUniqueInput = Prisma.AtLeast<{
   reviewContents?: Prisma.StringFilter<"Review"> | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   game?: Prisma.XOR<Prisma.GameScalarRelationFilter, Prisma.GameWhereInput>
-}, "gameId_userId_dateCreated">
+}, "gameId_userId">
 
 export type ReviewOrderByWithAggregationInput = {
   gameId?: Prisma.SortOrder
@@ -281,7 +281,7 @@ export type ReviewScalarWhereWithAggregatesInput = {
 }
 
 export type ReviewCreateInput = {
-  dateCreated: Date | string
+  dateCreated?: Date | string
   dateEditted?: Date | string | null
   stars: number
   reviewContents: string
@@ -292,7 +292,7 @@ export type ReviewCreateInput = {
 export type ReviewUncheckedCreateInput = {
   gameId: string
   userId: string
-  dateCreated: Date | string
+  dateCreated?: Date | string
   dateEditted?: Date | string | null
   stars: number
   reviewContents: string
@@ -319,7 +319,7 @@ export type ReviewUncheckedUpdateInput = {
 export type ReviewCreateManyInput = {
   gameId: string
   userId: string
-  dateCreated: Date | string
+  dateCreated?: Date | string
   dateEditted?: Date | string | null
   stars: number
   reviewContents: string
@@ -351,10 +351,9 @@ export type ReviewOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type ReviewGameIdUserIdDateCreatedCompoundUniqueInput = {
+export type ReviewGameIdUserIdCompoundUniqueInput = {
   gameId: string
   userId: string
-  dateCreated: Date | string
 }
 
 export type ReviewCountOrderByAggregateInput = {
@@ -489,7 +488,7 @@ export type IntFieldUpdateOperationsInput = {
 }
 
 export type ReviewCreateWithoutUserInput = {
-  dateCreated: Date | string
+  dateCreated?: Date | string
   dateEditted?: Date | string | null
   stars: number
   reviewContents: string
@@ -498,7 +497,7 @@ export type ReviewCreateWithoutUserInput = {
 
 export type ReviewUncheckedCreateWithoutUserInput = {
   gameId: string
-  dateCreated: Date | string
+  dateCreated?: Date | string
   dateEditted?: Date | string | null
   stars: number
   reviewContents: string
@@ -543,7 +542,7 @@ export type ReviewScalarWhereInput = {
 }
 
 export type ReviewCreateWithoutGameInput = {
-  dateCreated: Date | string
+  dateCreated?: Date | string
   dateEditted?: Date | string | null
   stars: number
   reviewContents: string
@@ -552,7 +551,7 @@ export type ReviewCreateWithoutGameInput = {
 
 export type ReviewUncheckedCreateWithoutGameInput = {
   userId: string
-  dateCreated: Date | string
+  dateCreated?: Date | string
   dateEditted?: Date | string | null
   stars: number
   reviewContents: string
@@ -586,7 +585,7 @@ export type ReviewUpdateManyWithWhereWithoutGameInput = {
 
 export type ReviewCreateManyUserInput = {
   gameId: string
-  dateCreated: Date | string
+  dateCreated?: Date | string
   dateEditted?: Date | string | null
   stars: number
   reviewContents: string
@@ -618,7 +617,7 @@ export type ReviewUncheckedUpdateManyWithoutUserInput = {
 
 export type ReviewCreateManyGameInput = {
   userId: string
-  dateCreated: Date | string
+  dateCreated?: Date | string
   dateEditted?: Date | string | null
   stars: number
   reviewContents: string

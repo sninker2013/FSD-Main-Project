@@ -97,3 +97,43 @@ Refactored Component - Friends - Shannon
 Architectural Layout documents - Xavier, D, Shannon
 
 Update README.md for Sprint 3 - Xavier
+
+## Sprint 4
+
+### Group Requirements
+
+Back-end App Initialization - Xavier
+
+Development SQL Database - D
+
+Prisma Installation and Client Initialization - Shannon
+
+Back-end CORS Configuration - D
+
+### Individual Requirements
+
+Back-end Resource Endpoints - Reviews - D
+
+Resource Database Schema - Reviews - D + Shannon
+
+Front-end Repository sends requests to back-end - Reviews - D
+
+Application State Persistence - Reviews - D
+
+Back-end Resource Endpoints - Games - Xavier
+
+Resource Database Schema - Games - Xavier + Shannon
+
+Front-end Repository sends requests to back-end - Games - Xavier
+
+Application State Persistence - Games - Xavier
+
+Back-end Resource Endpoints - Users + Friends - Shannon
+
+Resource Database Schema - Friends - Shannon
+
+Front-end Repository sends requests to back-end - Users + Friends - Shannon
+
+Application State Persistence - Users + Friends - Shannon
+
+Resource Database Schema - Users - Shannon + D

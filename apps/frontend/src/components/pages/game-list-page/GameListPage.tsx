@@ -1,5 +1,6 @@
 import { useGames } from "../../../hooks/useGames";
 import type { Game } from "../../../../../../shared/types/game";
+import "./GameListPage.css";
 
 type GameListPageProps = {
     dependencies?: any[];

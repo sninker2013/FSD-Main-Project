@@ -1,17 +1,27 @@
 import type { Game } from "../../../../../shared/types/game";
-import { sampleGames } from "../games/gameData";
 
 /**
  * Game Repository - Handles all data access for games.
  */
 
 /**
- * Fetch all games from the data source
+ * Fetch all games from the backend API
  * @returns Promise<Game[]> - Array of all games
  */
 export async function fetchGames(): Promise<Game[]> {
     try {
-        return [...sampleGames];
+        const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/api/v1/games`;
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+            throw new Error(`API request failed with status ${response.status}`);
+        }
+        const data = await response.json();
+        // Extract games from the ApiResponse structure and add default isFeatured
+        const games = data.data || [];
+        return games.map((game: any) => ({
+            ...game,
+            isFeatured: game.isFeatured ?? false
+        }));
     } catch (error) {
         throw new Error(`Failed to fetch games: ${error}`);
     }

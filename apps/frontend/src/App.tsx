@@ -27,15 +27,15 @@ function App() {
   const [newGameTitle, setNewGameTitle] = useState("");
 
   const { reviews, createReview } = useReviews()
-  
 
+  const currentUserName = "john_doe";
   
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Landing />}/>
         <Route path="PopularGames" element={<PopularGames />}/>
-        <Route path="Friends" element={<FriendsList />}/>
+        <Route path="Friends" element={<FriendsList currentUserName={currentUserName} />}/>
         <Route 
           path="Reviews" 
           element={<ReviewsPage reviews={reviews} createReview={createReview}/>}/>

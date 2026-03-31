@@ -1,109 +1,81 @@
-import { useState, useEffect } from "react";
-import "./friends_list.css"
-import type { Friends } from "../../../../../../shared/types/friends";
+import type { Friend } from "@shared/types/friends";
 import { FriendForm } from "../friends_form/friends_form";
 import starIcon from "./assets/star-transparent.png";
+import useFriendsInput from "../../../hooks/useFriendsInput";
+import "./friends_list.css";
 
-import { testFriends } from "../../../apis/friends/friendsData";
-
-import {
-    initializeFriends,
-    getFriends,
-    addFriend,
-    updateFriendFavourite,
-    deleteFriend
-} from "../../../apis/friends/friendsRepo";
-
-function FriendItem({ 
-    userName,
-    isFavourite,
-    onToggleFavourite,
-    onDelete
- }: { 
-    userName: string;
-    isFavourite: boolean;
-    onToggleFavourite: () => void;
-    onDelete: () => void;
- }) {
-  return (
-    <li
-        className={`friends ${isFavourite ? "favourite" : ""}`}
-    > 
-        {isFavourite && <img src={starIcon} alt="star" style={{ width: "16px", marginLeft: "5px" }} />}
-        {userName}
-        <button id="favouriteButton" onClick={onToggleFavourite} style={{ marginLeft: "10px" }}>
-                {isFavourite ? "Remove" : "Favourite"}
-            </button>
-        <button id="deleteButton" onClick={onDelete} style={{ marginLeft: "5px" }}>Delete</button>
-    </li>
-  );
+interface FriendsListProps {
+    currentUserName: string;
 }
 
-export function FriendsList () {
-    const [friends, setFriends] = useState<Friends[]>([]);
+// Single friend item component
+function FriendItem({ 
+    friend,
+    onToggleFavourite,
+    onDelete
+}: { 
+    friend: Friend;
+    onToggleFavourite: () => void;
+    onDelete: () => void;
+}) {
+    const userName = friend.friend?.userName ?? "";
 
-    useEffect(() => {
-        initializeFriends(testFriends);
-        setFriends(getFriends());
-    }, []);
+    return (
+        <li className={`friends ${friend.isFavourite ? "favourite" : ""}`}>
+            {friend.isFavourite && (
+                <img src={starIcon} alt="star" style={{ width: "16px", marginLeft: "5px" }} />
+            )}
+            {userName}
+            <button onClick={onToggleFavourite} style={{ marginLeft: "10px" }}>
+                {friend.isFavourite ? "Remove" : "Favourite"}
+            </button>
+            <button onClick={onDelete} style={{ marginLeft: "5px" }}>Delete</button>
+        </li>
+    );
+}
 
-    const handleAddFriend = (userName: string) => {
-        addFriend(userName);
-        setFriends(getFriends());
+// Main FriendsList component using the hook
+export function FriendsList({ currentUserName }: FriendsListProps) {
+    const friendInput = useFriendsInput();
+
+    // Toggle favourite handler
+    const handleToggleFavourite = async (friend: Friend) => {
+        await friendInput.updateFriendFavourite(
+            friend.userId,
+            friend.friendId,
+            !friend.isFavourite
+        );
     };
 
-    const handleToggleFavourite = (friendId: string) => {
-        updateFriendFavourite(friendId);
-        setFriends(getFriends());
-    }
-
-    const handleDelete = (friendId: string) => {
-        deleteFriend(friendId);
-        setFriends(getFriends());
+    // Delete friend handler
+    const handleDelete = async (friend: Friend) => {
+        await friendInput.deleteFriend(friend.userId, friend.friendId);
     };
 
     return (
         <>
-            <DisplayFriendsList 
-                friendsList={friends} 
-                onToggleFavourite={handleToggleFavourite}
-                onDelete={handleDelete}
+            <section className="friendsList">
+                <h2 id="friendsListTitle">Friends</h2>
+                <ul className="friend__list">
+                    {friendInput.friends.map(friend => (
+                        <FriendItem
+                            key={friend.friendId}
+                            friend={friend}
+                            onToggleFavourite={() => handleToggleFavourite(friend)}
+                            onDelete={() => handleDelete(friend)}
+                        />
+                    ))}
+                </ul>
+            </section>
+
+            <FriendForm 
+                currentUserName={currentUserName}
+                checkUserExists={async (userName) => 
+                    !friendInput.friends.some(f => f.friend?.userName === userName)
+                }
             />
-            <FriendForm onSubmit={handleAddFriend}/>
         </>
     );
 }
 
-function DisplayFriendsList({
-    friendsList,
-    onToggleFavourite,
-    onDelete
-}: {
-    friendsList: Friends[];
-    onToggleFavourite: (id: string) => void;
-    onDelete: (id: string) => void;
-}) {
-
-    return (
-        <section className="friendsList">
-            <h2 id="friendsListTitle">Friends</h2>
-                <ul className="friend__list">
-                    {friendsList.map(friend => (
-                        <FriendItem
-                            key={friend.id}
-                            userName={friend.userName}
-                            isFavourite={friend.isFavourite}
-                            onToggleFavourite={() =>
-                                onToggleFavourite(friend.id)
-                            }
-                            onDelete={() =>
-                                onDelete(friend.id)
-                            }
-                        />
-                    ))}
-                </ul>
-        </section>
-    );
-}
-
-export default FriendsList
+export default FriendsList;

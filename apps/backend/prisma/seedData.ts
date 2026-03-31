@@ -52,25 +52,109 @@ export const userSeedData: User[] = [
 
 export const gameSeedData: Game[] = [
     {
-        id: "3ao8twl",
+        id: "ky7r3hm8",
         gameName: "Elden Ring",
-        coverPicture: "",
-        gameDescription: "sgk",
-        releaseDate: new Date(),
+        coverPicture: "/images/gameCovers/eldenring.jpg",
+        gameDescription: "",
+        releaseDate: new Date("2022-02-25"),
     },
     {
-        id: "lkt8h4l3r",
-        gameName: "skghl",
-        coverPicture: "",
-        gameDescription: "sdlgkhlkgh",
-        releaseDate: new Date(),
+        id: "tp2q9nj5",
+        gameName: "Arc Raiders",
+        coverPicture: "/images/gameCovers/arcraiders.jpg",
+        gameDescription: "",
+        releaseDate: new Date("2024-10-16"),
     },
     {
-        id: "7a2i09ew4",
-        gameName: "wghoiwroi",
-        coverPicture: "",
-        gameDescription: "akslg;h",
-        releaseDate: new Date(),
+        id: "wg4x8kl2",
+        gameName: "Project Zomboid",
+        coverPicture: "/images/gameCovers/projectzomboid.jpg",
+        gameDescription: "",
+        releaseDate: new Date("2013-11-08"),
+    },
+    {
+        id: "br6jf3p9",
+        gameName: "Armored Core VI: Fires of Rubicon",
+        coverPicture: "/images/gameCovers/armoredcoresix.jpg",
+        gameDescription: "",
+        releaseDate: new Date("2023-08-25"),
+    },
+    {
+        id: "hz8w5m1t",
+        gameName: "Final Fantasy VII Rebirth",
+        coverPicture: "/images/gameCovers/ffvii.jpg",
+        gameDescription: "",
+        releaseDate: new Date("2024-02-29"),
+    },
+    {
+        id: "vd7s4c6n",
+        gameName: "Cyberpunk 2077",
+        coverPicture: "/images/gameCovers/cyberpunk2077.jpg",
+        gameDescription: "",
+        releaseDate: new Date("2020-12-10"),
+    },
+    {
+        id: "jn3y2b8r",
+        gameName: "Monster Hunter Rise",
+        coverPicture: "/images/gameCovers/mhrise.jpg",
+        gameDescription: "",
+        releaseDate: new Date("2022-01-12"),
+    },
+    {
+        id: "qs9g7f4x",
+        gameName: "Helldivers 2",
+        coverPicture: "/images/gameCovers/helldivers2.jpg",
+        gameDescription: "",
+        releaseDate: new Date("2024-02-08"),
+    },
+    {
+        id: "ml5h1w3q",
+        gameName: "NieR Replicant ver.1.22474487139...",
+        coverPicture: "/images/gameCovers/nierreplicant.jpg",
+        gameDescription: "",
+        releaseDate: new Date("2021-04-23"),
+    },
+    {
+        id: "fp8k6j2v",
+        gameName: "Half Life 2",
+        coverPicture: "/images/gameCovers/halflife2.jpg",
+        gameDescription: "",
+        releaseDate: new Date("2004-11-16"),
+    },
+    {
+        id: "rc4t9p7h",
+        gameName: "Indiana Jones and the Great Circle",
+        coverPicture: "/images/gameCovers/thegreatcircle.jpg",
+        gameDescription: "",
+        releaseDate: new Date("2024-12-09"),
+    },
+    {
+        id: "nx2w5l8d",
+        gameName: "Metaphor: ReFantazio",
+        coverPicture: "/images/gameCovers/metaphor.jpg",
+        gameDescription: "",
+        releaseDate: new Date("2024-10-11"),
+    },
+    {
+        id: "yh6m3s1b",
+        gameName: "Like a Dragon: Infinite Wealth",
+        coverPicture: "/images/gameCovers/infinitewealth.jpg",
+        gameDescription: "",
+        releaseDate: new Date("2023-01-16"),
+    },
+    {
+        id: "kg9v4n7e",
+        gameName: "Tekken 8",
+        coverPicture: "/images/gameCovers/takken8.jpg",
+        gameDescription: "",
+        releaseDate: new Date("2024-01-16"),
+    },
+    {
+        id: "uw1x8r5k",
+        gameName: "Dragon's Dogma II",
+        coverPicture: "/images/gameCovers/dragonsdogma2.jpg",
+        gameDescription: "",
+        releaseDate: new Date("2024-03-22"),
     }
 ]
 
@@ -175,7 +259,7 @@ export const friendSeedData: Friend[] = [
 
 export const reviewSeedData: Prisma.ReviewUncheckedCreateInput[] = [
     {
-        gameId: "3ao8twl",   
+        gameId: "ky7r3hm8",   
         userId: "w34tuh3",
         dateCreated: new Date(),
         dateEditted: new Date(),
@@ -183,7 +267,7 @@ export const reviewSeedData: Prisma.ReviewUncheckedCreateInput[] = [
         reviewContents: "Great!"
     },
     {
-        gameId: "lkt8h4l3r",
+        gameId: "tp2q9nj5",
         userId: "w34tuh3",
         dateCreated: new Date(),
         dateEditted: new Date(),
@@ -191,7 +275,7 @@ export const reviewSeedData: Prisma.ReviewUncheckedCreateInput[] = [
         reviewContents: "kfhsgj",
     },
     {
-        gameId: "lkt8h4l3r",
+        gameId: "tp2q9nj5",
         userId: "4382ty9s",
         dateCreated: new Date(),
         dateEditted: new Date(),
@@ -199,7 +283,7 @@ export const reviewSeedData: Prisma.ReviewUncheckedCreateInput[] = [
         reviewContents: "Love it!",
     },
     {
-        gameId: "7a2i09ew4",
+        gameId: "wg4x8kl2",
         userId: "34p98tw",
         dateCreated: new Date(),
         dateEditted: new Date(),
@@ -207,7 +291,7 @@ export const reviewSeedData: Prisma.ReviewUncheckedCreateInput[] = [
         reviewContents: "So good!"
     },
     {
-        gameId: "3ao8twl",
+        gameId: "ky7r3hm8",
         userId: "34p98tw",
         dateCreated: new Date(),
         dateEditted: new Date(),
@@ -215,7 +299,7 @@ export const reviewSeedData: Prisma.ReviewUncheckedCreateInput[] = [
         reviewContents: "Loved it!"
     },
     {
-        gameId: "lkt8h4l3r",
+        gameId: "tp2q9nj5",
         userId: "34p98tw",
         dateCreated: new Date(),
         dateEditted: new Date(),
@@ -223,7 +307,7 @@ export const reviewSeedData: Prisma.ReviewUncheckedCreateInput[] = [
         reviewContents: "Absolutely brilliant!"
     },
     {
-        gameId: "7a2i09ew4",
+        gameId: "wg4x8kl2",
         userId: "l2r8rrf3",
         dateCreated: new Date(),
         dateEditted: new Date(),
@@ -231,7 +315,7 @@ export const reviewSeedData: Prisma.ReviewUncheckedCreateInput[] = [
         reviewContents: "a;slkgh",
     },
     {
-        gameId: "7a2i09ew4",
+        gameId: "wg4x8kl2",
         userId: "wg3yop24",
         dateCreated: new Date(),
         dateEditted: new Date(),
@@ -239,7 +323,7 @@ export const reviewSeedData: Prisma.ReviewUncheckedCreateInput[] = [
         reviewContents: "lsgkh;l",
     },
     {
-        gameId: "3ao8twl",
+        gameId: "ky7r3hm8",
         userId: "4gtf359g",
         dateCreated: new Date(),
         dateEditted: new Date(),

@@ -10,7 +10,7 @@ import type { Game } from "../../../../../shared/types/game";
  */
 export async function fetchGames(): Promise<Game[]> {
     try {
-        const apiUrl = `${import.meta.env.VITE_API_BASE_URL}api/v1/games`;
+        const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/api/v1/games`;
         const response = await fetch(apiUrl);
         if (!response.ok) {
             throw new Error(`API request failed with status ${response.status}`);

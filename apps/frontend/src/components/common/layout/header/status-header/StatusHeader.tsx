@@ -49,6 +49,7 @@ export function Status() {
         <div className="status">
             <SignedIn>
                 <UserButton afterSignOutUrl="/" />
+                <SetStatus />
             </SignedIn>
             <SignedOut>
                 <SignInButton mode="modal" />

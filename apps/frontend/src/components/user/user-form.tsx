@@ -10,49 +10,53 @@ type UserFormProps = {
     ) => void;
 };
 
-export function UserForm({ onSubmit }: UserFormProps) { 
-  const userName = useFriendsInput();
-  const [success, setSuccess] = useState("");
+export function UserForm({ onSubmit }: UserFormProps) {
+    const {
+        userName,
+        errors,
+        success,
+        valueChangeHandler,
+        inputReset,
+        validate,
+    } = useCreateUserFormInput();
+    
+    const handleSubmit = (e: React.FormEvent) => {
+      e.preventDefault();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+      const isValid = validate();
 
-    const isValid = userName.validate();
+      if (!isValid) return;
 
-    if (!isValid) {
-      setSuccess("");
-      return;
-    }
+      onSubmit(userName);
+      inputReset();
+    };
 
-    onSubmit(userName.value);
-    setSuccess("Form is valid!");
-    userName.inputReset();
+    return (
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="userName" className="loginForm">
+          User Name:
+            <input
+              type="text"
+              name="userName"
+              id="userName"
+              value={userName}
+              onChange={(e) =>
+                valueChangeHandler("userName", e.target.value)
+              }
+                />
+        </label>
 
-    // Optional: auto-hide success message
-    setTimeout(() => setSuccess(""), 3000);
-  };
+        <div className="form-feedback">
+          {errors.map((err, i) => (
+            <p key={i} style={{ color: "red" }}>
+              {err}
+            </p>
+          ))}
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="userName" className="loginForm">
-        User Name:
-        <input
-          type="text"
-          name="userName"
-          id="userName"
-          value={userName.value}
-          onChange={userName.valueChangeHandler}
-        />
-      </label>
+          {success && <p style={{ color: "green" }}>{success}</p>}
+        </div>
 
-      <div className="form-feedback">
-        {userName.errors.map((err, i) => (
-          <p key={i} style={{ color: "red" }}>{err}</p>
-        ))}
-        {success && <p style={{ color: "green" }}>{success}</p>}
-      </div>
-
-      <button type="submit">Submit</button>
-    </form>
-  );
+        <button type="submit">Submit</button>
+      </form>
+    );
 }

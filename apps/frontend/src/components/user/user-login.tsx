@@ -1,13 +1,15 @@
 import { useState } from "react";
 import type { User } from "../../../../../shared/types/user";
 
-const users: User[] = [
+const USERS: User[] = [
   { userId: "239", userName: "Shellg", dateCreated: new Date("2026-03-29T12:00:00Z") },
   { userId: "240", userName: "Alice", dateCreated: new Date() },
 ];
 
+const normalize = (value: string) => value.trim().toLowerCase();
+
 type LoginItemProps = {
-  onLogin: (user: User) => void; // required callback
+  onLogin: (user: User) => void;
 };
 
 export function LoginItem({ onLogin }: LoginItemProps) {
@@ -15,22 +17,25 @@ export function LoginItem({ onLogin }: LoginItemProps) {
   const [error, setError] = useState<string>("");
 
   const handleLogin = () => {
-    if (!userName.trim()) {
+    const cleaned = normalize(userName);
+
+    if (!cleaned) {
       setError("Please enter a username");
       return;
     }
 
-    const foundUser = users.find(
-      (u) => u.userName.toLowerCase() === userName.trim().toLowerCase()
+    const foundUser = USERS.find(
+      (u) => normalize(u.userName) === cleaned
     );
 
-    if (foundUser) {
-      onLogin(foundUser); // ✅ callback works
-      setError("");
-      setUserName(""); // optional: clear input
-    } else {
+    if (!foundUser) {
       setError("User not found");
+      return;
     }
+
+    onLogin(foundUser);
+    setError("");
+    setUserName("");
   };
 
   return (
@@ -52,20 +57,7 @@ export function LoginItem({ onLogin }: LoginItemProps) {
           style={{ width: "100%", padding: "0.5rem", marginBottom: "0.5rem" }}
         />
 
-        <button
-          type="submit"
-          style={{
-            width: "100%",
-            padding: "0.5rem",
-            backgroundColor: "#007bff",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-          }}
-        >
-          Login
-        </button>
+        <button type="submit">Login</button>
       </form>
     </div>
   );

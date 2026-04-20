@@ -42,21 +42,16 @@ export const getUserByUserName = async(userName: string): Promise<User | null> =
  * @returns The created user with generated ID
  */
 export const createUser = async(userData: {
-    id: string,
     userName: string,
     dateCreated?: Date,
-    profilePic?: string
+    profilePic: string
 }): Promise<User> => {
 
     const newUser: User = await prisma.user.create({
         data: {
-            id: userData.id,
-            userName: userData.userName,
-            dateCreated: userData.dateCreated ?? new Date(),
-            profilePic: userData.profilePic?
-        },
+            ...userData
+        }
     });
-
     return newUser;
 }
 

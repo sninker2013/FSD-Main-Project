@@ -35,7 +35,7 @@ export const getUserByUserName = async(
     next: NextFunction
 ): Promise<void> => {
     try {
-        const user = await userService.getUserByUserName(req.params.userName);
+        const user = await userService.getUserByUserName(req.params.userName as string);
         
         if (user) {
             res.status(200).json(successResponse(user, "User retrieved successfully" ));
@@ -85,7 +85,7 @@ export const deleteUser = async(
     next: NextFunction
 ): Promise<void> => {
     try {
-        await userService.deleteUser(req.params.id);
+        await userService.deleteUser(req.params.id as string);
         res.status(200)
             .json(successResponse(null, "User deleted succesfully"));
     } catch(error) {

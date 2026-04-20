@@ -8,6 +8,8 @@ import { useStatus } from "../../../../hooks/useStatus";
 import { SearchBar } from "../../../search-bar/SearchBar";
 import { useSearch } from "../../../../../hooks/useSearch";
 
+import { UserButton, SignedIn, SignedOut, SignInButton } from "@clerk/clerk-react"
+
 export function StatusHeader() {
     const { 
         searchValue,
@@ -45,9 +47,13 @@ export function StatusHeader() {
 export function Status() {
     return(
         <div className="status">
-            <img src={"/images/profilePics/silksong.png"} alt="reviewer profile picture" style={{width: "56px", height: "56px"}}/>
-            <p>username</p>
-            <SetStatus />
+            <SignedIn>
+                <UserButton afterSignOutUrl="/" />
+                <SetStatus />
+            </SignedIn>
+            <SignedOut>
+                <SignInButton mode="modal" />
+            </SignedOut>
         </div>
     )
 }

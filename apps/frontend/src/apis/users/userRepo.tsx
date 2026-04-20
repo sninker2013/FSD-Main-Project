@@ -1,5 +1,5 @@
-import type { User } from "../../../../shared/types/user";
-import type { CreateUserDTO } from "../../../../shared/types/createUser";
+import type { User } from "../../../../../shared/types/user";
+import type { CreateUserDTO } from "../../../../../shared/types/createUser";
 
 type UsersResponseJSON = { message: string; data: User[] };
 type UserResponseJSON = { message: string; data: User };

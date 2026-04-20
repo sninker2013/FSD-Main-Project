@@ -1,6 +1,4 @@
-import { Routes, Route, Link } from "react-router-dom";
-import LoginPage from "./login-page";
-import { Login } from "../../user/login";
+import { Link } from "react-router-dom";
 
 export default function LoginOptions() {
   return (

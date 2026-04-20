@@ -42,6 +42,7 @@ export const getUserByUserName = async(userName: string): Promise<User | null> =
  * @returns The created user with generated ID
  */
 export const createUser = async(userData: {
+    id: string,
     userName: string,
     dateCreated?: Date,
     profilePic: string

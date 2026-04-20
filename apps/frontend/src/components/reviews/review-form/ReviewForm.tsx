@@ -4,20 +4,20 @@ import { validateForm } from "../../../services/reviewService";
 
 type ReviewFormProps = {
     onSubmit: (
-        starRating: 1|2|3|4|5|undefined,
+        starRating: 1|2|3|4|5,
         reviewDesc: string
-    ) => void;
+    ) => Promise<void>;
 };
 
 export function ReviewForm ({ onSubmit }: ReviewFormProps) {
-    const [starRating, setStarRating] = useState<1|2|3|4|5|undefined>();
+    const [starRating, setStarRating] = useState<1|2|3|4|5>();
     const [reviewDesc, setReviewDesc] = useState<string>("")
     const [error, setError] = useState<string>();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const { valid, error } = await validateForm(starRating, reviewDesc)
-        if (valid) {
+        if (valid && starRating) {
             setError("")
             onSubmit(starRating, reviewDesc)
         } else {

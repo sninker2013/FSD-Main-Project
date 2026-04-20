@@ -14,7 +14,6 @@ import type { UserProfileType, Game } from "./components/common/user-profile/pro
 import { testProfile, testGames } from "./components/common/user-profile/profileData";
 
 import { ReviewsPage } from "./components/pages/ReviewsPage";
-import { useReviews } from "./hooks/useReviews";
 
 import { SearchResult } from "./components/pages/search-results";
 
@@ -29,8 +28,6 @@ function App() {
 
   const [newGameTitle, setNewGameTitle] = useState("");
 
-  const { reviews, createReview } = useReviews()
-
   const currentUserName = "john_doe";
   
   return (
@@ -41,7 +38,7 @@ function App() {
         <Route path="Friends" element={<FriendsList currentUserName={currentUserName} />}/>
         <Route 
           path="Reviews" 
-          element={<ReviewsPage reviews={reviews} createReview={createReview}/>}/>
+          element={<ReviewsPage />}/>
         <Route 
           path="Profile" 
           element={<UserProfilePage 

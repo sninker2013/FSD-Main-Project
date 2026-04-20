@@ -36,6 +36,22 @@ export const getUserByUserName = async(userName: string): Promise<User | null> =
     }
 }
 
+export const getUserById = async(id: string): Promise<User | null> => {
+        const user: User | null = await prisma.user.findUnique(
+        {
+            where: {
+                id: id
+            }
+        }
+    );
+
+    if (!user) {
+        return null;
+    } else {
+        return user;
+    }
+}
+
 /**
  * Creates a new user
  * @param userData - The data for the new user (userId, userName and dateCreated)
@@ -63,4 +79,12 @@ export const deleteUser = async(id: string): Promise<void> => {
             id: id
         }
     });
+}
+
+export const updateUserPfp = async(id: string, pfp: string): Promise<User> => {
+    const updatedUser = await prisma.user.update({
+        where: { id: id },
+        data: { profilePic: pfp}
+    })
+    return updatedUser
 }

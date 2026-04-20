@@ -1,6 +1,6 @@
 import type { User } from  "../../../../shared/types/user";
 import type { CreateUserDTO } from "../../../../shared/types/createUser";
-import * as userRepo from "../repository/userRepo";
+import * as userRepo from "../apis/users/userRepo";
 
 export interface ValidationResult {
     isValid: boolean;

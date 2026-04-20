@@ -1,13 +1,9 @@
-import { useState } from "react";
-import useFriendsInput from "../../hooks/useFriendsInput";
-//import "./friends-form.css";
+import { useCreateUserFormInput } from "../../hooks/useUserFormInput";
 
 //Used to create an account
 
 type UserFormProps = {
-    onSubmit: (
-        userName: string
-    ) => void;
+    onSubmit: (userName: string) => void;
 };
 
 export function UserForm({ onSubmit }: UserFormProps) {
@@ -19,44 +15,44 @@ export function UserForm({ onSubmit }: UserFormProps) {
         inputReset,
         validate,
     } = useCreateUserFormInput();
-    
+
     const handleSubmit = (e: React.FormEvent) => {
-      e.preventDefault();
+        e.preventDefault();
 
-      const isValid = validate();
+        const isValid = validate();
 
-      if (!isValid) return;
+        if (!isValid) return;
 
-      onSubmit(userName);
-      inputReset();
+        onSubmit(userName);
+        inputReset();
     };
 
     return (
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="userName" className="loginForm">
-          User Name:
-            <input
-              type="text"
-              name="userName"
-              id="userName"
-              value={userName}
-              onChange={(e) =>
-                valueChangeHandler("userName", e.target.value)
-              }
+        <form onSubmit={handleSubmit}>
+            <label htmlFor="userName" className="loginForm">
+                User Name:
+                <input
+                    type="text"
+                    name="userName"
+                    id="userName"
+                    value={userName}
+                    onChange={(e) =>
+                        valueChangeHandler("userName", e.target.value)
+                    }
                 />
-        </label>
+            </label>
 
-        <div className="form-feedback">
-          {errors.map((err, i) => (
-            <p key={i} style={{ color: "red" }}>
-              {err}
-            </p>
-          ))}
+            <div className="form-feedback">
+                {errors.map((err, i) => (
+                    <p key={i} style={{ color: "red" }}>
+                        {err}
+                    </p>
+                ))}
 
-          {success && <p style={{ color: "green" }}>{success}</p>}
-        </div>
+                {success && <p style={{ color: "green" }}>{success}</p>}
+            </div>
 
-        <button type="submit">Submit</button>
-      </form>
+            <button type="submit">Submit</button>
+        </form>
     );
 }

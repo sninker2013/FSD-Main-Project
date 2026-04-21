@@ -55,7 +55,16 @@ export async function createReview(reviewData: {
 
 export async function getReviewsByUserId(userId: string): Promise<Review[]> {
     const reviews = await prisma.review.findMany({
-        where: {userId: userId}
+        where: {userId: userId},
+        include: {
+            user: {
+                select: {
+                    id: true,
+                    userName: true,
+                    profilePic: true
+                }
+            }
+        }
     })
     return reviews
 }

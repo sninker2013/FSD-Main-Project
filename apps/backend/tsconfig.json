@@ -6,6 +6,8 @@
       "outDir": "./dist",
       "sourceMap": true,
       "lib": ["ESNext"],
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
       "paths": {
         "*": ["./*"]
       }

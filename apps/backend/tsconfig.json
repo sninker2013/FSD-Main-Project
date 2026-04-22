@@ -1,17 +1,17 @@
 {
-    "extends": "../../tsconfig.json",
+    "extends": "../../tsconfig.base.json",
     "compilerOptions": {
       "target": "ES6",
       "module": "commonjs",
       "outDir": "./dist",
+      "baseUrl": "./",
       "sourceMap": true,
       "lib": ["ESNext"],
-      "esModuleInterop": true,
-      "allowSyntheticDefaultImports": true,
       "paths": {
-        "*": ["./*"]
+        "*": ["*"],
+        "@shared/*": ["../../shared/*"]
       }
     },
-    "include": ["src/**/*", "tests/**/*", "prisma/**/*"],
+    "include": ["src/**/*", "tests/**/*", "types", "global.d.ts", "api/index.ts"],
     "exclude": ["node_modules", "dist"]
 }

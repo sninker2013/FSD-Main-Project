@@ -18,7 +18,6 @@ import { useReviews } from "./hooks/useReviews";
 
 import { SearchResult } from "./components/pages/search-results";
 
-
 function App() {
 
   const [profile, setProfile] = useState<UserProfileType>(testProfile);

@@ -5,12 +5,12 @@ import dotenv from "dotenv";
 
 import corsOptions from "../config/cors";
 import setupSwagger from "../config/swagger";
-import reviewRoutes from "./api/v1/routes/reviewRoutes";
-
-import friendsRoutes from "./api/v1/routes/friendsRoutes";
-
-import gameRoutes from "./api/v1/routes/gameRoutes";
 import errorHandler from "./api/v1/middleware/errorHandler";
+
+import reviewRoutes from "./api/v1/routes/reviewRoutes";
+import friendsRoutes from "./api/v1/routes/friendsRoutes";
+import gameRoutes from "./api/v1/routes/gameRoutes";
+import userRoutes from "./api/v1/routes/userRoutes";
 
 const app: Express = express();
 
@@ -30,6 +30,8 @@ app.use("/api/v1/reviews", reviewRoutes);
 app.use("/api/v1/friends", friendsRoutes);
 
 app.use("/api/v1/games", gameRoutes);
+
+app.use("/api/v1/users", userRoutes);
 
 app.use(errorHandler);
 

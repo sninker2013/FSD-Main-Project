@@ -223,20 +223,20 @@ export type UserScalarWhereWithAggregatesInput = {
 }
 
 export type UserCreateInput = {
-  id: string
+  id?: string
   userName: string
   profilePic: string
-  dateCreated: Date | string
+  dateCreated?: Date | string
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   friends?: Prisma.FriendCreateNestedManyWithoutUserInput
   friendOf?: Prisma.FriendCreateNestedManyWithoutFriendInput
 }
 
 export type UserUncheckedCreateInput = {
-  id: string
+  id?: string
   userName: string
   profilePic: string
-  dateCreated: Date | string
+  dateCreated?: Date | string
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   friends?: Prisma.FriendUncheckedCreateNestedManyWithoutUserInput
   friendOf?: Prisma.FriendUncheckedCreateNestedManyWithoutFriendInput
@@ -263,10 +263,10 @@ export type UserUncheckedUpdateInput = {
 }
 
 export type UserCreateManyInput = {
-  id: string
+  id?: string
   userName: string
   profilePic: string
-  dateCreated: Date | string
+  dateCreated?: Date | string
 }
 
 export type UserUpdateManyMutationInput = {
@@ -360,19 +360,19 @@ export type UserUpdateOneRequiredWithoutReviewsNestedInput = {
 }
 
 export type UserCreateWithoutFriendsInput = {
-  id: string
+  id?: string
   userName: string
   profilePic: string
-  dateCreated: Date | string
+  dateCreated?: Date | string
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   friendOf?: Prisma.FriendCreateNestedManyWithoutFriendInput
 }
 
 export type UserUncheckedCreateWithoutFriendsInput = {
-  id: string
+  id?: string
   userName: string
   profilePic: string
-  dateCreated: Date | string
+  dateCreated?: Date | string
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   friendOf?: Prisma.FriendUncheckedCreateNestedManyWithoutFriendInput
 }
@@ -383,19 +383,19 @@ export type UserCreateOrConnectWithoutFriendsInput = {
 }
 
 export type UserCreateWithoutFriendOfInput = {
-  id: string
+  id?: string
   userName: string
   profilePic: string
-  dateCreated: Date | string
+  dateCreated?: Date | string
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   friends?: Prisma.FriendCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutFriendOfInput = {
-  id: string
+  id?: string
   userName: string
   profilePic: string
-  dateCreated: Date | string
+  dateCreated?: Date | string
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   friends?: Prisma.FriendUncheckedCreateNestedManyWithoutUserInput
 }
@@ -464,19 +464,19 @@ export type UserUncheckedUpdateWithoutFriendOfInput = {
 }
 
 export type UserCreateWithoutReviewsInput = {
-  id: string
+  id?: string
   userName: string
   profilePic: string
-  dateCreated: Date | string
+  dateCreated?: Date | string
   friends?: Prisma.FriendCreateNestedManyWithoutUserInput
   friendOf?: Prisma.FriendCreateNestedManyWithoutFriendInput
 }
 
 export type UserUncheckedCreateWithoutReviewsInput = {
-  id: string
+  id?: string
   userName: string
   profilePic: string
-  dateCreated: Date | string
+  dateCreated?: Date | string
   friends?: Prisma.FriendUncheckedCreateNestedManyWithoutUserInput
   friendOf?: Prisma.FriendUncheckedCreateNestedManyWithoutFriendInput
 }

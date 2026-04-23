@@ -18,10 +18,6 @@ import { useReviews } from "./hooks/useReviews";
 
 import { SearchResult } from "./components/pages/search-results";
 
-import LoginOptions from "./components/pages/users/login-options-page";
-import LoginPage from "./components/pages/users/login-page";
-import CreateUserPage from "./components/pages/users/create-user-page";
-
 function App() {
 
   const [profile, setProfile] = useState<UserProfileType>(testProfile);
@@ -52,9 +48,6 @@ function App() {
             newGameTitle={newGameTitle}
             setNewGameTitle={setNewGameTitle}
           />}/>
-          <Route path="/login-options" element={<LoginOptions />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/create-user" element={<CreateUserPage />} />
           {// new path to handle searching for games
           }<Route path="games/search" element={<SearchResult/>}/>
       </Route>

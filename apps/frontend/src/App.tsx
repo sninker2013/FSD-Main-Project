@@ -23,8 +23,6 @@ function App() {
   const [games, setGames] = useState<Game[]>(testGames);
 
   const [newGameTitle, setNewGameTitle] = useState("");
-
-  const { reviews, createReview } = useReviews()
   
   return (
     <Routes>

@@ -28,6 +28,7 @@ export type UserMinAggregateOutputType = {
   id: string | null
   userName: string | null
   profilePic: string | null
+  status: string | null
   dateCreated: Date | null
 }
 
@@ -35,6 +36,7 @@ export type UserMaxAggregateOutputType = {
   id: string | null
   userName: string | null
   profilePic: string | null
+  status: string | null
   dateCreated: Date | null
 }
 
@@ -42,6 +44,7 @@ export type UserCountAggregateOutputType = {
   id: number
   userName: number
   profilePic: number
+  status: number
   dateCreated: number
   _all: number
 }
@@ -51,6 +54,7 @@ export type UserMinAggregateInputType = {
   id?: true
   userName?: true
   profilePic?: true
+  status?: true
   dateCreated?: true
 }
 
@@ -58,6 +62,7 @@ export type UserMaxAggregateInputType = {
   id?: true
   userName?: true
   profilePic?: true
+  status?: true
   dateCreated?: true
 }
 
@@ -65,6 +70,7 @@ export type UserCountAggregateInputType = {
   id?: true
   userName?: true
   profilePic?: true
+  status?: true
   dateCreated?: true
   _all?: true
 }
@@ -145,6 +151,7 @@ export type UserGroupByOutputType = {
   id: string
   userName: string
   profilePic: string
+  status: string
   dateCreated: Date
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
@@ -173,6 +180,7 @@ export type UserWhereInput = {
   id?: Prisma.StringFilter<"User"> | string
   userName?: Prisma.StringFilter<"User"> | string
   profilePic?: Prisma.StringFilter<"User"> | string
+  status?: Prisma.StringFilter<"User"> | string
   dateCreated?: Prisma.DateTimeFilter<"User"> | Date | string
   reviews?: Prisma.ReviewListRelationFilter
   friends?: Prisma.FriendListRelationFilter
@@ -183,6 +191,7 @@ export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userName?: Prisma.SortOrder
   profilePic?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   dateCreated?: Prisma.SortOrder
   reviews?: Prisma.ReviewOrderByRelationAggregateInput
   friends?: Prisma.FriendOrderByRelationAggregateInput
@@ -196,6 +205,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   profilePic?: Prisma.StringFilter<"User"> | string
+  status?: Prisma.StringFilter<"User"> | string
   dateCreated?: Prisma.DateTimeFilter<"User"> | Date | string
   reviews?: Prisma.ReviewListRelationFilter
   friends?: Prisma.FriendListRelationFilter
@@ -206,6 +216,7 @@ export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userName?: Prisma.SortOrder
   profilePic?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   dateCreated?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
@@ -219,13 +230,15 @@ export type UserScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"User"> | string
   userName?: Prisma.StringWithAggregatesFilter<"User"> | string
   profilePic?: Prisma.StringWithAggregatesFilter<"User"> | string
+  status?: Prisma.StringWithAggregatesFilter<"User"> | string
   dateCreated?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
 
 export type UserCreateInput = {
-  id?: string
+  id: string
   userName: string
   profilePic: string
+  status?: string
   dateCreated?: Date | string
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   friends?: Prisma.FriendCreateNestedManyWithoutUserInput
@@ -233,9 +246,10 @@ export type UserCreateInput = {
 }
 
 export type UserUncheckedCreateInput = {
-  id?: string
+  id: string
   userName: string
   profilePic: string
+  status?: string
   dateCreated?: Date | string
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   friends?: Prisma.FriendUncheckedCreateNestedManyWithoutUserInput
@@ -246,6 +260,7 @@ export type UserUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userName?: Prisma.StringFieldUpdateOperationsInput | string
   profilePic?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   friends?: Prisma.FriendUpdateManyWithoutUserNestedInput
@@ -256,6 +271,7 @@ export type UserUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userName?: Prisma.StringFieldUpdateOperationsInput | string
   profilePic?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   friends?: Prisma.FriendUncheckedUpdateManyWithoutUserNestedInput
@@ -263,9 +279,10 @@ export type UserUncheckedUpdateInput = {
 }
 
 export type UserCreateManyInput = {
-  id?: string
+  id: string
   userName: string
   profilePic: string
+  status?: string
   dateCreated?: Date | string
 }
 
@@ -273,6 +290,7 @@ export type UserUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userName?: Prisma.StringFieldUpdateOperationsInput | string
   profilePic?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -280,6 +298,7 @@ export type UserUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userName?: Prisma.StringFieldUpdateOperationsInput | string
   profilePic?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -287,6 +306,7 @@ export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userName?: Prisma.SortOrder
   profilePic?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   dateCreated?: Prisma.SortOrder
 }
 
@@ -294,6 +314,7 @@ export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userName?: Prisma.SortOrder
   profilePic?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   dateCreated?: Prisma.SortOrder
 }
 
@@ -301,6 +322,7 @@ export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userName?: Prisma.SortOrder
   profilePic?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   dateCreated?: Prisma.SortOrder
 }
 
@@ -360,18 +382,20 @@ export type UserUpdateOneRequiredWithoutReviewsNestedInput = {
 }
 
 export type UserCreateWithoutFriendsInput = {
-  id?: string
+  id: string
   userName: string
   profilePic: string
+  status?: string
   dateCreated?: Date | string
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   friendOf?: Prisma.FriendCreateNestedManyWithoutFriendInput
 }
 
 export type UserUncheckedCreateWithoutFriendsInput = {
-  id?: string
+  id: string
   userName: string
   profilePic: string
+  status?: string
   dateCreated?: Date | string
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   friendOf?: Prisma.FriendUncheckedCreateNestedManyWithoutFriendInput
@@ -383,18 +407,20 @@ export type UserCreateOrConnectWithoutFriendsInput = {
 }
 
 export type UserCreateWithoutFriendOfInput = {
-  id?: string
+  id: string
   userName: string
   profilePic: string
+  status?: string
   dateCreated?: Date | string
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   friends?: Prisma.FriendCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutFriendOfInput = {
-  id?: string
+  id: string
   userName: string
   profilePic: string
+  status?: string
   dateCreated?: Date | string
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   friends?: Prisma.FriendUncheckedCreateNestedManyWithoutUserInput
@@ -420,6 +446,7 @@ export type UserUpdateWithoutFriendsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userName?: Prisma.StringFieldUpdateOperationsInput | string
   profilePic?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   friendOf?: Prisma.FriendUpdateManyWithoutFriendNestedInput
@@ -429,6 +456,7 @@ export type UserUncheckedUpdateWithoutFriendsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userName?: Prisma.StringFieldUpdateOperationsInput | string
   profilePic?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   friendOf?: Prisma.FriendUncheckedUpdateManyWithoutFriendNestedInput
@@ -449,6 +477,7 @@ export type UserUpdateWithoutFriendOfInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userName?: Prisma.StringFieldUpdateOperationsInput | string
   profilePic?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   friends?: Prisma.FriendUpdateManyWithoutUserNestedInput
@@ -458,24 +487,27 @@ export type UserUncheckedUpdateWithoutFriendOfInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userName?: Prisma.StringFieldUpdateOperationsInput | string
   profilePic?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   friends?: Prisma.FriendUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutReviewsInput = {
-  id?: string
+  id: string
   userName: string
   profilePic: string
+  status?: string
   dateCreated?: Date | string
   friends?: Prisma.FriendCreateNestedManyWithoutUserInput
   friendOf?: Prisma.FriendCreateNestedManyWithoutFriendInput
 }
 
 export type UserUncheckedCreateWithoutReviewsInput = {
-  id?: string
+  id: string
   userName: string
   profilePic: string
+  status?: string
   dateCreated?: Date | string
   friends?: Prisma.FriendUncheckedCreateNestedManyWithoutUserInput
   friendOf?: Prisma.FriendUncheckedCreateNestedManyWithoutFriendInput
@@ -501,6 +533,7 @@ export type UserUpdateWithoutReviewsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userName?: Prisma.StringFieldUpdateOperationsInput | string
   profilePic?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   friends?: Prisma.FriendUpdateManyWithoutUserNestedInput
   friendOf?: Prisma.FriendUpdateManyWithoutFriendNestedInput
@@ -510,6 +543,7 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userName?: Prisma.StringFieldUpdateOperationsInput | string
   profilePic?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   dateCreated?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   friends?: Prisma.FriendUncheckedUpdateManyWithoutUserNestedInput
   friendOf?: Prisma.FriendUncheckedUpdateManyWithoutFriendNestedInput
@@ -568,6 +602,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   id?: boolean
   userName?: boolean
   profilePic?: boolean
+  status?: boolean
   dateCreated?: boolean
   reviews?: boolean | Prisma.User$reviewsArgs<ExtArgs>
   friends?: boolean | Prisma.User$friendsArgs<ExtArgs>
@@ -579,6 +614,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   userName?: boolean
   profilePic?: boolean
+  status?: boolean
   dateCreated?: boolean
 }, ExtArgs["result"]["user"]>
 
@@ -586,6 +622,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   userName?: boolean
   profilePic?: boolean
+  status?: boolean
   dateCreated?: boolean
 }, ExtArgs["result"]["user"]>
 
@@ -593,10 +630,11 @@ export type UserSelectScalar = {
   id?: boolean
   userName?: boolean
   profilePic?: boolean
+  status?: boolean
   dateCreated?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userName" | "profilePic" | "dateCreated", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userName" | "profilePic" | "status" | "dateCreated", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   reviews?: boolean | Prisma.User$reviewsArgs<ExtArgs>
   friends?: boolean | Prisma.User$friendsArgs<ExtArgs>
@@ -617,6 +655,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     id: string
     userName: string
     profilePic: string
+    status: string
     dateCreated: Date
   }, ExtArgs["result"]["user"]>
   composites: {}
@@ -1047,6 +1086,7 @@ export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'String'>
   readonly userName: Prisma.FieldRef<"User", 'String'>
   readonly profilePic: Prisma.FieldRef<"User", 'String'>
+  readonly status: Prisma.FieldRef<"User", 'String'>
   readonly dateCreated: Prisma.FieldRef<"User", 'DateTime'>
 }
     

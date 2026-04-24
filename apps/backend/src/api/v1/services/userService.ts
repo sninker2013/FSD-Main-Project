@@ -88,3 +88,11 @@ export const updateUserPfp = async(id: string, pfp: string): Promise<User> => {
     })
     return updatedUser
 }
+
+export const updateUserStatus = async(id: string, status: string): Promise<User> => {
+    const updatedUser = await prisma.user.update({
+        where: { id: id },
+        data: { status: status }
+    })
+    return updatedUser
+}

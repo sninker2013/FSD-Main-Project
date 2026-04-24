@@ -63,11 +63,39 @@ function SetStatus() {
         status, updateStatus,
         lockStatus, lockUnlock,
         clearButtonVisible,
-        buttonLogic
+        buttonLogic,
+        isLoading,
+        error,
+        isSignedIn
     } = useStatus()
+    
+    if (!isSignedIn) {
+        return null;
+    }
+
+    if (isLoading) {
+        return (
+            <form id="status-form">
+                <textarea 
+                    placeholder="Loading status..."
+                    maxLength={128}
+                    cols={32}
+                    rows={4}
+                    disabled
+                />
+            </form>
+        );
+    }
+
+    const getButtonText = () => {
+        if (!lockStatus) return "Submit";
+        if (status !== "") return "Clear";
+        return "Edit";
+    };
     
     return (
     <form id="status-form">
+        {error && <div style={{ color: "red", fontSize: "0.8rem" }}>{error}</div>}
         <textarea 
             placeholder="Click to set your status!"
             maxLength={128}
@@ -76,11 +104,11 @@ function SetStatus() {
             readOnly={lockStatus}
             value={status}
             onChange={e => updateStatus(e.target.value)}
-            onClick={() => lockUnlock(false)}>
+            onClick={() => lockStatus && status === "" && lockUnlock(false)}>
         </textarea>
 
         <input type="button"
-        value={lockStatus ? "Clear Status": "Submit"}
+        value={getButtonText()}
         style={{ visibility: clearButtonVisible ? "visible" : "hidden"}}
         onClick={() => {
             buttonLogic()

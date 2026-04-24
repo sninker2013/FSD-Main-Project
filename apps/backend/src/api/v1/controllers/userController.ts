@@ -92,3 +92,61 @@ export const deleteUser = async(
         next(error);
     }
 };
+
+/**
+ * Retrieves the current authenticated user
+ * @param req - The express Request (must include userId from Clerk auth middleware)
+ * @param res - The express Response
+ * @param next - The express middleware chaining function
+ */
+export const getCurrentUser = async(
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<void> => {
+    try {
+        const userId = (req as any).userId;
+        
+        if (!userId) {
+            res.status(401).json({ success: false, message: "User not authenticated" });
+            return;
+        }
+
+        const user = await userService.getUserById(userId);
+        
+        if (user) {
+            res.status(200).json(successResponse(user, "Current user retrieved successfully"));
+        } else {
+            res.status(404).json({ success: false, message: "User not found" });
+        }
+    } catch(error) {
+        next(error);
+    }
+};
+
+/**
+ * Updates the current authenticated user's status
+ * @param req - The express Request (must include userId from Clerk auth middleware and status in body)
+ * @param res - The express Response
+ * @param next - The express middleware chaining function
+ */
+export const updateCurrentUserStatus = async(
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<void> => {
+    try {
+        const userId = (req as any).userId;
+        const { status } = req.body;
+        
+        if (!userId) {
+            res.status(401).json({ success: false, message: "User not authenticated" });
+            return;
+        }
+
+        const updatedUser = await userService.updateUserStatus(userId, status);
+        res.status(200).json(successResponse(updatedUser, "User status updated successfully"));
+    } catch(error) {
+        next(error);
+    }
+};

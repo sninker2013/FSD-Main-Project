@@ -1,78 +1,50 @@
-import { useState } from "react";
 import useFriendsInput from "../../../hooks/useFriendsInput";
 import "./friends-form.css";
 
 type FriendFormProps = {
-  currentUserName: string; // pass the logged-in user's username
-  checkUserExists: (userName: string) => Promise<boolean>; // function to check DB
+  currentUserName: string;
+  checkUserExists: (userName: string) => Promise<boolean>;
 };
 
-export function FriendForm({ currentUserName, checkUserExists }: FriendFormProps) { 
-    const friendInput = useFriendsInput(); // friend username input
-    const [formSuccess, setFormSuccess] = useState("");
-    const [friendNotFound, setFriendNotFound] = useState(false);
+export function FriendForm({ currentUserName, checkUserExists }: FriendFormProps) {
+  const friendInput = useFriendsInput(currentUserName);
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    friendInput.setErrors([]);
 
-        // Validate input
-        const isValid = friendInput.validate();
-        if (!isValid) {
-            setFormSuccess("");
-            setFriendNotFound(false);
-            return;
-        }
+    if (!friendInput.validate()) return;
 
-        // Check if friend exists
-        const exists = await checkUserExists(friendInput.value);
-        if (!exists) {
-            setFriendNotFound(true);
-            setFormSuccess("");
-            return;
-        }
+    const friendName = friendInput.value.trim();
+    const exists = await checkUserExists(friendName);
+    if (!exists) {
+      friendInput.setErrors(["Friend username does not exist!"]);
+      return;
+    }
 
-        setFriendNotFound(false);
+    try {
+      await friendInput.addFriendByUserName();
+    } catch {
+      friendInput.setErrors(["Unexpected error occurred"]);
+    }
+  };
 
-        // Add friend via hook
-        const newFriend = await friendInput.addFriendByUserName(currentUserName);
-        if (newFriend) {
-            const newFriend = await friendInput.addFriendByUserName();
+  return (
+    <form onSubmit={handleSubmit}>
+      <label htmlFor="friendUserName" className="friendForm">
+        Friend Username:
+        <input
+          type="text"
+          id="friendUserName"
+          value={friendInput.value}
+          onChange={friendInput.valueChangeHandler}
+        />
+      </label>
+      <input type="submit" value="Add Friend" />
 
-            if (!newFriend) return;
-
-            setFormSuccess("Friend added successfully!");
-        } else {
-            setFormSuccess("");
-        }
-    };
-
-    return (
-        <>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="friendUserName" className="friendForm">
-                    Friend Username:
-                    <input
-                        type="text"
-                        name="friendUserName"
-                        id="friendUserName"
-                        value={friendInput.value}
-                        onChange={friendInput.valueChangeHandler}
-                    />
-                </label>
-
-                {friendInput.errors.map((err, i) => (
-                    <p key={i} style={{ color: "red" }}>{err}</p>
-                ))}
-
-                {friendNotFound && (
-                    <p style={{ color: "red" }}>Friend username does not exist!</p>
-                )}
-
-                <input type="submit" value="Add Friend" />
-            </form>
-
-            {friendInput.success && <p style={{ color: "green" }}>{friendInput.success}</p>}
-            {formSuccess && <p style={{ color: "green" }}>{formSuccess}</p>}
-        </>
-    );
+      {friendInput.errors.map((error, i) => (
+        <p key={i} style={{ color: "red" }}>{error}</p>
+      ))}
+    </form>
+  );
 }

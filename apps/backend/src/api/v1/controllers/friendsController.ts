@@ -26,22 +26,18 @@ export const getFriendsForUser = async (req: Request, res: Response, next: NextF
   }
 };
 
-export const addFriendByUserName = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-) => {
-    try {
-        const { userName, friendUserName } = req.body;
+export const addFriendByUserName = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { userName, friendUserName } = req.body;
+    if (!userName || !friendUserName) {
+      return res.status(400).json({ message: "Both userName and friendUserName are required" });
+    }
 
-        const newFriend = await friendService.addFriendByUserName(userName, friendUserName);
+    const newFriend = await friendService.addFriendByUserName(userName, friendUserName);
 
-        res.status(201).json({
-            message: "Friend added successfully",
-            data: newFriend,
-        });
-    } catch (err) {
-        next(err); // pass error to global middleware
+    res.status(201).json({ message: "Friend added successfully", data: newFriend });
+  } catch (err) {
+        next(err); // call next with error
     }
 };
 

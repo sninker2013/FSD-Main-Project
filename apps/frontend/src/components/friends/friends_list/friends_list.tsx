@@ -1,4 +1,3 @@
-// friends_list.tsx
 import type { Friend } from "@shared/types/friends";
 import { FriendForm } from "../friends_form/friends_form";
 import starIcon from "./assets/star-transparent.png";
@@ -8,40 +7,33 @@ import { useState, useMemo } from "react";
 import { useUser } from "@clerk/clerk-react";
 import "./friends_list.css";
 
-interface FriendsListProps {
-    currentUserName: string;
-}
-
-// Single friend item component
-function FriendItem({ 
-    friend,
-    onToggleFavourite,
-    onDelete
-}: { 
-    friend: Friend;
-    onToggleFavourite: () => void;
-    onDelete: () => void;
+// ----- FriendItem Component -----
+function FriendItem({
+  friend,
+  onToggleFavourite,
+}: {
+  friend: Friend;
+  onToggleFavourite: () => void;
 }) {
-    const userName = friend.friend?.userName ?? "";
-
-    return (
-        <li className={`friends ${friend.isFavourite ? "favourite" : ""}`}>
-            {friend.isFavourite && (
-                <img src={starIcon} alt="star" style={{ width: "16px", marginLeft: "5px" }} />
-            )}
-            {userName}
-            <button onClick={onToggleFavourite} style={{ marginLeft: "10px" }}>
-                {friend.isFavourite ? "Remove" : "Favourite"}
-            </button>
-            <button onClick={onDelete} style={{ marginLeft: "5px" }}>Delete</button>
-        </li>
-    );
+  return (
+    <li className={`friends ${friend.isFavourite ? "favourite" : ""}`}>
+      {friend.isFavourite && (
+        <img src={starIcon} alt="star" style={{ width: 16, marginLeft: 5 }} />
+      )}
+      {friend.friend?.userName ?? ""}
+      <button onClick={onToggleFavourite} style={{ marginLeft: 10 }}>
+        {friend.isFavourite ? "Remove" : "Favourite"}
+      </button>
+    </li>
+  );
 }
 
 // ----- Main FriendsList Component -----
 export default function FriendsList() {
   const { user } = useUser();
-  if (!user) return <p>Please log in to see your friends.</p>;
+
+  // Ensure username exists
+  if (!user || !user.username) return <p>Please log in to see your friends.</p>;
 
   const currentUserName = user.username;
   const friendInput = useFriendsInput(currentUserName);
@@ -49,22 +41,37 @@ export default function FriendsList() {
 
   const normalizedSearch = searchValue.toLowerCase().trim();
 
-    const matchedFriend = friendInput.friends.find(friend => {
-        const name = friend.friend?.userName ?? "";
-        return name.toLowerCase() === normalizedSearch;
+  // Deduplicate friends
+  const uniqueFriends = useMemo(() => {
+    const seen = new Set<string>();
+    return friendInput.friends.filter((friend) => {
+      const id = `${friend.userId}-${friend.friendId}`;
+      if (seen.has(id)) return false;
+      seen.add(id);
+      return true;
     });
+  }, [friendInput.friends]);
 
-    const handleToggleFavourite = async (friend: Friend) => {
-        await friendInput.updateFriendFavourite(
-            friend.userId,
-            friend.friendId,
-            !friend.isFavourite
-        );
-    };
+  // Search filtering
+  const filteredFriends = useMemo(() => {
+    if (!normalizedSearch) return uniqueFriends;
+    return uniqueFriends.filter((friend) =>
+      (friend.friend?.userName ?? "").toLowerCase().includes(normalizedSearch)
+    );
+  }, [normalizedSearch, uniqueFriends]);
 
-    const handleDelete = async (friend: Friend) => {
-        await friendInput.deleteFriend(friend.userId, friend.friendId);
-    };
+  // Toggle favourite
+  const handleToggleFavourite = async (friend: Friend) => {
+    try {
+      await friendInput.updateFriendFavourite(
+        friend.userId,
+        friend.friendId,
+        !friend.isFavourite
+      );
+    } catch {
+      friendInput.setErrors(["Failed to update favourite"]);
+    }
+  };
 
   return (
     <>
@@ -77,28 +84,20 @@ export default function FriendsList() {
           handleSearchChange={setSearchValue}
         />
 
-                <ul className="friend__list">
-                {!searchValue.trim() ? (
-                    friendInput.friends.map(friend => (
-                        <FriendItem
-                        key={friend.friendId}
-                        friend={friend}
-                        onToggleFavourite={() => handleToggleFavourite(friend)}
-                        onDelete={() => handleDelete(friend)}
-                        />
-                    ))
-                ) : matchedFriend ? (
-                    <FriendItem
-                    key={matchedFriend.friendId}
-                    friend={matchedFriend}
-                    onToggleFavourite={() => handleToggleFavourite(matchedFriend)}
-                    onDelete={() => handleDelete(matchedFriend)}
-                    />
-                ) : (
-                    <li>No matching friend found</li>
-                )}
-                </ul>
-            </section>
+        <ul className="friend__list">
+          {filteredFriends.length > 0 ? (
+            filteredFriends.map((friend) => (
+              <FriendItem
+                key={`${friend.userId}-${friend.friendId}`}
+                friend={friend}
+                onToggleFavourite={() => handleToggleFavourite(friend)}
+              />
+            ))
+          ) : (
+            <li>No matching friend found</li>
+          )}
+        </ul>
+      </section>
 
       <FriendForm
         currentUserName={currentUserName}

@@ -1,25 +1,21 @@
 import type { Friend } from "../../../../../shared/types/friends";
 
-type FriendsResponseJSON = {message: String, data: Friend[]};
-type FriendResponseJSON = {message: String, data: Friend};
+type FriendsResponseJSON = { message: string; data: Friend[] };
+type FriendResponseJSON = { message: string; data: Friend };
 
 const BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/api/v1`;
-const FRIEND_ENDPOINT = "/friends"
+const FRIEND_ENDPOINT = "/friends";
 
 /**
- * getFriends - gets the entire list of friends from the friends data and shows it
- * on the page.
- * @returns 
- * list - a list of friends from the data
+ * getFriendsForUser - fetches friends for a specific userId
  */
-
-export async function getFriends(): Promise<Friend[]> {
+export async function getFriendsForUser(userId: string): Promise<Friend[]> {
     const friendResponse: Response = await fetch(
-        `${BASE_URL}${FRIEND_ENDPOINT}`
+        `${BASE_URL}${FRIEND_ENDPOINT}?userId=${userId}`
     );
 
-    if(!friendResponse.ok) {
-        throw new Error("Failed to fetch friends");
+    if (!friendResponse.ok) {
+        throw new Error("Failed to fetch friends for user");
     }
 
     const json: FriendsResponseJSON = await friendResponse.json();
@@ -27,36 +23,30 @@ export async function getFriends(): Promise<Friend[]> {
 }
 
 /**
- * addFriend
- * @param userName - the userName of the friend 
- * @returns 
- * - userName: string - that has been added to the list.
+ * addFriendByUserName
  */
-
 export async function addFriendByUserName(
     userName: string,
     friendUserName: string
 ): Promise<Friend> {
     const res = await fetch(`${BASE_URL}${FRIEND_ENDPOINT}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json"},
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             userName,
             friendUserName,
-        }),        
+        }),
     });
 
     if (!res.ok) throw new Error("Failed to add friend");
 
     const json: FriendResponseJSON = await res.json();
     return json.data;
-};
+}
 
 /**
- * updateFriendFavourite - updates if the friend has been favourited
- * @param friendId - string used to apply the favourite to the friendId
+ * updateFriendFavourite
  */
-
 export async function updateFriendFavourite(
     userId: string,
     friendId: string,

@@ -66,7 +66,6 @@ export function FriendsList({ currentUserName }: FriendsListProps) {
             <section className="friendsList">
                 <h2 id="friendsListTitle">Friends</h2>
 
-                {/* 🔍 Search bar */}
                 <FriendSearchBar
                     searchValue={searchValue}
                     messages={[]}

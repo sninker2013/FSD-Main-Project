@@ -26,32 +26,6 @@ export async function getFriends(): Promise<Friend[]> {
     return json.data;
 }
 
-export async function getFriendByUserName(friendUserName: string): Promise<Friend> {
-    const friendResponse: Response = await fetch(
-        `${BASE_URL}${FRIEND_ENDPOINT}/${friendUserName}`
-    );
-
-    if(!friendResponse.ok) {
-        throw new Error(`Failed to fetch friend with user name ${friendUserName}`);
-    }
-
-    const json: FriendResponseJSON = await friendResponse.json();
-    return json.data;
-}
-
-export async function getFriendsByUserName(userName: string): Promise<Friend[]> {
-    const friendResponse: Response = await fetch(
-        `${BASE_URL}${FRIEND_ENDPOINT}/of/${userName}`
-    );
-
-    if(!friendResponse.ok) {
-        throw new Error(`Failed to fetch friends with user name ${userName}`);
-    }
-
-    const json: FriendsResponseJSON = await friendResponse.json();
-    return json.data;
-}
-
 /**
  * addFriend
  * @param userName - the userName of the friend 
@@ -104,23 +78,3 @@ export async function updateFriendFavourite(
     const json: FriendResponseJSON = await updateResponse.json();
     return json.data;
 }
-
-
-/**
- * deleteFriend - deletes friend from the friendsList
- * @param friendId - string: the friendId to make sure that it
- * applies to the friend you want to delete.
- */
-
-export async function deleteFriend(
-    userId: string,
-    friendId: string
-): Promise<void> {
-    const res = await fetch(
-        `${BASE_URL}${FRIEND_ENDPOINT}/${userId}/${friendId}`,
-        {
-            method: "DELETE",
-        }
-    );
-    if (!res.ok) throw new Error("Failed to delete friend");
-};

@@ -15,35 +15,25 @@ import type { Friend } from "@shared/types/friends";
  * - error: string - "User Name needs at least 3 characters."
  */
 
-interface ValidationResult {
-    isValid: boolean;
-    errors: string[];
-}
-
 interface UseFriendsInputReturn {
     value: string;
     errors: string[];
-    success: string;
     friends: Friend[];
     valueChangeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
     inputReset: () => void;
     validate: () => boolean;
 
-    getFriendByUserName: (friendUserName: string) => Promise<Friend | null>;
-    getFriendsByUserName: (userName: string) => Promise<Friend[]>;
     addFriendByUserName: (currentUserName: string) => Promise<Friend | null>;
     updateFriendFavourite: (
         userId: string,
         friendId: string,
         isFavourite: boolean
     ) => Promise<void>;
-    deleteFriend: (userId: string, friendId: string) => Promise<void>;
 }
 
 const useFriendsInput = (): UseFriendsInputReturn => {
     const [enteredValue, setEnteredValue] = useState("");
     const [errors, setErrors] = useState<string[]>([]);
-    const [success, setSuccess] = useState("");
 
     const [friends, setFriends] = useState<Friend[]>([]);
 
@@ -52,14 +42,17 @@ const useFriendsInput = (): UseFriendsInputReturn => {
     }, [])
 
     const loadFriends = async () => {
-        const data = await friendService.getFriends();
-        setFriends(data);
-    }
+        try {
+            const data = await friendService.getFriends();
+            setFriends(data);
+        } catch {
+            setErrors(["Failed to load friends"]);
+        }
+    };
 
     const valueChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEnteredValue(event.target.value);
         setErrors([]);
-        setSuccess("");
     };
 
     /**
@@ -70,7 +63,6 @@ const useFriendsInput = (): UseFriendsInputReturn => {
     const inputReset = () => {
         setEnteredValue("");
         setErrors([]);
-        setSuccess("");
     };
 
     /**
@@ -79,11 +71,11 @@ const useFriendsInput = (): UseFriendsInputReturn => {
      */
 
     const validate = (): boolean => {
-        const result: ValidationResult = 
-            friendService.validateUserName(enteredValue);
-
+        const value = enteredValue.trim();
+        const result = friendService.validateUserName(value);
+        
         setErrors(result.errors);
-        setSuccess(result.isValid ? "Form is valid!" : "");
+        
         return result.isValid;
     };
 
@@ -95,30 +87,24 @@ const useFriendsInput = (): UseFriendsInputReturn => {
 
     // Return the value, error state, valueChangeHandler, inputReset, and validate 
 
-    const getFriendsByUserName = async (userName: string) => {
-        return friendService.getFriendsByUserName(userName);
-    };
-
-    const getFriendByUserName = async (friendUserName: string) => {
-        return friendService.getFriendByUserName(friendUserName);
-    };
-
     const addFriendByUserName = async (
         currentUserName: string
     ): Promise<Friend | null> => {
         if (!validate()) return null;
-
-        const newFriend = await friendService.addFriendByUserName(
-            currentUserName,
-            enteredValue
-        );
-
-        await loadFriends();
-
-        setSuccess("Friend added successfully!");
-        inputReset();
-
-        return newFriend;
+        try {
+            const newFriend = await friendService.addFriendByUserName(
+                currentUserName,
+                enteredValue.trim()
+            );
+            
+            await loadFriends();
+            inputReset();
+            
+            return newFriend;
+        } catch {
+            setErrors(["Failed to add friend"]);
+            return null;
+        }
     };
     
 
@@ -127,36 +113,23 @@ const useFriendsInput = (): UseFriendsInputReturn => {
         friendId: string,
         isFavourite: boolean
     ) => {
-        await friendService.updateFriendFavourite(
-            userId,
-            friendId,
-            isFavourite
-        );
-
-        await loadFriends();
-    };
-
-    const deleteFriend = async (
-        userId: string,
-        friendId: string
-    ) => {
-        await friendService.deleteFriend(userId, friendId);
-        await loadFriends();
+        try {
+            await friendService.updateFriendFavourite(userId, friendId, isFavourite);
+            await loadFriends();
+        } catch {
+            setErrors(["Failed to update friend"]);
+        }
     };
 
     return {
         value: enteredValue,
         errors,
-        success,
         valueChangeHandler,
         inputReset,
         validate,
         friends,
-        getFriendByUserName,
-        getFriendsByUserName,
         addFriendByUserName,
         updateFriendFavourite,
-        deleteFriend,
     };
 };
 

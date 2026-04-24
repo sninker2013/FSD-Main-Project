@@ -23,6 +23,25 @@ export const getAllFriends = async(
     }
 };
 
+export const addFriendByUserName = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const { userName, friendUserName } = req.body;
+
+        const newFriend = await friendService.addFriendByUserName(userName, friendUserName);
+
+        res.status(201).json({
+            message: "Friend added successfully",
+            data: newFriend,
+        });
+    } catch (err) {
+        next(err); // pass error to global middleware
+    }
+};
+
 /**
  * Manages requests and reponses to update a Friend
  * @param req - The express Request

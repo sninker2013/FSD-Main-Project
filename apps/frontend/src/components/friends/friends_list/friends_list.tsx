@@ -14,11 +14,9 @@ interface FriendsListProps {
 function FriendItem({ 
     friend,
     onToggleFavourite,
-    onDelete
 }: { 
     friend: Friend;
     onToggleFavourite: () => void;
-    onDelete: () => void;
 }) {
     const userName = friend.friend?.userName ?? "";
 
@@ -31,7 +29,6 @@ function FriendItem({
             <button onClick={onToggleFavourite} style={{ marginLeft: "10px" }}>
                 {friend.isFavourite ? "Remove" : "Favourite"}
             </button>
-            <button onClick={onDelete} style={{ marginLeft: "5px" }}>Delete</button>
         </li>
     );
 }
@@ -57,10 +54,6 @@ export default function FriendsList({ currentUserName }: FriendsListProps) {
         );
     };
 
-    const handleDelete = async (friend: Friend) => {
-        await friendInput.deleteFriend(friend.userId, friend.friendId);
-    };
-
     return (
         <>
             <section className="friendsList">
@@ -79,7 +72,6 @@ export default function FriendsList({ currentUserName }: FriendsListProps) {
                         key={friend.friendId}
                         friend={friend}
                         onToggleFavourite={() => handleToggleFavourite(friend)}
-                        onDelete={() => handleDelete(friend)}
                         />
                     ))
                 ) : matchedFriend ? (
@@ -87,7 +79,6 @@ export default function FriendsList({ currentUserName }: FriendsListProps) {
                     key={matchedFriend.friendId}
                     friend={matchedFriend}
                     onToggleFavourite={() => handleToggleFavourite(matchedFriend)}
-                    onDelete={() => handleDelete(matchedFriend)}
                     />
                 ) : (
                     <li>No matching friend found</li>
@@ -97,9 +88,12 @@ export default function FriendsList({ currentUserName }: FriendsListProps) {
 
             <FriendForm 
                 currentUserName={currentUserName}
-                checkUserExists={async (userName) => 
-                    !friendInput.friends.some(f => f.friend?.userName === userName)
-                }
+                checkUserExists={async (userName) => {
+                    const res = await fetch(
+                        `${import.meta.env.VITE_API_BASE_URL}/api/v1/users/${userName}`
+                    );
+                    return res.ok;
+                }}
             />
         </>
     );

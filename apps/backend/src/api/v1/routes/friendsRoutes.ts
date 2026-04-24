@@ -8,6 +8,8 @@ const router: Router = express.Router();
 router.get("/",
     friendsController.getAllFriends);
 
+router.post("/", friendsController.addFriendByUserName)
+
 router.put("/:userId/:friendId", validateRequest(friendSchema),
     friendsController.updateFriendFavourite);
 

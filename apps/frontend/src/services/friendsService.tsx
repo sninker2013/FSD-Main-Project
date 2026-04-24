@@ -1,6 +1,12 @@
 import type { Friend } from  "@shared/types/friends";
 import * as friendsRepo from "../apis/friends/friendsRepo";
 
+
+export class ServiceError extends Error {
+    constructor(message: string) {
+        super(message);
+    }
+}
 /**
  * This Service function handles the validation for the friendsInput
  * for the friendsForm.
@@ -29,26 +35,23 @@ export function validateUserName(userName: string): ValidationResult {
     };
 }
 
-export async function getFriends(): Promise<Friend[]> {
+export const getFriends = async (): Promise<Friend[]> => {
     return await friendsRepo.getFriends();
-}
-
-export const getFriendByUserName = async (
-    friendUserName: string,
-): Promise<Friend> => {
-    return await friendsRepo.getFriendByUserName(friendUserName);
-}
-
-export const getFriendsByUserName = async (
-    userName: string,
-): Promise<Friend[]> => {
-    return await friendsRepo.getFriendsByUserName(userName);
-}
+};
 
 export const addFriendByUserName = async (
     userName: string,
     friendUserName: string
 ): Promise<Friend> => {
+
+    if (userName.trim().length < 3 || friendUserName.trim().length < 3) {
+        throw new ServiceError("Usernames must be at least 3 characters long");
+    }
+
+    if (userName === friendUserName) {
+        throw new ServiceError("You cannot add yourself as a friend");
+    }
+
     return await friendsRepo.addFriendByUserName(userName, friendUserName);
 };
 
@@ -63,10 +66,3 @@ export const updateFriendFavourite = async (
         isFavourite
     );
 };
-
-export const deleteFriend = async (
-    userId: string,
-    friendId: string
-): Promise<void> => {
-    await friendsRepo.deleteFriend(userId, friendId);
-}

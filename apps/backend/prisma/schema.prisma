@@ -18,6 +18,7 @@ model User {
 
   userName String @unique
   profilePic String
+  status String @default("")
   dateCreated DateTime @default(now())
 
   reviews Review[]

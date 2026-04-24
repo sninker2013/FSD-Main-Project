@@ -14,10 +14,12 @@ import type { UserProfileType, Game } from "./components/common/user-profile/pro
 import { testProfile, testGames } from "./components/common/user-profile/profileData";
 
 import { ReviewsPage } from "./components/pages/ReviewsPage";
-import { useReviews } from "./hooks/useReviews";
 
 import { SearchResult } from "./components/pages/search-results";
 
+import LoginOptions from "./components/pages/users/login-options-page";
+import LoginPage from "./components/pages/users/login-page";
+import CreateUserPage from "./components/pages/users/create-user-page";
 
 function App() {
 
@@ -25,8 +27,6 @@ function App() {
   const [games, setGames] = useState<Game[]>(testGames);
 
   const [newGameTitle, setNewGameTitle] = useState("");
-
-  const { reviews, createReview } = useReviews()
 
   const currentUserName = "john_doe";
   
@@ -38,7 +38,7 @@ function App() {
         <Route path="Friends" element={<FriendsList currentUserName={currentUserName} />}/>
         <Route 
           path="Reviews" 
-          element={<ReviewsPage reviews={reviews} createReview={createReview}/>}/>
+          element={<ReviewsPage />}/>
         <Route 
           path="Profile" 
           element={<UserProfilePage 
@@ -49,6 +49,9 @@ function App() {
             newGameTitle={newGameTitle}
             setNewGameTitle={setNewGameTitle}
           />}/>
+          <Route path="/login-options" element={<LoginOptions />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/create-user" element={<CreateUserPage />} />
           {// new path to handle searching for games
           }<Route path="games/search" element={<SearchResult/>}/>
       </Route>

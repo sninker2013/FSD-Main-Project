@@ -18,7 +18,7 @@ model User {
 
   userName String @unique
   profilePic String
-  dateCreated DateTime
+  dateCreated DateTime @default(now())
 
   reviews Review[]
   friends Friend[] @relation("UserFriends")

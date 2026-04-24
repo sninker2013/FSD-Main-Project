@@ -1,6 +1,6 @@
 export type Review = {
     id: string,
-    gameId: string;
+    game: {id: string, gameName: string}
     userId: string;
     dateCreated: Date;
     dateEditted?: Date;

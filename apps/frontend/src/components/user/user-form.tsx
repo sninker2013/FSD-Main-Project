@@ -1,58 +1,58 @@
-import { useState } from "react";
-import useFriendsInput from "../../hooks/useFriendsInput";
-//import "./friends-form.css";
+import { useCreateUserFormInput } from "../../hooks/useUserFormInput";
 
 //Used to create an account
 
 type UserFormProps = {
-    onSubmit: (
-        userName: string
-    ) => void;
+    onSubmit: (userName: string) => void;
 };
 
-export function UserForm({ onSubmit }: UserFormProps) { 
-  const userName = useFriendsInput();
-  const [success, setSuccess] = useState("");
+export function UserForm({ onSubmit }: UserFormProps) {
+    const {
+        userName,
+        errors,
+        success,
+        valueChangeHandler,
+        inputReset,
+        validate,
+    } = useCreateUserFormInput();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
 
-    const isValid = userName.validate();
+        const isValid = validate();
 
-    if (!isValid) {
-      setSuccess("");
-      return;
-    }
+        if (!isValid) return;
 
-    onSubmit(userName.value);
-    setSuccess("Form is valid!");
-    userName.inputReset();
+        onSubmit(userName);
+        inputReset();
+    };
 
-    // Optional: auto-hide success message
-    setTimeout(() => setSuccess(""), 3000);
-  };
+    return (
+        <form onSubmit={handleSubmit}>
+            <label htmlFor="userName" className="loginForm">
+                User Name:
+                <input
+                    type="text"
+                    name="userName"
+                    id="userName"
+                    value={userName}
+                    onChange={(e) =>
+                        valueChangeHandler("userName", e.target.value)
+                    }
+                />
+            </label>
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="userName" className="loginForm">
-        User Name:
-        <input
-          type="text"
-          name="userName"
-          id="userName"
-          value={userName.value}
-          onChange={userName.valueChangeHandler}
-        />
-      </label>
+            <div className="form-feedback">
+                {errors.map((err, i) => (
+                    <p key={i} style={{ color: "red" }}>
+                        {err}
+                    </p>
+                ))}
 
-      <div className="form-feedback">
-        {userName.errors.map((err, i) => (
-          <p key={i} style={{ color: "red" }}>{err}</p>
-        ))}
-        {success && <p style={{ color: "green" }}>{success}</p>}
-      </div>
+                {success && <p style={{ color: "green" }}>{success}</p>}
+            </div>
 
-      <button type="submit">Submit</button>
-    </form>
-  );
+            <button type="submit">Submit</button>
+        </form>
+    );
 }

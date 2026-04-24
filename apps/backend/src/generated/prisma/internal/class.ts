@@ -24,7 +24,6 @@ const config: runtime.GetPrismaClientConfig = {
     },
     "output": {
       "value": "C:\\Users\\Acer\\Documents\\rrc_polytech\\2026\\winter_2026\\fullstack\\Assignments\\FSD-Main-Project\\apps\\backend\\src\\generated\\prisma",
-
       "fromEnvVar": null
     },
     "config": {
@@ -38,12 +37,11 @@ const config: runtime.GetPrismaClientConfig = {
       }
     ],
     "previewFeatures": [],
-
     "sourceFilePath": "C:\\Users\\Acer\\Documents\\rrc_polytech\\2026\\winter_2026\\fullstack\\Assignments\\FSD-Main-Project\\apps\\backend\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativePath": "../../../prisma",
-  "clientVersion": "6.19.2",
+  "clientVersion": "6.19.3",
   "engineVersion": "c2990dca591cba766e3b7ef5d9e8a84796e47ab7",
   "datasourceNames": [
     "db"

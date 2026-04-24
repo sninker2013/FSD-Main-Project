@@ -5,7 +5,7 @@ import './App.css'
 import { Layout } from "./components/common/layout/layout";
 import { Landing } from "./components/pages/landing/landing";
 
-import { FriendsList } from "./components/friends/friends_list/friends_list";
+import FriendsList from "./components/friends/friends_list/friends_list";
 import { PopularGames } from "./components/popular_games/PopularGames";
 
 

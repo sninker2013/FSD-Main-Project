@@ -37,7 +37,7 @@ function FriendItem({
 }
 
 // Main FriendsList component using the hook
-export function FriendsList({ currentUserName }: FriendsListProps) {
+export default function FriendsList({ currentUserName }: FriendsListProps) {
     const friendInput = useFriendsInput();
 
     const [searchValue, setSearchValue] = useState("");

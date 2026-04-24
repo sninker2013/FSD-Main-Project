@@ -17,9 +17,6 @@ export function Nav() {
                 <NavLink to="/friends">
                     Friends
                 </NavLink>
-                <NavLink to="/login-options">
-                    Login
-                </NavLink>
             </div>
         </nav>
     )

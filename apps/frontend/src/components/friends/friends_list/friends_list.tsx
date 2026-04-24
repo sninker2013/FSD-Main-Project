@@ -2,6 +2,8 @@ import type { Friend } from "@shared/types/friends";
 import { FriendForm } from "../friends_form/friends_form";
 import starIcon from "./assets/star-transparent.png";
 import useFriendsInput from "../../../hooks/useFriendsInput";
+import { FriendSearchBar } from "../../friends/friend_search_bar";
+import { useState } from "react";
 import "./friends_list.css";
 
 interface FriendsListProps {
@@ -35,10 +37,18 @@ function FriendItem({
 }
 
 // Main FriendsList component using the hook
-export function FriendsList({ currentUserName }: FriendsListProps) {
+export default function FriendsList({ currentUserName }: FriendsListProps) {
     const friendInput = useFriendsInput();
 
-    // Toggle favourite handler
+    const [searchValue, setSearchValue] = useState("");
+
+    const normalizedSearch = searchValue.toLowerCase().trim();
+
+    const matchedFriend = friendInput.friends.find(friend => {
+        const name = friend.friend?.userName ?? "";
+        return name.toLowerCase() === normalizedSearch;
+    });
+
     const handleToggleFavourite = async (friend: Friend) => {
         await friendInput.updateFriendFavourite(
             friend.userId,
@@ -47,7 +57,6 @@ export function FriendsList({ currentUserName }: FriendsListProps) {
         );
     };
 
-    // Delete friend handler
     const handleDelete = async (friend: Friend) => {
         await friendInput.deleteFriend(friend.userId, friend.friendId);
     };
@@ -56,15 +65,33 @@ export function FriendsList({ currentUserName }: FriendsListProps) {
         <>
             <section className="friendsList">
                 <h2 id="friendsListTitle">Friends</h2>
+
+                <FriendSearchBar
+                    searchValue={searchValue}
+                    messages={[]}
+                    handleSearchChange={setSearchValue}
+                />
+
                 <ul className="friend__list">
-                    {friendInput.friends.map(friend => (
+                {!searchValue.trim() ? (
+                    friendInput.friends.map(friend => (
                         <FriendItem
-                            key={friend.friendId}
-                            friend={friend}
-                            onToggleFavourite={() => handleToggleFavourite(friend)}
-                            onDelete={() => handleDelete(friend)}
+                        key={friend.friendId}
+                        friend={friend}
+                        onToggleFavourite={() => handleToggleFavourite(friend)}
+                        onDelete={() => handleDelete(friend)}
                         />
-                    ))}
+                    ))
+                ) : matchedFriend ? (
+                    <FriendItem
+                    key={matchedFriend.friendId}
+                    friend={matchedFriend}
+                    onToggleFavourite={() => handleToggleFavourite(matchedFriend)}
+                    onDelete={() => handleDelete(matchedFriend)}
+                    />
+                ) : (
+                    <li>No matching friend found</li>
+                )}
                 </ul>
             </section>
 
@@ -77,5 +104,3 @@ export function FriendsList({ currentUserName }: FriendsListProps) {
         </>
     );
 }
-
-export default FriendsList;

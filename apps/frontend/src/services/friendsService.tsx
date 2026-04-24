@@ -1,12 +1,6 @@
 import type { Friend } from  "@shared/types/friends";
 import * as friendsRepo from "../apis/friends/friendsRepo";
 
-
-export class ServiceError extends Error {
-    constructor(message: string) {
-        super(message);
-    }
-}
 /**
  * This Service function handles the validation for the friendsInput
  * for the friendsForm.
@@ -29,24 +23,27 @@ export function validateUserName(userName: string) {
   return { isValid: errors.length === 0, errors };
 }
 
-export const getFriendsForUser = async (currentUserName: string): Promise<Friend[]> => {
+export async function getFriendsForUser(currentUserName: string): Promise<Friend[]> {
     return await friendsRepo.getFriendsForUser(currentUserName);
-};
+}
 
-export const addFriendByUserName = async (userName: string, friendUserName: string) => {
-  const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/friends`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ userName, friendUserName }),
-  });
+export const getFriendByUserName = async (
+    friendUserName: string,
+): Promise<Friend> => {
+    return await friendsRepo.getFriendByUserName(friendUserName);
+}
 
-  if (!res.ok) {
-    const err = await res.json();
-    throw new Error(err.message || "Failed to add friend");
-  }
+export const getFriendsByUserName = async (
+    userName: string,
+): Promise<Friend[]> => {
+    return await friendsRepo.getFriendsByUserName(userName);
+}
 
-  const json = await res.json();
-  return json.data;
+export const addFriendByUserName = async (
+    userName: string,
+    friendUserName: string
+): Promise<Friend> => {
+    return await friendsRepo.addFriendByUserName(userName, friendUserName);
 };
 
 export const updateFriendFavourite = async (
@@ -60,3 +57,10 @@ export const updateFriendFavourite = async (
         isFavourite
     );
 };
+
+export const deleteFriend = async (
+    userId: string,
+    friendId: string
+): Promise<void> => {
+    await friendsRepo.deleteFriend(userId, friendId);
+}

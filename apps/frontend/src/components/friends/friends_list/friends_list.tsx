@@ -8,25 +8,34 @@ import { useState, useMemo } from "react";
 import { useUser } from "@clerk/clerk-react";
 import "./friends_list.css";
 
-// ----- FriendItem Component -----
-function FriendItem({
-  friend,
-  onToggleFavourite: _onToggleFavourite,
-}: {
-  friend: Friend;
-  onToggleFavourite: () => void;
+interface FriendsListProps {
+    currentUserName: string;
+}
+
+// Single friend item component
+function FriendItem({ 
+    friend,
+    onToggleFavourite,
+    onDelete
+}: { 
+    friend: Friend;
+    onToggleFavourite: () => void;
+    onDelete: () => void;
 }) {
-  return (
-    <li className={`friends ${friend.isFavourite ? "favourite" : ""}`}>
-      {friend.isFavourite && (
-        <img src={starIcon} alt="star" style={{ width: 16, marginLeft: 5 }} />
-      )}
-      {friend.friend?.userName ?? ""}
-      <button onClick={_onToggleFavourite} style={{ marginLeft: 10 }}>
-        {friend.isFavourite ? "Remove" : "Favourite"}
-      </button>
-    </li>
-  );
+    const userName = friend.friend?.userName ?? "";
+
+    return (
+        <li className={`friends ${friend.isFavourite ? "favourite" : ""}`}>
+            {friend.isFavourite && (
+                <img src={starIcon} alt="star" style={{ width: "16px", marginLeft: "5px" }} />
+            )}
+            {userName}
+            <button onClick={onToggleFavourite} style={{ marginLeft: "10px" }}>
+                {friend.isFavourite ? "Remove" : "Favourite"}
+            </button>
+            <button onClick={onDelete} style={{ marginLeft: "5px" }}>Delete</button>
+        </li>
+    );
 }
 
 // ----- Main FriendsList Component -----
@@ -40,37 +49,22 @@ export default function FriendsList() {
 
   const normalizedSearch = searchValue.toLowerCase().trim();
 
-  // Deduplicate friends
-  const uniqueFriends = useMemo(() => {
-    const seen = new Set<string>();
-    return friendInput.friends.filter((friend) => {
-      const id = `${friend.userId}-${friend.friendId}`;
-      if (seen.has(id)) return false;
-      seen.add(id);
-      return true;
+    const matchedFriend = friendInput.friends.find(friend => {
+        const name = friend.friend?.userName ?? "";
+        return name.toLowerCase() === normalizedSearch;
     });
-  }, [friendInput.friends]);
 
-  // Search filtering
-  const filteredFriends = useMemo(() => {
-    if (!normalizedSearch) return uniqueFriends;
-    return uniqueFriends.filter((friend) =>
-      (friend.friend?.userName ?? "").toLowerCase().includes(normalizedSearch)
-    );
-  }, [normalizedSearch, uniqueFriends]);
+    const handleToggleFavourite = async (friend: Friend) => {
+        await friendInput.updateFriendFavourite(
+            friend.userId,
+            friend.friendId,
+            !friend.isFavourite
+        );
+    };
 
-  // Toggle favourite
-  const handleToggleFavourite = async (friend: Friend) => {
-    try {
-      await friendInput.updateFriendFavourite(
-        friend.userId,
-        friend.friendId,
-        !friend.isFavourite
-      );
-    } catch (err) {
-      console.error("Failed to update favourite:", err);
-    }
-  };
+    const handleDelete = async (friend: Friend) => {
+        await friendInput.deleteFriend(friend.userId, friend.friendId);
+    };
 
   return (
     <>
@@ -83,34 +77,35 @@ export default function FriendsList() {
           handleSearchChange={setSearchValue}
         />
 
-        <ul className="friend__list">
-          {filteredFriends.length > 0 ? (
-            filteredFriends.map((friend) => (
-              <FriendItem
-                key={`${friend.userId}-${friend.friendId}`}
-                friend={friend}
-                onToggleFavourite={() => handleToggleFavourite(friend)}
-              />
-            ))
-          ) : (
-            <li>No matching friend found</li>
-          )}
-        </ul>
-      </section>
+                <ul className="friend__list">
+                {!searchValue.trim() ? (
+                    friendInput.friends.map(friend => (
+                        <FriendItem
+                        key={friend.friendId}
+                        friend={friend}
+                        onToggleFavourite={() => handleToggleFavourite(friend)}
+                        onDelete={() => handleDelete(friend)}
+                        />
+                    ))
+                ) : matchedFriend ? (
+                    <FriendItem
+                    key={matchedFriend.friendId}
+                    friend={matchedFriend}
+                    onToggleFavourite={() => handleToggleFavourite(matchedFriend)}
+                    onDelete={() => handleDelete(matchedFriend)}
+                    />
+                ) : (
+                    <li>No matching friend found</li>
+                )}
+                </ul>
+            </section>
 
-      <FriendForm
-      currentUserName={currentUserName}
-      checkUserExists={async (userName) => {
-        try {
-          const res = await fetch(
-            `${import.meta.env.VITE_API_BASE_URL}/api/v1/users/${userName}`
-          );
-          return res.ok;
-        } catch {
-          return false;
-        }
-      }}
-      />
-    </>
-  );
+            <FriendForm 
+                currentUserName={currentUserName}
+                checkUserExists={async (userName) => 
+                    !friendInput.friends.some(f => f.friend?.userName === userName)
+                }
+            />
+        </>
+    );
 }

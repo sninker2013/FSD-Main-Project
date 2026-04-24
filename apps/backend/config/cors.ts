@@ -8,9 +8,13 @@ const corsOptions: CorsOptions = {
         const frontendUrl = process.env.FRONTEND_URL.replace(/\/$/, '');
         const allowedOrigins = [frontendUrl];
 
+        const isVercelPreview = origin && origin.match(
+            /https:\/\/fsd-main-project-frontend-.*\.vercel\.app/
+        );
+
         // invoke callback (eg. next middleware) if  origin matches or no origin
         // some services (like postman) do not include an origin in their request
-        if(!origin || allowedOrigins.includes(origin)) {
+        if(!origin || allowedOrigins.includes(origin) || isVercelPreview) {
             callback(null, true);
         } else {
             callback(new Error("Not allowed by CORS restriction"), false);

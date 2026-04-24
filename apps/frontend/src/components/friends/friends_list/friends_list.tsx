@@ -100,12 +100,19 @@ export default function FriendsList() {
                 </ul>
             </section>
 
-            <FriendForm 
-                currentUserName={currentUserName}
-                checkUserExists={async (userName) => 
-                    !friendInput.friends.some(f => f.friend?.userName === userName)
-                }
-            />
-        </>
-    );
+      <FriendForm
+        currentUserName={currentUserName}
+        checkUserExists={async (userName) => {
+          try {
+            const res = await fetch(
+              `${import.meta.env.VITE_API_BASE_URL}/api/v1/users/${userName}`
+            );
+            return res.ok;
+          } catch {
+            return false;
+          }
+        }}
+      />
+    </>
+  );
 }

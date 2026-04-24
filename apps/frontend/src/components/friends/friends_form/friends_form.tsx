@@ -8,7 +8,7 @@ type FriendFormProps = {
 };
 
 export function FriendForm({ currentUserName, checkUserExists }: FriendFormProps) {
-    const friendInput = useFriendsInput();
+    const friendInput = useFriendsInput(currentUserName); // pass the argument here
     const [friendNotFound, setFriendNotFound] = useState(false);
     const [formSuccess, setFormSuccess] = useState("");
 
@@ -31,7 +31,7 @@ export function FriendForm({ currentUserName, checkUserExists }: FriendFormProps
                 return;
             }
 
-            const newFriend = await friendInput.addFriendByUserName(currentUserName);
+            const newFriend = await friendInput.addFriendByUserName();
 
             if (!newFriend) return;
 

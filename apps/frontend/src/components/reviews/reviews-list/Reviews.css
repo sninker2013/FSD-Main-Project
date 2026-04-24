@@ -15,6 +15,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-template-areas: 
+        "game game game game game"
         "profile rating rating rating date"
         "profile desc desc desc desc";
     border-bottom: 2px solid #A7C2FA;
@@ -46,4 +47,9 @@
 .review__desc {
     grid-area: desc;
     text-wrap: wrap;
+}
+
+.game {
+    grid-area: game;
+    text-align: center;
 }

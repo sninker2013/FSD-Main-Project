@@ -1,4 +1,4 @@
-# LetterBoxd/GoodReads but for games
+# GameStars
 
 ## Team TBD
 
@@ -8,9 +8,71 @@ Shannon, D, and Xavier
 
 As a user, I want to be able to categorize and rate the games that I play, to be able to keep a record of how I feel about games right after I play them.
 
-As a user, I want to be able to share these reviews with friends, as well as see what they are playing/reviewing, to gain insight into what to play next.
+As a user, I want to be able to have a friends list, and see what they are up to. Such as what they are playing.
 
-As a user, I would like to be able to catagorize a list of "To be played", "playing", and "played" games to share to my followers and keep track for myself.
+As a user, I would like to be able to search for games to see what's available.
+
+## Local Setup Instructions
+
+### Required Technology
+
+Docker and Docker Compose (Or another way to host a postgres database)
+
+### 1. Create Clerk Project
+
+Create a free [Clerk](clerk.com) account and a Free Project
+
+In the project dashboard navigate to Developers/API Keys
+
+Copy the PUBLIC and SECRET_KEY values for later
+
+### 2. Install packages
+
+In the terminal run:
+
+`npm i`
+
+### 3. Create Postgres DB
+
+Create a Postgres DB (run `docker compose up -d` if you want to use our docker setup)
+
+### 4. Create .env files
+
+Create a file named ".env" in apps/frontend
+
+Populate the file with:
+
+```bash
+VITE_CLERK_PUBLISHABLE_KEY=<clerk-publishable-key>
+
+VITE_API_BASE_URL=http://localhost:3000
+```
+
+Create a file named ".env" in apps/backend
+
+Populate the file with:
+
+```bash
+PORT=3000
+
+DATABASE_URL=<local-postgres-db-url> # postgresql://postgres:postgres@localhost:5435/gamestars_db if you ran "docker compose"
+
+FRONTEND_URL=http://localhost:5173
+
+CLERK_PUBLISHABLE_KEY=<clerk-publishable-key>
+
+CLERK_SECRET_KEY=<clerk-secret-key>
+```
+
+### 4. Migrate and seed database
+
+In the terminal run:
+
+`npx prisma migrate dev`
+
+`cd apps/backend`
+
+`npx prisma db seed`
 
 ## Sprint 1
 

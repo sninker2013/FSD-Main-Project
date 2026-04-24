@@ -23,7 +23,7 @@ const config: runtime.GetPrismaClientConfig = {
       "value": "prisma-client"
     },
     "output": {
-      "value": "C:\\Users\\skip_\\Documents\\rrc-polytech\\semester-4\\COMP-4002_Full_Stack_Development\\project\\FSD-Main-Project\\apps\\backend\\src\\generated\\prisma",
+      "value": "C:\\RRC\\Term 4\\FSD\\FSD-Main-Project\\apps\\backend\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -37,7 +37,7 @@ const config: runtime.GetPrismaClientConfig = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\skip_\\Documents\\rrc-polytech\\semester-4\\COMP-4002_Full_Stack_Development\\project\\FSD-Main-Project\\apps\\backend\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\RRC\\Term 4\\FSD\\FSD-Main-Project\\apps\\backend\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativePath": "../../../prisma",

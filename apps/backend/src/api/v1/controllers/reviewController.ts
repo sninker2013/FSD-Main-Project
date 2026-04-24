@@ -19,10 +19,33 @@ export async function getAllReviews(_req: Request, res: Response, next: NextFunc
  */
 export async function createReview(req: Request, res: Response, next: NextFunction) {
     try {
+        const userId = req.userId
+        if (!userId) {
+            return res.status(401).json({ error: "User not authenticated" })
+        }
+
         const reviewData = req.body;
-        const newReview: Review = await reviewService.createReview(reviewData);
+        const newReview: Review = await reviewService.createReview({
+            ...reviewData,
+            userId
+        });
         res.status(201).json(successResponse(newReview, "Review created successfully"));
     } catch (error) {
         next(error);
     }
 };
+
+export async function getReviewsByUserId(req: Request, res: Response, next: NextFunction) {
+    try {
+        const userId = req.userId
+
+        if (!userId) {
+            return res.status(401).json({ error: "User not authenticated"});
+        }
+
+        const reviews: Review[] = await reviewService.getReviewsByUserId(userId)
+        res.status(200).json(successResponse(reviews, "reviews retrieved successfully"))
+    } catch (error){
+        next(error)
+    }
+}

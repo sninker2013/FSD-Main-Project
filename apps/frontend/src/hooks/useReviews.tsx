@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import * as reviewService from "../services/reviewService";
 import type { Review } from "../../../../shared/types/reviews";
+import { useAuth } from "@clerk/clerk-react";
 
 /**
  * updates a list of reviews, this needs to be a custom hook because if we decide to make individual game pages, the reviews for said game will use this hook.
@@ -12,22 +13,41 @@ export function useReviews() {
     const [reviews, updateReviews] = useState<Review[]>([])
     const [error, setError] = useState<string | null>(null);
 
+    const {getToken, isSignedIn} = useAuth();
+
+    const fetchReviews = async() => {
+        try{
+            let sessionToken = isSignedIn? await getToken(): null;
+            if (sessionToken) {
+            let result = await reviewService.getReviewsByUserId(sessionToken)
+            updateReviews([...result])
+        } else {
+            const result = await reviewService.getAllReviews()
+            updateReviews(result)
+        }
+        } catch (error) {
+            setError(`${error}`)
+        }
+    }
     
     const createReview = async(starRating: 1|2|3|4|5, reviewDesc: string) => {
         try {
-            const newReview = await reviewService.createReview(starRating, reviewDesc);
+            let sessionToken = isSignedIn? await getToken(): null
+            if (sessionToken) {
+            const newReview = await reviewService.createReview(starRating, reviewDesc, sessionToken);
             updateReviews(oldState => [newReview, ...oldState]);
+            }
         } catch (error) {
             setError(`${error}`)
         }
     }
     
     useEffect(() => {
-        reviewService.getAllReviews()
-            .then(data => updateReviews(data))
-            .catch(err => setError(`${err}`));
-    }, []);
-
+        // need this because it would show all reviews in the time clerk took to resolve the sign in.
+        if (isSignedIn === undefined) return;
+        fetchReviews()
+    }, [isSignedIn]);
+    
     return {
         reviews,
         error,

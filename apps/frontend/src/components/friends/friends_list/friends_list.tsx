@@ -99,17 +99,17 @@ export default function FriendsList() {
       </section>
 
       <FriendForm
-        currentUserName={currentUserName}
-        checkUserExists={async (userName) => {
-          try {
-            const res = await fetch(
-              `${import.meta.env.VITE_API_BASE_URL}/api/v1/users/${userName}`
-            );
-            return res.ok;
-          } catch {
-            return false;
-          }
-        }}
+      currentUserName={currentUserName}
+      checkUserExists={async (userName) => {
+        try {
+          const res = await fetch(
+            `${import.meta.env.VITE_API_BASE_URL}/api/v1/users/${userName}`
+          );
+          return res.ok;
+        } catch {
+          return false;
+        }
+      }}
       />
     </>
   );

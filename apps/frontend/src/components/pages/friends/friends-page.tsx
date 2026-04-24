@@ -1,5 +1,4 @@
 import FriendsList from "../../friends/friends_list/friends_list";
-import { FriendSearchBar } from "../../friends/friend_search_bar";
 import "./friends-page.css";
 
 interface AllFriendsProps {

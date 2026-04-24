@@ -53,24 +53,25 @@ const useFriendsInput = (currentUserName: string): UseFriendsInputReturn => {
     return result.isValid;
   };
 
-  const addFriendByUserName = async (currentUserName: string) => {
+  const addFriendByUserName = async () => {
     if (!validate()) return null;
-
+    
     try {
-        const newFriend = await friendService.addFriendByUserName(
-        currentUserName, // logged-in username
-        enteredValue.trim() // friend to add
-        );
-
-        await loadFriends(); // refresh list
-        inputReset();        // clear input
-
-        return newFriend;
+      const newFriend = await friendService.addFriendByUserName(
+        currentUserName,
+        enteredValue.trim()
+      );
+      
+      await loadFriends(); 
+      inputReset();         
+      
+      return newFriend;
+    
     } catch (err: any) {
-        setErrors([err.message || "Failed to add friend"]);
-        return null;
+      setErrors([err.message || "Failed to add friend"]);
+      return null;
     }
-    };
+  };
 
   const updateFriendFavourite = async (
     userId: string,

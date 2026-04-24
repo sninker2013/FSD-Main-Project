@@ -52,9 +52,8 @@ export async function createReview(
         {
             method: "POST",
             body: JSON.stringify({
-                /* 
-                These hardcoded game and user IDs are temporary, once the game backend is integrated I will edit the form so the user
-                can select the game they write the review for.
+                /* Ideally there would be a search bar in the review form for the user to search
+                for which game they would like to review, unfortunately we ran out of time to include this.
                 */
                 gameId: "ky7r3hm8",
                 stars: starRating,

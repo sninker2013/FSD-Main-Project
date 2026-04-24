@@ -9,6 +9,10 @@ h1, h2 {
     color: #A7C2FA;
 }
 
+h3 {
+    color: #C8A4D4;
+}
+
 p, label {
     color: #A9D66D;
     font-family: "Inter", sans-serif;

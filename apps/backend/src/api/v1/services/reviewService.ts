@@ -8,20 +8,21 @@ import prisma from "../../../../prisma/client";
 export async function fetchAllReviews() {
   return await prisma.review.findMany({
     include: {
+        game: {
+            select: {
+                id: true,
+                gameName: true
+            }
+        },
         user: {
             select: {
                 id: true,
                 userName: true,
-                profilePic: true
-            }
-        },
-        game: {
-            select: {
-                gameName: true
+                profilePic:true
+                }
             }
         }
-    }
-  });
+    });
 }
 
 /**
@@ -41,6 +42,12 @@ export async function createReview(reviewData: {
     const newReview: Review = await prisma.review.create({
         data: {...reviewData},
         include: {
+            game: {
+                select: {
+                    id: true,
+                    gameName: true
+                }
+            },
             user: {
                 select: {
                     id: true,
@@ -57,14 +64,20 @@ export async function getReviewsByUserId(userId: string): Promise<Review[]> {
     const reviews = await prisma.review.findMany({
         where: {userId: userId},
         include: {
+            game: {
+                select: {
+                    id: true,
+                    gameName: true
+                }
+            },
             user: {
                 select: {
                     id: true,
                     userName: true,
-                    profilePic: true
+                    profilePic:true
                 }
             }
         }
-    })
+    });
     return reviews
 }

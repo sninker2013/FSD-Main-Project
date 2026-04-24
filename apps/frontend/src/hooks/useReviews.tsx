@@ -43,9 +43,11 @@ export function useReviews() {
     }
     
     useEffect(() => {
+        // need this because it would show all reviews in the time clerk took to resolve the sign in.
+        if (isSignedIn === undefined) return;
         fetchReviews()
     }, [isSignedIn]);
-
+    
     return {
         reviews,
         error,

@@ -199,3 +199,25 @@ Front-end Repository sends requests to back-end - Users + Friends - Shannon
 Application State Persistence - Users + Friends - Shannon
 
 Resource Database Schema - Users - Shannon + D
+
+## Sprint 5
+
+### Team Requirements
+
+Clerk Auth Setup - Xavier
+
+Team Vercel Account - D
+
+Back-end User Management - All of us, Mostly Shannon
+
+User Login/Registration - Xavier/Shannon
+
+Local Setup Instructions - D
+
+### Individual Requirements
+
+Custom User-Associated Data and Session Management - Reviews - D
+
+Custom User-Associated Data and Session Management - Friends - Shannon
+
+Custom User-Associated Data and Session Management - User Status - Xavier

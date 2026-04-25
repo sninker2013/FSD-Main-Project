@@ -5,7 +5,7 @@ const corsOptions: CorsOptions = {
     origin: function(origin, callback) {
         process.env.FRONTEND_URL = process.env.FRONTEND_URL || '';
         const frontendUrl = process.env.FRONTEND_URL.replace(/\/$/, '');
-        const allowedOrigins = [frontendUrl];
+        const allowedOrigins = [frontendUrl, "http://localhost:5173"];
 
         const isVercelPreview = origin && origin.match(
             /https:\/\/fsd-main-project-frontend-.*\.vercel\.app/

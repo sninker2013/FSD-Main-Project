@@ -104,6 +104,8 @@ export const getCurrentUser = async(
     res: Response,
     next: NextFunction
 ): Promise<void> => {
+    console.log("req.userId:", (req as any).userId);
+    console.log("req keys:", Object.keys(req));
     try {
         const userId = (req as any).userId;
         

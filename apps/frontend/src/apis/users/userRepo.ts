@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export interface UserData {
     id: string;
@@ -14,7 +14,7 @@ export interface UserData {
  * @returns The current user data
  */
 export async function getCurrentUser(sessionToken: string): Promise<UserData> {
-    const response = await fetch(`${API_BASE_URL}/users/current`, {
+    const response = await fetch(`${API_BASE_URL}/api/v1/users/current`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -37,7 +37,7 @@ export async function getCurrentUser(sessionToken: string): Promise<UserData> {
  * @returns The updated user data
  */
 export async function updateUserStatus(sessionToken: string, status: string): Promise<UserData> {
-    const response = await fetch(`${API_BASE_URL}/users/current/status`, {
+    const response = await fetch(`${API_BASE_URL}/api/v1/users/current/status`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",

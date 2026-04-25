@@ -1,3 +1,4 @@
+
 import express, {Express} from "express";
 import morgan from "morgan";
 import cors from "cors";
@@ -16,10 +17,10 @@ import userRoutes from "./api/v1/routes/userRoutes";
 const app: Express = express();
 
 dotenv.config();
+app.use(cors(corsOptions));
 app.use(clerkMiddleware())
 app.use(morgan("combined"));
 app.use(express.json());
-app.use(cors(corsOptions));
 setupSwagger(app);
 
 app.get("/",  (_req, res) => {

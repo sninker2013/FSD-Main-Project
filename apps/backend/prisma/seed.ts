@@ -35,12 +35,32 @@ async function main() {
     );
 
     // insert friends to db
-    const friends = await prisma.friend.createMany(
-        {
-            data: friendSeedData,
-            skipDuplicates: true
-        }
-    );
+    const seen = new Set();
+
+    const normalizedFriends = friendSeedData
+        .map(f => {
+            const [a, b] = [f.userId, f.friendId].sort();
+            return `${a}-${b}`;
+        })
+        .filter(key => {
+            if (seen.has(key)) return false;
+            seen.add(key);
+            return true;
+        })
+        .map(key => {
+            const [userId, friendId] = key.split("-");
+            return {
+                userId,
+                friendId,
+                dateAdded: new Date(),
+                isFavourite: false,
+            };
+        });
+
+    const friends = await prisma.friend.createMany({
+        data: normalizedFriends,
+        skipDuplicates: true,
+    });
 
     // insert reviews to db
     const reviews = await prisma.review.createMany(

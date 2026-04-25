@@ -5,8 +5,9 @@ import * as friendsController from "../controllers/friendsController";
 
 const router: Router = express.Router();
 
-router.get("/",
-    friendsController.getAllFriends);
+router.get("/:userId", friendsController.getFriendsForUser);
+
+router.post("/", friendsController.addFriendByUserName)
 
 router.put("/:userId/:friendId", validateRequest(friendSchema),
     friendsController.updateFriendFavourite);

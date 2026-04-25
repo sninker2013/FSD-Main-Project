@@ -1,6 +1,7 @@
 import "./Reviews.css";
 import Stars from "../../common/stars/Stars";
 import type { Review } from "@shared/types/reviews";
+import { SignedIn, SignedOut } from "@clerk/clerk-react";
 
 function Reviews ({ reviews }: { reviews: Review[] }) {
     return (
@@ -23,7 +24,12 @@ function ReviewsDisplay({ reviews }: { reviews: Review[] }) {
 
     return(
         <section className="reviews">
-            <h2>Reviews</h2>
+            <SignedIn>
+                <h2>Your Reviews</h2>
+            </SignedIn>
+            <SignedOut>
+                <h2>Popular Reviews</h2>
+            </SignedOut>
             <div className="reviews__list">
                 {reviewItems}
             </div>
@@ -40,17 +46,20 @@ function ReviewItem({review}: {review: Review}) {
 
     return(
         <section className="review">
-                <section className="profile">
-                    <img src={review.user.profilePic} alt="reviewer profile picture" style={{width: "56px", height: "56px"}}/>
-                    <p>{review.user.userName}</p>
-                </section>
-                <section className="review__row">
-                <Stars {...review}/>
-                </section>
-                <p className="date">{formattedDate}</p>
-                <section className="review__desc">
-                    <p>{review.reviewContents}</p>
-                </section>
+            <section className="game">
+                <h3>{review.game.gameName}</h3>
+            </section>
+            <section className="profile">
+                <img src={review.user.profilePic} alt="reviewer profile picture" style={{width: "56px", height: "56px"}}/>
+                <p>{review.user.userName}</p>
+            </section>
+            <section className="review__row">
+            <Stars {...review}/>
+            </section>
+            <p className="date">{formattedDate}</p>
+            <section className="review__desc">
+                <p>{review.reviewContents}</p>
+            </section>
         </section>
     )
 }

@@ -1,13 +1,16 @@
 import { ReviewForm } from "../reviews/review-form/ReviewForm";
 import Reviews from "../reviews/reviews-list/Reviews";
-import type { Review } from "../../../../../shared/types/reviews";
+import { useReviews } from "../../hooks/useReviews";
+import { SignedIn } from "@clerk/clerk-react";
 
-export function ReviewsPage ({reviews, createReview}: {reviews: Review[], createReview: any}) {
-
+export function ReviewsPage () {
+    const { reviews, createReview } = useReviews()
     
     return (
         <>
+        <SignedIn>
         <ReviewForm onSubmit={createReview}/>
+        </SignedIn>
         <Reviews reviews={reviews}/>
         </>
     )

@@ -23,15 +23,13 @@ function App() {
   const [games, setGames] = useState<Game[]>(testGames);
 
   const [newGameTitle, setNewGameTitle] = useState("");
-
-  const currentUserName = "john_doe";
   
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Landing />}/>
         <Route path="PopularGames" element={<PopularGames />}/>
-        <Route path="Friends" element={<FriendsList currentUserName={currentUserName} />}/>
+        <Route path="Friends" element={<FriendsList />}/>
         <Route 
           path="Reviews" 
           element={<ReviewsPage />}/>

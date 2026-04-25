@@ -1,6 +1,9 @@
 import { CorsOptions } from "cors";
 
-// configure the type of requests that CORS will allow to be made to the backend
+const allowedOrigins = [
+  "http://localhost:5173",
+];
+
 const corsOptions: CorsOptions = {
     // throw an error if the request does not come from the list of allowed origins
     origin: function(origin, callback) {

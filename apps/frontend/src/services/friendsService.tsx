@@ -1,6 +1,12 @@
 import type { Friend } from  "@shared/types/friends";
 import * as friendsRepo from "../apis/friends/friendsRepo";
 
+
+export class ServiceError extends Error {
+    constructor(message: string) {
+        super(message);
+    }
+}
 /**
  * This Service function handles the validation for the friendsInput
  * for the friendsForm.
@@ -15,41 +21,32 @@ export interface ValidationResult {
     errors: string[];
 }
 
-export function validateUserName(userName: string): ValidationResult {
-
-    const errors: string[] = [];
-
-    if (userName.trim().length < 3) {
-        errors.push("User Name needs at least 3 characters.");
-    }
-
-    return { 
-        isValid: errors.length === 0,
-        errors,
-    };
+export function validateUserName(userName: string) {
+  const errors: string[] = [];
+  if (userName.trim().length < 3) {
+    errors.push("User Name needs at least 3 characters.");
+  }
+  return { isValid: errors.length === 0, errors };
 }
 
-export async function getFriends(): Promise<Friend[]> {
-    return await friendsRepo.getFriends();
-}
+export const getFriendsForUser = async (currentUserName: string): Promise<Friend[]> => {
+    return await friendsRepo.getFriendsForUser(currentUserName);
+};
 
-export const getFriendByUserName = async (
-    friendUserName: string,
-): Promise<Friend> => {
-    return await friendsRepo.getFriendByUserName(friendUserName);
-}
+export const addFriendByUserName = async (userName: string, friendUserName: string) => {
+  const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/friends`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ userName, friendUserName }),
+  });
 
-export const getFriendsByUserName = async (
-    userName: string,
-): Promise<Friend[]> => {
-    return await friendsRepo.getFriendsByUserName(userName);
-}
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.message || "Failed to add friend");
+  }
 
-export const addFriendByUserName = async (
-    userName: string,
-    friendUserName: string
-): Promise<Friend> => {
-    return await friendsRepo.addFriendByUserName(userName, friendUserName);
+  const json = await res.json();
+  return json.data;
 };
 
 export const updateFriendFavourite = async (
@@ -63,10 +60,3 @@ export const updateFriendFavourite = async (
         isFavourite
     );
 };
-
-export const deleteFriend = async (
-    userId: string,
-    friendId: string
-): Promise<void> => {
-    await friendsRepo.deleteFriend(userId, friendId);
-}

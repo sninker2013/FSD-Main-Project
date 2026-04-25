@@ -1,9 +1,5 @@
 import { CorsOptions } from "cors";
 
-const allowedOrigins = [
-  "http://localhost:5173",
-];
-
 const corsOptions: CorsOptions = {
     // throw an error if the request does not come from the list of allowed origins
     origin: function(origin, callback) {
